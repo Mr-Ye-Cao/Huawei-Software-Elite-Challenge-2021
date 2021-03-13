@@ -6,6 +6,9 @@
 
 namespace {
 const char kSpace[] = " ";
+const char kComma[] = ", ";
+const char kZero[] = "0";
+const char kAdd = 'a';
 } // namespace
 
 class InputReader {
@@ -17,7 +20,7 @@ class InputReader {
 
   private:
     const std::string file_location_;
-    // Add data structures for holding these information
+    // TODO(Yu Xin): Add data structures for holding these information
 
     
 };

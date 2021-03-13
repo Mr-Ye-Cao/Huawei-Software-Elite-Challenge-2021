@@ -7,7 +7,6 @@ int main() {
 	// file locatinon is relative to the location of this file
 	std::string file_location = "./test.txt";
 	InputReader input_reader(file_location);
-	// input_reader.ReadInputFile(file_location);
 
 	// TODO:process
 	// TODO:write standard output
