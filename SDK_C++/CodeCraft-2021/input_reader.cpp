@@ -6,11 +6,13 @@
 #include <cstring>
 #include <fstream>
 
-// void Read_Input_File(string file_location);
-// void Read_Input_Cin();
+InputReader::InputReader(std::string file_location) 
+  : file_location_(file_location) {
+    ReadInputFile();
+}
 
-void InputReader::ReadInputFile(std::string file_location){
-    std::ifstream file(file_location);
+void InputReader::ReadInputFile(){
+    std::ifstream file(file_location_);
     if(!file.is_open()) {
         std::cout << file.is_open() << std::endl;
         std::cerr << "Error: " << strerror(errno) << std::endl;
@@ -44,7 +46,7 @@ void InputReader::ReadInputFile(std::string file_location){
     M = std::stoi(line);
     for(int i=0;i<M;i++) {
         std::getline(file,line);
-        line=line.substr(1,line.length()-2);
+        line=line.substr(1, line.length() - 2);
 
         // (name, #cpu, #memory, #SD)
         std::string name;                // string length is at most 20 characters (number&alphabet&.)
@@ -63,7 +65,7 @@ void InputReader::ReadInputFile(std::string file_location){
     T = std::stoi(line);
     for(int i = 0; i < T; ++i) {
         std::getline(file,line);
-        unsigned short R = stoi(line);     // the total requests over all days < 1e5
+        unsigned short R = std::stoi(line);     // the total requests over all days < 1e5
         for(int j=0;j<R;j++) {
             std::getline(file,line);
             line = line.substr(1, line.length() - 2);

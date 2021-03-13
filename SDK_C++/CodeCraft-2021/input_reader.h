@@ -10,13 +10,14 @@ const char kSpace[] = " ";
 
 class InputReader {
   public:
-    InputReader() = default;
+    InputReader(std::string file_location);
     ~InputReader() = default;
-    void ReadInputFile(std::string file_location);
+    void ReadInputFile();
     void ReadInputCin();
 
   private:
-
+    const std::string file_location_;
+    // Add data structures for holding these information
 
     
 };

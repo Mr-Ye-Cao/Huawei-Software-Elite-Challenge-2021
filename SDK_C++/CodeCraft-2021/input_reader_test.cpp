@@ -2,10 +2,14 @@
 
 #include "input_reader.h"
 
-int Test1() {
+#include <string>
+
+// int Test1() {
     
-}
+// }
 
 // int main() {
-
+// 	std::string file_location = "./test.txt";
+// 	InputReader input_reader;
+// 	input_reader.ReadInputFile(file_location);
 // }
