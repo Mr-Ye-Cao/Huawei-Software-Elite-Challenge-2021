@@ -18,6 +18,8 @@ vm_data_manager.h
 request_data_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/request_data_manager.h
 
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/index_comparator.h
+
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.cpp
 input_reader.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.h
@@ -53,8 +55,14 @@ input_reader.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.cpp
 server_data_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.h
+iostream
+-
+index_comparator.h
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/index_comparator.h
 
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.h
+queue
+-
 vector
 -
 input_reader.h
