@@ -6,13 +6,12 @@
 #include <cstring>
 #include <fstream>
 
-InputReader::InputReader(std::string file_location) 
-  : file_location_(file_location) {
+InputReader::InputReader() {
     ReadInputFile();
 }
 
 void InputReader::ReadInputFile(){
-    std::ifstream file(file_location_);
+    std::ifstream file(kFileLocation);
     if(!file.is_open()) {
         std::cout << file.is_open() << std::endl;
         std::cerr << "Error: " << strerror(errno) << std::endl;
@@ -96,3 +95,11 @@ void InputReader::ReadInputFile(){
 void InputReader::ReadInputCin(){
 
 }
+
+InputReader& InputReader::GetInstance() {
+    static InputReader input_reader;
+    return input_reader;
+}
+std::vector<ServerInfo>& InputReader::GetServerInfoList() { return server_info_list_; }
+std::vector<VmInfo>& InputReader::GetVmInfoList() { return vm_info_list_; }
+std::vector<DailyRequestInfo>& InputReader::GetDailyRequestInfoList() { return daily_request_info_list_; }
