@@ -223,6 +223,87 @@ input_reader_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/input_reader_test.cpp.s
 .PHONY : input_reader_test.cpp.s
 
+request_data_manager.o: request_data_manager.cpp.o
+
+.PHONY : request_data_manager.o
+
+# target to build an object file
+request_data_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.o
+.PHONY : request_data_manager.cpp.o
+
+request_data_manager.i: request_data_manager.cpp.i
+
+.PHONY : request_data_manager.i
+
+# target to preprocess a source file
+request_data_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.i
+.PHONY : request_data_manager.cpp.i
+
+request_data_manager.s: request_data_manager.cpp.s
+
+.PHONY : request_data_manager.s
+
+# target to generate assembly for a file
+request_data_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.s
+.PHONY : request_data_manager.cpp.s
+
+server_data_manager.o: server_data_manager.cpp.o
+
+.PHONY : server_data_manager.o
+
+# target to build an object file
+server_data_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.o
+.PHONY : server_data_manager.cpp.o
+
+server_data_manager.i: server_data_manager.cpp.i
+
+.PHONY : server_data_manager.i
+
+# target to preprocess a source file
+server_data_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.i
+.PHONY : server_data_manager.cpp.i
+
+server_data_manager.s: server_data_manager.cpp.s
+
+.PHONY : server_data_manager.s
+
+# target to generate assembly for a file
+server_data_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.s
+.PHONY : server_data_manager.cpp.s
+
+vm_data_manager.o: vm_data_manager.cpp.o
+
+.PHONY : vm_data_manager.o
+
+# target to build an object file
+vm_data_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o
+.PHONY : vm_data_manager.cpp.o
+
+vm_data_manager.i: vm_data_manager.cpp.i
+
+.PHONY : vm_data_manager.i
+
+# target to preprocess a source file
+vm_data_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.i
+.PHONY : vm_data_manager.cpp.i
+
+vm_data_manager.s: vm_data_manager.cpp.s
+
+.PHONY : vm_data_manager.s
+
+# target to generate assembly for a file
+vm_data_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.s
+.PHONY : vm_data_manager.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -241,6 +322,15 @@ help:
 	@echo "... input_reader_test.o"
 	@echo "... input_reader_test.i"
 	@echo "... input_reader_test.s"
+	@echo "... request_data_manager.o"
+	@echo "... request_data_manager.i"
+	@echo "... request_data_manager.s"
+	@echo "... server_data_manager.o"
+	@echo "... server_data_manager.i"
+	@echo "... server_data_manager.s"
+	@echo "... vm_data_manager.o"
+	@echo "... vm_data_manager.i"
+	@echo "... vm_data_manager.s"
 .PHONY : help
 
 
