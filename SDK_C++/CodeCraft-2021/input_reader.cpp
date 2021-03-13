@@ -18,70 +18,76 @@ void InputReader::ReadInputFile(){
         std::cerr << "Error: " << strerror(errno) << std::endl;
         return;
     }
-    unsigned short int N,M,T;
+    uint16_t N, M, T;
     std::string line;
 
-    // (name, #cpu, #memory, #h_cost, #m_cost)
-    std::string server_name; // string length is at most 20 characters (number&alphabet)
-    unsigned short server_cpu, server_memory; // range [1, 1024] positive number
-    unsigned int h_cost; // range [1, 5*1e5] positive number
-    unsigned short m_cost; // range [1, 5000]  positive number
-    unsigned short server_start = 0;
+    // (name, #cpu, #memory, #purchase_cost, #running_cost)
+    uint16_t server_start = 0;
     std::getline(file,line);
     N = std::stoi(line);
+    server_info_list_.resize(N);
     for(int i = 0;i < N; ++i) {
         std::getline(file,line);
         line = line.substr(1, line.length() - 2);
-
         server_start = 0;
-        server_name = line.substr(0, (server_start = line.find(kSpace)) - 1);
-        std::cout << "Server Name: " << server_name << std::endl;
-        server_cpu = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
-        server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
-        h_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
-        m_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        
+        ServerInfo& curr = server_info_list_[i];
+        curr.server_name = line.substr(0, (server_start = line.find(kSpace)) - 1);
+        std::cout << "Server Name: " << curr.server_name << std::endl;
+        curr.server_cpu = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        curr.server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        curr.purchase_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        curr.running_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
     }
 
     // (name, #cpu, #memory, #SD)
     std::string vm_name; // string length is at most 20 characters (number&alphabet&.)
-    unsigned short vm_cpu, vm_memory; // range [1, 1024] positive number (can be contained in at least one server)
+    uint16_t vm_cpu, vm_memory; // range [1, 1024] positive number (can be contained in at least one server)
     bool is_single;
-    unsigned short vm_start = 0;
+    uint16_t vm_start = 0;
     std::getline(file, line);
     M = std::stoi(line);
-    for(int i=0;i<M;i++) {
+    vm_info_list_.resize(M);
+    for(int i = 0; i < M; ++i) {
         std::getline(file,line);
         line=line.substr(1, line.length() - 2);
-
         vm_start = 0;
-        vm_name = line.substr(0, (vm_start = line.find(kSpace))-1);
-        std::cout << "VM Name: " << vm_name << std::endl;
-        vm_cpu = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
-        vm_memory = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
-        is_single = line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)) == kZero ? true : false;
+
+        VmInfo& curr = vm_info_list_[i];
+        curr.vm_name = line.substr(0, (vm_start = line.find(kSpace))-1);
+        std::cout << "VM Name: " << curr.vm_name << std::endl;
+        curr.vm_cpu = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
+        curr.vm_memory = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
+        curr.is_single = line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)) == kZero ? true : false;
     }
 
-    // add request
-    std::string request_name;
-    int id;       // ID is 32bit integer BUT NOT NECESSARILY POSITIVE
+    // Adds requests
     std::getline(file,line);
     T = std::stoi(line);
+    daily_request_info_list_.resize(T);
     for(int i = 0; i < T; ++i) {
         std::getline(file,line);
-        unsigned short R = std::stoi(line);     // the total requests over all days < 1e5
-        for(int j=0;j<R;j++) {
+        uint16_t R = std::stoi(line);     // the total requests over all days < 1e5
+        DailyRequestInfo& curr_day_request = daily_request_info_list_[i];
+        curr_day_request.number = R;
+        curr_day_request.request_info_list_.resize(R);
+        for(int j = 0; j < R; ++j) {
             std::getline(file,line);
             line = line.substr(1, line.length() - 2);
 
+            RequestInfo& curr_request = curr_day_request.request_info_list_[j];
             // (add, name, id) / (del, id)
             if(line[0] == kAdd) {
+                curr_request.request_type = RequestType::kAdd;
                 int start = line.find(kSpace) + 1;
-                request_name = line.substr(5, line.find_last_of(kComma) - 6);
-                std::cout << "Request: " << request_name << std::endl;
-                id = std::stoi(line.substr(line.find_last_of(kComma) + 1));                    
+                curr_request.requested_vm_name = line.substr(5, line.find_last_of(kComma) - 6);
+                std::cout << "Requests to add: " << curr_request.requested_vm_name << std::endl;
+                curr_request.id = std::stoi(line.substr(line.find_last_of(kComma) + 1));                    
             } else {
                 // delete requst (the vm with this id is guarenteed to exist)
-                id = std::stoi(line.substr(line.find_last_of(kComma) + 1));       // id is 32bit integer BUT NOT NECESSARILY POSITIVE
+                curr_request.request_type = RequestType::kDelete;
+                curr_request.id = std::stoi(line.substr(line.find_last_of(kComma) + 1));
+                std::cout << "Requests to delete ID: " << curr_request.id << std::endl;
             }
         }
     }
