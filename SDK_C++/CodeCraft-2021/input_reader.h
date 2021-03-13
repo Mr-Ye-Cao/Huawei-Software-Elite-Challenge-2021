@@ -6,6 +6,7 @@
 #include <string>
 
 namespace {
+const std::string kFileLocation = "./test.txt";
 const char kSpace[] = " ";
 const char kComma[] = ", ";
 const char kZero[] = "0";
@@ -48,14 +49,19 @@ struct DailyRequestInfo {
 
 class InputReader {
   public:
-    InputReader(std::string file_location);
-    ~InputReader() = default;
+    static InputReader& GetInstance();
+    std::vector<ServerInfo>& GetServerInfoList();
+    std::vector<VmInfo>& GetVmInfoList();
+    std::vector<DailyRequestInfo>& GetDailyRequestInfoList();
+    InputReader(const InputReader&) = delete;
+    InputReader& operator=(const InputReader&) = delete;
     
-    void ReadInputFile();
-    void ReadInputCin();
 
   private:
-    const std::string file_location_;
+    InputReader();
+    ~InputReader() = default;
+    void ReadInputFile();
+    void ReadInputCin();
     // Temporarily use vector as data structures for holding these information
     // TODO(Yu Xin): adapt to data structures if needed,
     // or just build indices over some keys later on for faster access.
