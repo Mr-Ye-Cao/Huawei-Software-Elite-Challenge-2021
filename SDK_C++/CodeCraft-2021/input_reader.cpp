@@ -33,6 +33,7 @@ void InputReader::ReadInputFile(std::string file_location){
 
         unsigned short start = 0;
         name = line.substr(0, (start = line.find(kSpace)) - 1);
+        std::cout << "Server Name: " << name << std::endl;
         cpu = std::stoi(line.substr(start+1, start = line.find(kSpace, start + 1)));
         memory = std::stoi(line.substr(start + 1, start = line.find(kSpace, start + 1)));
         h_cost = std::stoi(line.substr(start + 1, start = line.find(kSpace, start + 1)));
@@ -52,6 +53,7 @@ void InputReader::ReadInputFile(std::string file_location){
 
         unsigned short start = 0;
         name = line.substr(0, (start = line.find(kSpace))-1);
+        std::cout << "VM Name: " << name << std::endl;
         cpu = std::stoi(line.substr(start + 1, start = line.find(kSpace,start + 1)));
         memory = std::stoi(line.substr(start + 1, start = line.find(kSpace,start + 1)));
         is_single = line.substr(start + 1, start = line.find(kSpace,start + 1)) == "0" ? true : false;
@@ -74,6 +76,7 @@ void InputReader::ReadInputFile(std::string file_location){
 
                 int start = line.find(kSpace) + 1;
                 name = line.substr(5, line.find_last_of(", ") - 6);
+                std::cout << "Request: " << name << std::endl;
                 id = std::stoi(line.substr(line.find_last_of(", ") + 1));                    
             } else {
                 // delete requst (the vm with this id is guarenteed to exist)

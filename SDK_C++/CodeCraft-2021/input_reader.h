@@ -10,12 +10,12 @@ const char kSpace[] = " ";
 
 class InputReader {
   public:
-    InputReader();
+    InputReader() = default;
     ~InputReader() = default;
-
-  private:
     void ReadInputFile(std::string file_location);
     void ReadInputCin();
+
+  private:
 
 
     

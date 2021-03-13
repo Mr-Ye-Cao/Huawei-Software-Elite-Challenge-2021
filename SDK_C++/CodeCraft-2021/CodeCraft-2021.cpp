@@ -1,13 +1,14 @@
 #include <iostream>
 #include <string>
-#include "../Input_Reader/reader.cpp"
+#include "input_reader.h"
 
 int main()
 {
 	// TODO:read standard input
 	// file locatinon is relative to the location of this file
-	string file_location = "./test.txt";
-	Read_Input_File(file_location);
+	std::string file_location = "./test.txt";
+	InputReader input_reader;
+	input_reader.ReadInputFile(file_location);
 
 	// TODO:process
 	// TODO:write standard output
