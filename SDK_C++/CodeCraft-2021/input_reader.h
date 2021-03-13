@@ -15,6 +15,7 @@ class InputReader {
   public:
     InputReader(std::string file_location);
     ~InputReader() = default;
+    
     void ReadInputFile();
     void ReadInputCin();
 
