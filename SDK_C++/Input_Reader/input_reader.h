@@ -1,5 +1,7 @@
 // @Author: Yu Xin
 
+#pragma once
+
 #include <string>
 
 namespace {
