@@ -31,22 +31,23 @@ struct VmInfo {
     std::string vm_name; // string length is at most 20 characters (number&alphabet&.)
 };
 
-enum class RequestType {
-  kAdd,
-  kDelete
-};
+// enum class RequestType {
+//   kAdd,
+//   kDelete
+// };
 
 // requested_vm_name, (add, name, request_id) or (del, request_id)
 struct RequestInfo {
-    RequestType request_type;
-    int32_t request_id; // request_id is 32bit integer BUT NOT NECESSARILY POSITIVE
+    // int32_t request_id; // request_id is 32bit integer BUT NOT NECESSARILY POSITIVE
     std::string requested_vm_name; // string length is at most 20 characters (number&alphabet&.)
+    int16_t start_day; // inclusive
+    int16_t end_day; // non inclusive
 };
 
-struct DailyRequestInfo {
-    int32_t number;
-    std::vector<RequestInfo> request_info_list_;
-};
+// struct DailyRequestInfo {
+//     int32_t number;
+//     std::vector<RequestInfo> request_info_list_;
+// };
 
 class InputReader {
   public:
@@ -55,9 +56,12 @@ class InputReader {
     InputReader(const InputReader&) = delete;
     InputReader& operator=(const InputReader&) = delete;
 
+    uint16_t GetN();
     std::vector<ServerInfo>& GetServerInfoList();
+    uint16_t GetM();
     std::vector<VmInfo>& GetVmInfoList();
-    std::vector<DailyRequestInfo>& GetDailyRequestInfoList();
+    uint16_t GetT();
+    std::unordered_map<int16_t, RequestInfo>& GetRequestInfoList();
     
 
   private:
@@ -68,8 +72,11 @@ class InputReader {
     // Temporarily use vector as data structures for holding these information
     // TODO(Yu Xin): adapt to data structures if needed,
     // or just build indices over some keys later on for faster access.
+    uint16_t N; // Number of servers
     std::vector<ServerInfo> server_info_list_;
+    uint16_t M; // Number of VM's
     std::vector<VmInfo> vm_info_list_;
-    std::vector<DailyRequestInfo> daily_request_info_list_;
+    uint16_t T; // Number of days
+    std::unordered_map<int16_t, RequestInfo> request_info_list_; // request_id is 32bit integer BUT NOT NECESSARILY POSITIVE
     
 };

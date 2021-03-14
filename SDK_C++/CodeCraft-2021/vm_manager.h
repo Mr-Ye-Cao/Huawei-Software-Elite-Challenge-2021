@@ -3,7 +3,6 @@
 #pragma once
 
 #include <vector>
-#include <unordered_map>
 
 #include "request_data_manager.h"
 #include "vm_data_manager.h"
@@ -25,7 +24,10 @@ class VmManager {
   private:
     VmDataManager& vm_data_manager_;
     RequestDataManager& request_data_manager_;
+    uint16_t days_;
+    uint16_t num_vm_;
+    std::unordered_map<int16_t, RequestInfo>& request_info_list_;
     // vm id to a list of schedules of all vm's of this kind
     // TODO(Yu Xin): use next_available when adding requests to the list
-    std::unordered_map<uint16_t, std::vector<VmScheduleInfo> > vm_schedules_;
+    std::vector<std::vector<VmScheduleInfo> > vm_schedules_;
 };

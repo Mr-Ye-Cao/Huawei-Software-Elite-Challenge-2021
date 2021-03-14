@@ -7,12 +7,17 @@
 // TODO(Yu Xin): to be implemented.
 VmDataManager::VmDataManager() :
   input_reader_(InputReader::GetInstance()),
+  num_vm_(input_reader_.GetN()),
   vm_info_list_(input_reader_.GetVmInfoList()) {
     index_vm_name_.reserve(vm_info_list_.size());
     for (uint16_t i = 0; i < vm_info_list_.size(); ++i) {
         index_vm_name_[vm_info_list_[i].vm_name] = i;
     }
     // BuildIndexVmMemory();
+}
+
+uint16_t VmDataManager::GetNumVm() {
+ return num_vm_;
 }
 
 VmInfo& VmDataManager::GetVm(const std::string& vm_name) {
