@@ -27,9 +27,13 @@ void ServerDataManager::BuildIndexPurchaseCost(/*bool (*le)(const ServerInfo&, c
             server_info_list_.end(),
             [] (const ServerInfo& a, const ServerInfo& b) -> bool {
                 return a.purchase_cost < b.purchase_cost;
-            })
+        })
     );
     for (int i = 0; i < index_purchase_cost_.size(); ++i) {
         std::cout << "No. " << i << " is " << server_info_list_[index_purchase_cost_[i]].purchase_cost << std::endl;
     }
+}
+
+ServerInfo& ServerDataManager::GetServerNthPurchaseCost(uint16_t n) {
+    return server_info_list_[index_purchase_cost_[n]];
 }

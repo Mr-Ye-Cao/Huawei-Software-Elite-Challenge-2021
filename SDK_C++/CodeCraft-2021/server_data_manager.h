@@ -11,6 +11,8 @@ class ServerDataManager {
   public:
     ServerDataManager();
     ~ServerDataManager() = default;
+    ServerInfo& GetServerNthPurchaseCost(uint16_t n);
+
   private:
     InputReader& input_reader_;
     std::vector<ServerInfo>& server_info_list_;

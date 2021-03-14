@@ -31,6 +31,8 @@ fstream
 -
 
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.h
+unordered_map
+-
 vector
 -
 string
@@ -71,8 +73,12 @@ input_reader.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.cpp
 vm_data_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.h
+index_comparator.h
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/index_comparator.h
 
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.h
+unordered_map
+-
 vector
 -
 input_reader.h
