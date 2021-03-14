@@ -35,3 +35,8 @@ VmInfo& VmDataManager::GetVm(const std::string& vm_name) {
 //         })
 //     )
 // }
+
+VmDataManager& VmDataManager::GetInstance() {
+    static VmDataManager vm_data_manager;
+    return vm_data_manager;
+}

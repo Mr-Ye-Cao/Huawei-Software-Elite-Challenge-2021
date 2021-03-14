@@ -12,9 +12,9 @@ int main() {
 	// file locatinon is relative to the location of this file
 	// std::string file_location = "./test.txt";
 	// InputReader input_reader();
-	ServerDataManager server_data_manager_;
-	VmDataManager vm_data_manager_;
-	RequestDataManager request_data_manager_;
+	ServerDataManager& server_data_manager_(ServerDataManager::GetInstance());
+	VmDataManager& vm_data_manager_(VmDataManager::GetInstance());
+	RequestDataManager& request_data_manager_(RequestDataManager::GetInstance());
 
 	// TODO:process
 	// TODO:write standard output

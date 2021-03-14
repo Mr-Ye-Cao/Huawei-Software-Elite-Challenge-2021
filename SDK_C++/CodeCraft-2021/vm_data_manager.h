@@ -9,12 +9,17 @@
 
 class VmDataManager {
   public:
-    VmDataManager();
-    ~VmDataManager() = default;
+    // Meyer singleton
+    static VmDataManager& GetInstance();
+    VmDataManager(const VmDataManager&) = delete;
+    VmDataManager& operator=(const VmDataManager&) = delete;
+
     VmInfo& GetVm(const std::string& vm_name);
     // VmInfo& GetVmNthMemorySize(const std::string& vm_name); // Not needed as for now
 
   private:
+    VmDataManager();
+    ~VmDataManager() = default;
     InputReader& input_reader_;
     std::vector<VmInfo>& vm_info_list_;
     std::unordered_map<std::string, int> index_vm_name_;

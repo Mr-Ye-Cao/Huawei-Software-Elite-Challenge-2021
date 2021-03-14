@@ -6,7 +6,11 @@
 
 #include "index_comparator.h"
 
-// TODO(Yu Xin): to be implemented.
+ServerDataManager& ServerDataManager::GetInstance() {
+    static ServerDataManager server_data_manager;
+    return server_data_manager;
+}
+
 ServerDataManager::ServerDataManager() :
   input_reader_(InputReader::GetInstance()),
   server_info_list_(input_reader_.GetServerInfoList()) {

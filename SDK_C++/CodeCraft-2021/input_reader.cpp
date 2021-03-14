@@ -75,18 +75,18 @@ void InputReader::ReadInputFile(){
             line = line.substr(1, line.length() - 2);
 
             RequestInfo& curr_request = curr_day_request.request_info_list_[j];
-            // (add, name, id) / (del, id)
+            // (add, name, request_id) / (del, request_id)
             if(line[0] == kAdd) {
                 curr_request.request_type = RequestType::kAdd;
                 int start = line.find(kSpace) + 1;
                 curr_request.requested_vm_name = line.substr(5, line.find_last_of(kComma) - 6);
                 std::cout << "Requests to add: " << curr_request.requested_vm_name << std::endl;
-                curr_request.id = std::stoi(line.substr(line.find_last_of(kComma) + 1));                    
+                curr_request.request_id = std::stoi(line.substr(line.find_last_of(kComma) + 1));                    
             } else {
-                // delete requst (the vm with this id is guarenteed to exist)
+                // delete requst (the vm with this request_id is guarenteed to exist)
                 curr_request.request_type = RequestType::kDelete;
-                curr_request.id = std::stoi(line.substr(line.find_last_of(kComma) + 1));
-                std::cout << "Requests to delete ID: " << curr_request.id << std::endl;
+                curr_request.request_id = std::stoi(line.substr(line.find_last_of(kComma) + 1));
+                std::cout << "Requests to delete ID: " << curr_request.request_id << std::endl;
             }
         }
     }

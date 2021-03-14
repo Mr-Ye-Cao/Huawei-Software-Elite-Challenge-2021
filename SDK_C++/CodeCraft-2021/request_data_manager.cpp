@@ -8,3 +8,8 @@ RequestDataManager::RequestDataManager() :
   daily_request_info_list_(input_reader_.GetDailyRequestInfoList()) {
     
 }
+
+RequestDataManager& RequestDataManager::GetInstance() {
+    static RequestDataManager request_data_manager;
+    return request_data_manager;
+}

@@ -36,10 +36,10 @@ enum class RequestType {
   kDelete
 };
 
-// requested_vm_name, (add, name, id) or (del, id)
+// requested_vm_name, (add, name, request_id) or (del, request_id)
 struct RequestInfo {
     RequestType request_type;
-    int32_t id; // id is 32bit integer BUT NOT NECESSARILY POSITIVE
+    int32_t request_id; // request_id is 32bit integer BUT NOT NECESSARILY POSITIVE
     std::string requested_vm_name; // string length is at most 20 characters (number&alphabet&.)
 };
 
@@ -50,12 +50,14 @@ struct DailyRequestInfo {
 
 class InputReader {
   public:
+    // Meyer singleton
     static InputReader& GetInstance();
+    InputReader(const InputReader&) = delete;
+    InputReader& operator=(const InputReader&) = delete;
+
     std::vector<ServerInfo>& GetServerInfoList();
     std::vector<VmInfo>& GetVmInfoList();
     std::vector<DailyRequestInfo>& GetDailyRequestInfoList();
-    InputReader(const InputReader&) = delete;
-    InputReader& operator=(const InputReader&) = delete;
     
 
   private:
