@@ -304,6 +304,33 @@ vm_data_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.s
 .PHONY : vm_data_manager.cpp.s
 
+vm_manager.o: vm_manager.cpp.o
+
+.PHONY : vm_manager.o
+
+# target to build an object file
+vm_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o
+.PHONY : vm_manager.cpp.o
+
+vm_manager.i: vm_manager.cpp.i
+
+.PHONY : vm_manager.i
+
+# target to preprocess a source file
+vm_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.i
+.PHONY : vm_manager.cpp.i
+
+vm_manager.s: vm_manager.cpp.s
+
+.PHONY : vm_manager.s
+
+# target to generate assembly for a file
+vm_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.s
+.PHONY : vm_manager.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -331,6 +358,9 @@ help:
 	@echo "... vm_data_manager.o"
 	@echo "... vm_data_manager.i"
 	@echo "... vm_data_manager.s"
+	@echo "... vm_manager.o"
+	@echo "... vm_manager.i"
+	@echo "... vm_manager.s"
 .PHONY : help
 
 
