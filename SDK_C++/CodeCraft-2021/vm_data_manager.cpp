@@ -24,6 +24,10 @@ VmInfo& VmDataManager::GetVm(const std::string& vm_name) {
     return vm_info_list_[index_vm_name_[vm_name]];
 }
 
+int VmDataManager::GetVmId(const std::string& vm_name) {
+    return index_vm_name_[vm_name];
+}
+
 // void VmDataManager::BuildIndexVmMemory() {
 //     index_vm_memory_.resize(vm_info_list_.size());
 //     for (uint16_t i = 0; i < vm_info_list_.size(); ++i) {

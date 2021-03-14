@@ -18,10 +18,15 @@ struct VmScheduleInfo {
 
 class VmManager {
   public:
+    // Meyer singleton
+    static VmManager& GetInstance();
+    VmManager(const VmManager&) = delete;
+    VmManager& operator=(const VmManager&) = delete;
+
+  private:
     VmManager();
     ~VmManager() = default;
 
-  private:
     VmDataManager& vm_data_manager_;
     RequestDataManager& request_data_manager_;
     uint16_t days_;

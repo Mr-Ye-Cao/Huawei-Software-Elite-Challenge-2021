@@ -11,12 +11,14 @@ iostream
 -
 string
 -
+request_data_manager.h
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/request_data_manager.h
 server_data_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.h
 vm_data_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.h
-request_data_manager.h
-/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/request_data_manager.h
+vm_manager.h
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_manager.h
 
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/index_comparator.h
 
@@ -85,6 +87,8 @@ input_reader.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.h
 
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_manager.cpp
+iostream
+-
 vm_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_manager.h
 

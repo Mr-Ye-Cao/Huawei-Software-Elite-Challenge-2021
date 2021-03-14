@@ -16,6 +16,7 @@ class VmDataManager {
 
     uint16_t GetNumVm();
     VmInfo& GetVm(const std::string& vm_name);
+    int GetVmId(const std::string& vm_name);
     // VmInfo& GetVmNthMemorySize(const std::string& vm_name); // Not needed as for now
 
   private:
