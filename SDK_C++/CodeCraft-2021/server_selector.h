@@ -10,7 +10,7 @@ class ServerSelector {
   public:
     ServerSelector();
     ~ServerSelector();
-
+    void MakeServerSelection();
 
   private:
     ServerDataManager& server_data_manager_;
