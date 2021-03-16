@@ -12,7 +12,7 @@ VmManager::VmManager() :
   request_info_list_(request_data_manager_.GetRequestInfoList()) {
     vm_schedules_.reserve(num_vm_);
     for (const auto& request : request_info_list_) {
-        const int16_t request_id = request.first;
+        const int32_t request_id = request.first;
         const RequestInfo& request_info = request.second;
         int vm_id = vm_data_manager_.GetVmId(request_info.requested_vm_name);
 
@@ -23,9 +23,9 @@ VmManager::VmManager() :
         for (int16_t day = request_info.start_day; day <= request_info.end_day; ++day) {
             ++curr_vm_status.num_running[day];
             curr_vm_status.request_id_list[day].push_back(request_id);
-            // std::cout << "Request " << curr_vm_status.request_id_list[day].back()
-            //     << " added, we have " << curr_vm_status.num_running[day] << " "
-            //     << request_info.requested_vm_name << " running on day " << day << std::endl;
+            std::cout << "Request " << curr_vm_status.request_id_list[day].back()
+                << " added, we have " << curr_vm_status.num_running[day] << " "
+                << request_info.requested_vm_name << " running on day " << day << std::endl;
         }
     }
 }

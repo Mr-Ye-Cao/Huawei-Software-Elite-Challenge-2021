@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/CodeCraft-2021.dir/input_reader_test.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.o"
+  "CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o"
 )

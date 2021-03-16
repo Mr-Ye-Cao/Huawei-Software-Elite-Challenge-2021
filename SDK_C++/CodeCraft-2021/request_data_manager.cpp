@@ -17,6 +17,6 @@ uint16_t RequestDataManager::GetDays() {
     return days_;
 }
 
-std::unordered_map<int16_t, RequestInfo>& RequestDataManager::GetRequestInfoList() {
+std::unordered_map<int32_t, RequestInfo>& RequestDataManager::GetRequestInfoList() {
     return request_info_list_;
 }
