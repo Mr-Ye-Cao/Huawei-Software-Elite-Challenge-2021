@@ -63,6 +63,8 @@ void InputReader::ReadInputFile(){
     std::getline(file,line);
     T = std::stoi(line);
     // daily_request_info_list_.resize(T);
+    int request_start = 0;
+    int last_comma_pos = 0;
     for(int i = 0; i < T; ++i) {
         std::getline(file,line);
         uint16_t R = std::stoi(line);     // the total requests over all days < 1e5
@@ -74,20 +76,21 @@ void InputReader::ReadInputFile(){
             line = line.substr(1, line.length() - 2);
 
             // (add, name, request_id) / (del, request_id)
+            last_comma_pos = line.find_last_of(kComma);
             if(line[0] == kAdd) {
-                int start = line.find(kSpace) + 1;
-                const std::string& requested_vm_name = line.substr(5, line.find_last_of(kComma) - 6);
-                const int16_t request_id = std::stoi(line.substr(line.find_last_of(kComma) + 1));
-                std::cout << "Requests to add: " << request_id << " on day " << i << std::endl;
+                request_start = line.find(kSpace) + 1;
+                const std::string& requested_vm_name = line.substr(5, last_comma_pos - 6);
+                const int32_t request_id = std::stoi(line.substr(last_comma_pos + 1, line.size() - last_comma_pos - 1));
+                // std::cout << "Requests to add: " << request_id << " on day " << i << std::endl;
                 // RequestInfo& curr_request = request_info_list_[request_id];
                 request_info_list_[request_id].requested_vm_name = requested_vm_name;
                 request_info_list_[request_id].start_day = i;
                 request_info_list_[request_id].end_day = T - 1; // Default end day is the end of all days
             } else {
                 // delete request (the vm with this request_id is guarenteed to exist)
-                const int16_t& request_id = std::stoi(line.substr(line.find_last_of(kComma) + 1));
+                const int32_t& request_id = std::stoi(line.substr(last_comma_pos + 1, line.size() - last_comma_pos - 1));
                 request_info_list_[request_id].end_day = i;
-                std::cout << "Requests to delete ID: " << request_id << " on day " << i << std::endl;
+                // std::cout << "Requests to delete ID: " << request_id << " on day " << i << std::endl;
             }
         }
     }
@@ -107,4 +110,4 @@ std::vector<ServerInfo>& InputReader::GetServerInfoList() { return server_info_l
 uint16_t InputReader::GetM() { return M; }
 std::vector<VmInfo>& InputReader::GetVmInfoList() { return vm_info_list_; }
 uint16_t InputReader::GetT() { return T; }
-std::unordered_map<int16_t, RequestInfo>& InputReader::GetRequestInfoList() { return request_info_list_; }
+std::unordered_map<int32_t, RequestInfo>& InputReader::GetRequestInfoList() { return request_info_list_; }

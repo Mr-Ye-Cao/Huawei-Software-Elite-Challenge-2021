@@ -141,9 +141,22 @@ CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.cpp -o CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.s
 
+CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: CMakeFiles/CodeCraft-2021.dir/flags.make
+CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o -c /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.cpp
+
+CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.cpp > CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.i
+
+CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.cpp -o CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.s
+
 CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o: CMakeFiles/CodeCraft-2021.dir/flags.make
 CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o -c /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.cpp
 
 CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.i: cmake_force
@@ -156,7 +169,7 @@ CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.s: cmake_force
 
 CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o: CMakeFiles/CodeCraft-2021.dir/flags.make
 CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_manager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o -c /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_manager.cpp
 
 CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.i: cmake_force
@@ -174,6 +187,7 @@ CodeCraft__2021_OBJECTS = \
 "CMakeFiles/CodeCraft-2021.dir/input_reader_test.cpp.o" \
 "CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.o" \
 "CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.o" \
+"CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o" \
 "CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o" \
 "CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o"
 
@@ -185,11 +199,12 @@ CodeCraft__2021_EXTERNAL_OBJECTS =
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/input_reader_test.cpp.o
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.o
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.o
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/vm_manager.cpp.o
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/build.make
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021: CMakeFiles/CodeCraft-2021.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/bin/CodeCraft-2021"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CodeCraft-2021.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

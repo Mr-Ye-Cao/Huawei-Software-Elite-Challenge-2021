@@ -277,6 +277,33 @@ server_data_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.s
 .PHONY : server_data_manager.cpp.s
 
+server_selector.o: server_selector.cpp.o
+
+.PHONY : server_selector.o
+
+# target to build an object file
+server_selector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o
+.PHONY : server_selector.cpp.o
+
+server_selector.i: server_selector.cpp.i
+
+.PHONY : server_selector.i
+
+# target to preprocess a source file
+server_selector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.i
+.PHONY : server_selector.cpp.i
+
+server_selector.s: server_selector.cpp.s
+
+.PHONY : server_selector.s
+
+# target to generate assembly for a file
+server_selector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.s
+.PHONY : server_selector.cpp.s
+
 vm_data_manager.o: vm_data_manager.cpp.o
 
 .PHONY : vm_data_manager.o
@@ -355,6 +382,9 @@ help:
 	@echo "... server_data_manager.o"
 	@echo "... server_data_manager.i"
 	@echo "... server_data_manager.s"
+	@echo "... server_selector.o"
+	@echo "... server_selector.i"
+	@echo "... server_selector.s"
 	@echo "... vm_data_manager.o"
 	@echo "... vm_data_manager.i"
 	@echo "... vm_data_manager.s"

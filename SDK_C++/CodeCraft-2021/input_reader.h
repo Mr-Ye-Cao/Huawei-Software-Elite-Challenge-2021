@@ -61,7 +61,7 @@ class InputReader {
     uint16_t GetM();
     std::vector<VmInfo>& GetVmInfoList();
     uint16_t GetT();
-    std::unordered_map<int16_t, RequestInfo>& GetRequestInfoList();
+    std::unordered_map<int32_t, RequestInfo>& GetRequestInfoList();
     
 
   private:
@@ -77,6 +77,6 @@ class InputReader {
     uint16_t M; // Number of VM's
     std::vector<VmInfo> vm_info_list_;
     uint16_t T; // Number of days
-    std::unordered_map<int16_t, RequestInfo> request_info_list_; // request_id is 32bit integer BUT NOT NECESSARILY POSITIVE
+    std::unordered_map<int32_t, RequestInfo> request_info_list_; // request_id is 32bit integer BUT NOT NECESSARILY POSITIVE
     
 };
