@@ -23,9 +23,9 @@ VmManager::VmManager() :
         for (int16_t day = request_info.start_day; day <= request_info.end_day; ++day) {
             ++curr_vm_status.num_running[day];
             curr_vm_status.request_id_list[day].push_back(request_id);
-            std::cout << "Request " << curr_vm_status.request_id_list[day].back()
-                << " added, we have " << curr_vm_status.num_running[day] << " "
-                << request_info.requested_vm_name << " running on day " << day << std::endl;
+            // std::cout << "Request " << curr_vm_status.request_id_list[day].back()
+            //     << " added, we have " << curr_vm_status.num_running[day] << " "
+            //     << request_info.requested_vm_name << " running on day " << day << std::endl;
         }
     }
 }

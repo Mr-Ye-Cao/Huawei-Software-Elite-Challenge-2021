@@ -81,7 +81,7 @@ void InputReader::ReadInputFile(){
                 request_start = line.find(kSpace) + 1;
                 const std::string& requested_vm_name = line.substr(5, last_comma_pos - 6);
                 const int32_t request_id = std::stoi(line.substr(last_comma_pos + 1, line.size() - last_comma_pos - 1));
-                std::cout << "Requests to add: " << request_id << " on day " << i << std::endl;
+                // std::cout << "Requests to add: " << request_id << " on day " << i << std::endl;
                 // RequestInfo& curr_request = request_info_list_[request_id];
                 request_info_list_[request_id].requested_vm_name = requested_vm_name;
                 request_info_list_[request_id].start_day = i;
@@ -90,7 +90,7 @@ void InputReader::ReadInputFile(){
                 // delete request (the vm with this request_id is guarenteed to exist)
                 const int32_t& request_id = std::stoi(line.substr(last_comma_pos + 1, line.size() - last_comma_pos - 1));
                 request_info_list_[request_id].end_day = i;
-                std::cout << "Requests to delete ID: " << request_id << " on day " << i << std::endl;
+                // std::cout << "Requests to delete ID: " << request_id << " on day " << i << std::endl;
             }
         }
     }

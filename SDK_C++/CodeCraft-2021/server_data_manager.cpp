@@ -16,10 +16,13 @@ ServerDataManager::ServerDataManager() :
   server_info_list_(input_reader_.GetServerInfoList()) {
     std::cout << "Server manager constructed\n";
     index_purchase_cost_.resize(server_info_list_.size());
+    index_purchase_cost_core_.resize(server_info_list_.size());
     for (uint16_t i = 0; i < server_info_list_.size(); ++i) {
         index_purchase_cost_[i] = i;
+        index_purchase_cost_core_[i] = i;
     }
     BuildIndexPurchaseCost();
+    BuildIndexPurchaseCostCore();
 }
 
 void ServerDataManager::BuildIndexPurchaseCost(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/) {
@@ -33,11 +36,31 @@ void ServerDataManager::BuildIndexPurchaseCost(/*bool (*le)(const ServerInfo&, c
                 return a.purchase_cost < b.purchase_cost;
         })
     );
-    for (int i = 0; i < index_purchase_cost_.size(); ++i) {
-        std::cout << "No. " << i << " is " << server_info_list_[index_purchase_cost_[i]].purchase_cost << std::endl;
+    // for (int i = 0; i < index_purchase_cost_.size(); ++i) {
+    //     std::cout << "No. " << i << " is " << server_info_list_[index_purchase_cost_[i]].purchase_cost << std::endl;
+    // }
+}
+
+void ServerDataManager::BuildIndexPurchaseCostCore() {
+    std::sort(
+        index_purchase_cost_core_.begin(),
+        index_purchase_cost_core_.end(),
+        IndexComparator<std::vector<ServerInfo>::const_iterator, ServerInfo>(
+            server_info_list_.begin(),
+            server_info_list_.end(),
+            [] (const ServerInfo& a, const ServerInfo& b) -> bool {
+                return (float)a.purchase_cost / a.server_memory < (float)b.purchase_cost / b.server_memory;
+        })
+    );
+    for (int i = 0; i < index_purchase_cost_core_.size(); ++i) {
+        std::cout << "No. " << i << " costs " << server_info_list_[index_purchase_cost_core_[i]].purchase_cost << std::endl;
     }
 }
 
 ServerInfo& ServerDataManager::GetServerNthPurchaseCost(uint16_t n) {
     return server_info_list_[index_purchase_cost_[n]];
+}
+
+ServerInfo& ServerDataManager::GetServerNthPurchaseCostCore(uint16_t n) {
+    return server_info_list_[index_purchase_cost_core_[n]];
 }
