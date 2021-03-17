@@ -15,7 +15,7 @@ class ServerDataManager {
     ServerDataManager& operator=(const ServerDataManager&) = delete;
     
     ServerInfo& GetServerNthPurchaseCost(uint16_t n);
-    ServerInfo& GetServerNthPurchaseCostCore(uint16_t n);
+    ServerInfo& GetServerNthPurchaseCostCore(uint16_t n); // Find nth best by the ratio of purchase cost : price
 
   private:
     ServerDataManager();
