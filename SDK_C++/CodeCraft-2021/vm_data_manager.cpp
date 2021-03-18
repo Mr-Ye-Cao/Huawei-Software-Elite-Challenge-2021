@@ -20,6 +20,10 @@ uint16_t VmDataManager::GetNumVm() {
  return num_vm_;
 }
 
+VmInfo& VmDataManager::GetVm(const uint16_t& id) {
+    return vm_info_list_[id];
+}
+
 VmInfo& VmDataManager::GetVm(const std::string& vm_name) {
     return vm_info_list_[index_vm_name_[vm_name]];
 }

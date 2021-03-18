@@ -29,7 +29,7 @@ struct VmStatusInfo {
 // and the schedules of these vm's
 struct VmStatusWorstCaseInfo {
     // std::vector<uint32_t> num_running;
-    std::vector<std::vector<bool> > vm_schedule_list; // schedule of each vm
+    std::vector<std::vector<bool> > vm_schedule_list; // schedule of each vm; the size of this list is the number of worst case vm.
 
     // Day, list of server id; currently unused, but might need it later when mapping VM's to servers
     // std::unordered_map<int32_t, std::vector<int32_t> > server_id_list;
@@ -51,8 +51,14 @@ class VmManager {
     uint16_t days_; // Number of days (T)
     uint16_t num_vm_;
     std::unordered_map<int32_t, RequestInfo>& request_info_list_;
-    // vm id to a list of schedules of all vm's of this kind
-    // TODO(Yu Xin): use next_available when adding requests to the list
+    
+    // vm id (which is its index in vm_info_list_ in vm_data_manager_) to a list of schedules of all vm's of this kind
+    // This assumes unlimited migration to give an optimistic estimation
     std::unordered_map<uint16_t, VmStatusInfo> vm_schedules_;
+
+    // vm id (which is its index in vm_info_list_ in vm_data_manager_) to a list of schedules of all vm's of this kind
+    // This assumes no migration to give an absolute worst case
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo> vm_schedules_worst_case_;
+    int64_t worst_case_core_;
+    int64_t worst_case_memory_;
 };

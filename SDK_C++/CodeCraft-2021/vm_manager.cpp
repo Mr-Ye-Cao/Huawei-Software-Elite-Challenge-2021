@@ -45,7 +45,7 @@ VmManager::VmManager() :
         } else {
             vm_scheduled_for_worst_case = *(possible_vms.begin());
         }
-        std::cout << "vm_scheduled_for_worst_case is " << vm_scheduled_for_worst_case << std::endl;
+        // std::cout << "vm_scheduled_for_worst_case is " << vm_scheduled_for_worst_case << std::endl;
 
         for (int16_t day = request_info.start_day; day <= request_info.end_day; ++day) {
             ++curr_vm_status.num_running[day];
@@ -56,6 +56,18 @@ VmManager::VmManager() :
             //     << request_info.requested_vm_name << " running on day " << day << std::endl;
         }
     }
+
+    // Since we know how many of each vm are needed for the worst case,
+    // we can calculate worst case core and memory requirements
+    for (const auto& it : vm_schedules_worst_case_) {
+        const uint16_t& vm_id = it.first;
+        VmInfo& curr_vm = vm_data_manager_.GetVm(vm_id);
+        const int64_t& num_requested = it.second.vm_schedule_list.size();
+        worst_case_core_ += curr_vm.vm_cpu * num_requested;
+        worst_case_memory_ += curr_vm.vm_memory * num_requested;
+    }
+    std::cout << "worst_case_core_ is " << worst_case_core_ << std::endl;
+    std::cout << "worst_case_memory_ is " << worst_case_memory_ << std::endl;
 }
 
 VmManager& VmManager::GetInstance() {
