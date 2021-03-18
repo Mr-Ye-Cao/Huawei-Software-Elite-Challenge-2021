@@ -3,7 +3,9 @@
 #include "server_selector.h"
 
 ServerSelector::ServerSelector() :
-  server_data_manager_(ServerDataManager::GetInstance()) {
+  server_data_manager_(ServerDataManager::GetInstance()),
+  vm_data_manager_(VmDataManager::GetInstance()),
+  vm_manager_(VmManager::GetInstance()) {
 
 }
 

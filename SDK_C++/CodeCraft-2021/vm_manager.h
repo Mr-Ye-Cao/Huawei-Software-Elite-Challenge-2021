@@ -42,6 +42,8 @@ class VmManager {
     VmManager(const VmManager&) = delete;
     VmManager& operator=(const VmManager&) = delete;
 
+    std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& GetWorstCaseVmList();
+
   private:
     VmManager();
     ~VmManager() = default;

@@ -74,3 +74,7 @@ VmManager& VmManager::GetInstance() {
     static VmManager vm_manager;
     return vm_manager;
 }
+
+std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& VmManager::GetWorstCaseVmList() {
+    return vm_schedules_worst_case_;
+}
