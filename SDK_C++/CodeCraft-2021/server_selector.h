@@ -15,4 +15,5 @@ class ServerSelector {
   private:
     ServerDataManager& server_data_manager_;
     std::vector<ServerInfo> selected_servers_;
+    void MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list);
 };
