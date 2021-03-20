@@ -126,3 +126,7 @@ ServerInfo& ServerDataManager::GetServerNthCpu(uint16_t n) {
 ServerInfo& ServerDataManager::GetServerNthMemory(uint16_t n) {
     return server_info_list_[index_memory_[n]];
 }
+
+std::pair<uint16_t, ServerInfo&> GetServerLambdaMatch(float lambda) {
+
+}

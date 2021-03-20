@@ -58,6 +58,7 @@ void InputReader::ReadInputFile(){
         curr.vm_cpu = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
         curr.vm_memory = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
         curr.is_single = line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)) == kZero ? true : false;
+        curr.vm_lambda = (float)curr.vm_cpu / curr.vm_memory;
     }
 
     // Adds requests

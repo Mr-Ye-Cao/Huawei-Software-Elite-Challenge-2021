@@ -10,7 +10,9 @@ VmManager::VmManager() :
   request_data_manager_(RequestDataManager::GetInstance()),
   days_(request_data_manager_.GetDays()),
   num_vm_(vm_data_manager_.GetNumVm()),
-  request_info_list_(request_data_manager_.GetRequestInfoList()) {
+  request_info_list_(request_data_manager_.GetRequestInfoList()),
+  server_data_manager_(ServerDataManager::GetInstance()),
+  prev_lambda_match_(server_data_manager_.GetNumServers() / 2) {
     vm_schedules_.reserve(num_vm_);
     std::cout << "initializing vm manager" << std::endl;
     for (const auto& request : request_info_list_) {
@@ -77,4 +79,13 @@ VmManager& VmManager::GetInstance() {
 
 std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& VmManager::GetWorstCaseVmList() {
     return vm_schedules_worst_case_;
+}
+
+std::pair<uint16_t, ServerInfo&> VmManager::GetServerLambdaMatch(float lambda, bool fresh_start) {
+    uint16_t prev = prev_lambda_match_;
+    uint16_t last = prev_lambda_match_ + 2;
+    if (fresh_start) {
+        prev = 0;
+        last = server_data_manager_.GetNumServers() - 1;
+    }
 }
