@@ -19,6 +19,9 @@ class ServerDataManager {
     ServerInfo& GetServerNthPurchaseCostCpu(uint16_t n); // Find nth best by the ratio of purchase cost : price
     ServerInfo& GetServerNthCpu(uint16_t n); // Gets the server with the nth smallest cpu
     ServerInfo& GetServerNthMemory(uint16_t n); // Gets the server with the nth smallest memory
+    
+    std::map<int,int> associative;
+
     inline uint16_t GetNumServers() {
         return num_servers_;
     }
