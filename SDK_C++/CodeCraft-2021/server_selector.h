@@ -3,6 +3,7 @@
 #pragma once
 
 #include <vector>
+#include <unordered_map>
 
 #include "vm_data_manager.h"
 #include "vm_manager.h"
@@ -16,8 +17,10 @@ class ServerSelector {
 
   private:
     ServerDataManager& server_data_manager_;
+    std::unordered_map<uint16_t,uint16_t> vm_to_server_;
     VmDataManager& vm_data_manager_;
     VmManager& vm_manager_;
     std::vector<ServerInfo> selected_servers_;
     void MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list);
+    int WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num);
 };
