@@ -20,6 +20,7 @@ struct ServerInfo {
     int16_t server_memory; // range [1, 1024] positive number
     int16_t running_cost; // range [1, 5000]  positive number
     int32_t purchase_cost; // range [1, 5*1e5] positive number
+    float server_lambda; // lambda is CPU / Memory
     std::string server_name; // string length is at most 20 characters (number&alphabet)
 };
 
