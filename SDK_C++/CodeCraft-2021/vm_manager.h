@@ -44,7 +44,7 @@ class VmManager {
     VmManager& operator=(const VmManager&) = delete;
 
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& GetWorstCaseVmList();
-    std::pair<uint16_t, ServerInfo&> GetServerLambdaMatch(float lambda, bool fresh_start = true);
+    std::pair<uint16_t, ServerInfo&> GetServerLambdaMatch(float lambda, bool fresh_start = false);
 
   private:
     VmManager();
@@ -67,5 +67,5 @@ class VmManager {
     int64_t worst_case_core_;
     int64_t worst_case_memory_;
     std::vector<uint16_t> index_server_lambda_;
-    uint16_t prev_lambda_match_;
+    int16_t prev_lambda_match_;
 };
