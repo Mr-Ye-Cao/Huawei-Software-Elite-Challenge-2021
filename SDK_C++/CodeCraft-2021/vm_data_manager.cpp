@@ -12,8 +12,10 @@ VmDataManager::VmDataManager() :
     index_vm_name_.reserve(vm_info_list_.size());
     for (uint16_t i = 0; i < vm_info_list_.size(); ++i) {
         index_vm_name_[vm_info_list_[i].vm_name] = i;
+        index_vm_lambda_[i] = i;
     }
-    // BuildIndexVmMemory();
+    BuildIndexVmLambda();
+    BuildIndexVmSinDou();
 }
 
 uint16_t VmDataManager::GetNumVm() {
@@ -30,6 +32,56 @@ VmInfo& VmDataManager::GetVm(const std::string& vm_name) {
 
 int VmDataManager::GetVmId(const std::string& vm_name) {
     return index_vm_name_[vm_name];
+}
+
+VmInfo& VmDataManager::GetVmNthLambda(const uint16_t n) {
+    return vm_info_list_[index_vm_lambda_[n]];
+}
+
+VmInfo& VmDataManager::GetNthSingleVm(const uint16_t n) {
+    // Assumes correct input
+    return vm_info_list_[index_single_vm_[n]];
+}
+
+VmInfo& VmDataManager::GetNthDoubleVm(const uint16_t n) {
+    // Assumes correct input
+    return vm_info_list_[index_double_vm_[n]];
+}
+
+uint16_t VmDataManager::GetNumSingleVm(const uint16_t n) {
+    return num_single_vm_;
+}
+
+uint16_t VmDataManager::GetNumDoubleVm(const uint16_t n) {
+    return num_double_vm_;
+}
+
+void VmDataManager::BuildIndexVmLambda() {
+    index_vm_lambda_.resize(vm_info_list_.size());
+    for (uint16_t i = 0; i < vm_info_list_.size(); ++i) {
+        index_vm_lambda_[i] = i;
+    }
+    std::sort(
+        index_vm_lambda_.begin(),
+        index_vm_lambda_.end(),
+        IndexComparator<std::vector<VmInfo>::const_iterator, VmInfo>(
+            vm_info_list_.begin(),
+            vm_info_list_.end(),
+            [] (const VmInfo& a, const VmInfo& b) -> bool {
+                return (float)a.vm_cpu / a.vm_memory < (float)b.vm_cpu / b.vm_memory;
+        })
+    );
+}
+
+void VmDataManager::BuildIndexVmSinDou() {
+    index_single_vm_.clear();
+    index_double_vm_.clear();
+    for (uint16_t i = 0; i < vm_info_list_.size(); ++i) {
+        if (vm_info_list_[i].is_single) index_single_vm_.push_back(i);
+        else index_double_vm_.push_back(i);
+    }
+    num_single_vm_ = index_single_vm_.size();
+    num_double_vm_ = index_double_vm_.size();
 }
 
 // void VmDataManager::BuildIndexVmMemory() {

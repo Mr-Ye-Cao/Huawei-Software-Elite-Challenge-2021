@@ -20,11 +20,13 @@ ServerDataManager::ServerDataManager() :
     index_cpu_.resize(server_info_list_.size());
     index_memory_.resize(server_info_list_.size());
     num_servers_ = server_info_list_.size();
+    index_server_lambda_.resize(server_info_list_.size());
     for (uint16_t i = 0; i < num_servers_; ++i) {
         index_purchase_cost_[i] = i;
         index_purchase_cost_cpu_[i] = i;
         index_cpu_[i] = i;
         index_memory_[i] = i;
+        index_server_lambda_[i] = i;
     }
     BuildIndexPurchaseCost();
     BuildIndexPurchaseCostCpu();
@@ -94,6 +96,19 @@ void ServerDataManager::BuildIndexMemory() {
     // for (int i = 0; i < index_memory_.size(); ++i) {
     //     std::cout << "No. " << i << " memory is " << server_info_list_[index_memory_[i]].server_memory << std::endl;
     // }
+}
+
+void ServerDataManager::BuildIndexServerLambda() {
+    std::sort(
+        index_memory_.begin(),
+        index_memory_.end(),
+        IndexComparator<std::vector<ServerInfo>::const_iterator, ServerInfo>(
+            server_info_list_.begin(),
+            server_info_list_.end(),
+            [] (const ServerInfo& a, const ServerInfo& b) -> bool {
+                return a.server_lambda < b.server_lambda;
+        })
+    );
 }
 
 ServerInfo& ServerDataManager::GetServerNthPurchaseCost(uint16_t n) {

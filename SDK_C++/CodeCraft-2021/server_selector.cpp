@@ -4,6 +4,9 @@
 #include "vm_data_manager.h"
 #include "input_reader.h"
 
+#include "vm_data_manager.h"
+#include "input_reader.h"
+
 ServerSelector::ServerSelector() :
   server_data_manager_(ServerDataManager::GetInstance()),
   vm_data_manager_(VmDataManager::GetInstance()),
@@ -54,9 +57,9 @@ int ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& wor
 
     int16_t scpu_nu = servin.server_cpu;
     int16_t smem_nu = servin.server_memory;
-    int s_id = servin.server_id;
+    int s_id = servin.server_id; // TODO(yuxin): add way to get server ID
 
-    server_data_manager_.associative[id] = s_id;
+    server_data_manager_.vm_to_server_[id] = s_id;
 
     int16_t num_server_buy;
     if(is_single){
@@ -64,10 +67,10 @@ int ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& wor
         int spcpu_nu = scpu_nu / 2;
         int spmem_nu = smem_nu / 2;
 
-        num_server_buy = ceil(max(ceil(spcpu_nu/cpu_nu),ceil(spmem_nu/mem_nu))/2);
+        num_server_buy = std::ceil(std::max(std::ceil(spcpu_nu / cpu_nu), std::ceil(spmem_nu / mem_nu)) / 2);
     }else{
         //
-        num_server_buy = max(ceil(scpu_nu/cpu_nu),ceil(smem_nu/mem_nu));
+        num_server_buy = std::max(std::ceil(scpu_nu / cpu_nu), std::ceil(smem_nu / mem_nu));
     }
 
     return num_server_buy;

@@ -35,6 +35,7 @@ class ServerDataManager {
     std::vector<uint16_t> index_purchase_cost_cpu_; // By the ratio of purchase cost : price 
     std::vector<uint16_t> index_cpu_;
     std::vector<uint16_t> index_memory_;
+    std::vector<uint16_t> index_server_lambda_;
     uint16_t num_servers_;
     
     // le is less than or equal to, used as comparator
@@ -42,4 +43,5 @@ class ServerDataManager {
     void BuildIndexPurchaseCostCpu(); // Build index by the ratio of purchase cost : price 
     void BuildIndexCpu(); // Build index by the number of cpu's 
     void BuildIndexMemory(); // Build index by the size of memory 
+    void BuildIndexServerLambda(); // Lambda is CPU / Memory 
 };

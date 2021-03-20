@@ -36,6 +36,7 @@ void InputReader::ReadInputFile(){
         curr.server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         curr.purchase_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         curr.running_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        curr.server_lambda = (float)curr.server_cpu / curr.server_memory;
     }
 
     // (name, #cpu, #memory, #SD)
