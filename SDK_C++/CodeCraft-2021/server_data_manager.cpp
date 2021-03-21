@@ -15,6 +15,9 @@ ServerDataManager::ServerDataManager() :
   input_reader_(InputReader::GetInstance()),
   server_info_list_(input_reader_.GetServerInfoList()) {
     std::cout << "Server manager constructed\n";
+    
+    purchase_list_.resize(server_info_list_.size());
+
     index_purchase_cost_.resize(server_info_list_.size());
     index_purchase_cost_cpu_.resize(server_info_list_.size());
     index_cpu_.resize(server_info_list_.size());
@@ -109,6 +112,10 @@ void ServerDataManager::BuildIndexServerLambda() {
                 return a.server_lambda < b.server_lambda;
         })
     );
+}
+
+ServerInfo& ServerDataManager::GetServerInfo(uint16_t n) {
+    return server_info_list_[n];
 }
 
 ServerInfo& ServerDataManager::GetServerNthPurchaseCost(uint16_t n) {

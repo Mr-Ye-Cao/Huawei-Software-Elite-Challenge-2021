@@ -41,6 +41,8 @@ class VmManager {
     static VmManager& GetInstance();
     VmManager(const VmManager&) = delete;
     VmManager& operator=(const VmManager&) = delete;
+    
+    std::unordered_map<uint16_t,uint16_t> vm_to_server_;
 
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& GetWorstCaseVmList();
 

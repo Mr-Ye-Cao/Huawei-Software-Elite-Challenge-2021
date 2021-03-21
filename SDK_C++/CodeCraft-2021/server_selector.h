@@ -11,16 +11,19 @@
 
 class ServerSelector {
   public:
-    ServerSelector();
-    ~ServerSelector();
+    // Meyer singleton
+    static ServerSelector& GetInstance();
+    ServerSelector(const ServerSelector&) = delete;
+    ServerSelector& operator=(const ServerSelector&) = delete;
     void MakeServerSelection();
+    std::pair<int16_t,int16_t> WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num);
 
   private:
+    ServerSelector();
+    ~ServerSelector();
     ServerDataManager& server_data_manager_;
-    std::unordered_map<uint16_t,uint16_t> vm_to_server_;
     VmDataManager& vm_data_manager_;
     VmManager& vm_manager_;
     std::vector<ServerInfo> selected_servers_;
     void MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list);
-    int WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num);
 };

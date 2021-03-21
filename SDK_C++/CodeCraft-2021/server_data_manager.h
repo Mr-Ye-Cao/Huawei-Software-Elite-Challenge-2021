@@ -9,19 +9,20 @@
 
 class ServerDataManager {
   public:
+    // the number server
+    std::vector<uint16_t> purchase_list_;
+
     // Meyer singleton
     static ServerDataManager& GetInstance();
     ServerDataManager(const ServerDataManager&) = delete;
     ServerDataManager& operator=(const ServerDataManager&) = delete;
     
     // ALL ranking are done from smallest to largest
+    ServerInfo& GetServerInfo(uint16_t n);
     ServerInfo& GetServerNthPurchaseCost(uint16_t n);
     ServerInfo& GetServerNthPurchaseCostCpu(uint16_t n); // Find nth best by the ratio of purchase cost : price
     ServerInfo& GetServerNthCpu(uint16_t n); // Gets the server with the nth smallest cpu
     ServerInfo& GetServerNthMemory(uint16_t n); // Gets the server with the nth smallest memory
-    
-    std::map<int,int> associative;
-
     inline uint16_t GetNumServers() {
         return num_servers_;
     }
