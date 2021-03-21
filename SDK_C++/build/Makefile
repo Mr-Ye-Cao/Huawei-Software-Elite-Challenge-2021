@@ -223,6 +223,33 @@ input_reader_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/input_reader_test.cpp.s
 .PHONY : input_reader_test.cpp.s
 
+output_writer.o: output_writer.cpp.o
+
+.PHONY : output_writer.o
+
+# target to build an object file
+output_writer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/output_writer.cpp.o
+.PHONY : output_writer.cpp.o
+
+output_writer.i: output_writer.cpp.i
+
+.PHONY : output_writer.i
+
+# target to preprocess a source file
+output_writer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/output_writer.cpp.i
+.PHONY : output_writer.cpp.i
+
+output_writer.s: output_writer.cpp.s
+
+.PHONY : output_writer.s
+
+# target to generate assembly for a file
+output_writer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/output_writer.cpp.s
+.PHONY : output_writer.cpp.s
+
 request_data_manager.o: request_data_manager.cpp.o
 
 .PHONY : request_data_manager.o
@@ -331,6 +358,33 @@ server_selector.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.s
 .PHONY : server_selector.cpp.s
 
+utils.o: utils.cpp.o
+
+.PHONY : utils.o
+
+# target to build an object file
+utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/utils.cpp.o
+.PHONY : utils.cpp.o
+
+utils.i: utils.cpp.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/utils.cpp.i
+.PHONY : utils.cpp.i
+
+utils.s: utils.cpp.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/utils.cpp.s
+.PHONY : utils.cpp.s
+
 vm_data_manager.o: vm_data_manager.cpp.o
 
 .PHONY : vm_data_manager.o
@@ -403,6 +457,9 @@ help:
 	@echo "... input_reader_test.o"
 	@echo "... input_reader_test.i"
 	@echo "... input_reader_test.s"
+	@echo "... output_writer.o"
+	@echo "... output_writer.i"
+	@echo "... output_writer.s"
 	@echo "... request_data_manager.o"
 	@echo "... request_data_manager.i"
 	@echo "... request_data_manager.s"
@@ -415,6 +472,9 @@ help:
 	@echo "... server_selector.o"
 	@echo "... server_selector.i"
 	@echo "... server_selector.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 	@echo "... vm_data_manager.o"
 	@echo "... vm_data_manager.i"
 	@echo "... vm_data_manager.s"

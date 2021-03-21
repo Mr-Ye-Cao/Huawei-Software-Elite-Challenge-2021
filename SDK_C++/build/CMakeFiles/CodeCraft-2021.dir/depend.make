@@ -3,6 +3,7 @@
 
 CMakeFiles/CodeCraft-2021.dir/CodeCraft-2021.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/CodeCraft-2021.cpp
 CMakeFiles/CodeCraft-2021.dir/CodeCraft-2021.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.h
+CMakeFiles/CodeCraft-2021.dir/CodeCraft-2021.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/output_writer.h
 CMakeFiles/CodeCraft-2021.dir/CodeCraft-2021.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/request_data_manager.h
 CMakeFiles/CodeCraft-2021.dir/CodeCraft-2021.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.h
 CMakeFiles/CodeCraft-2021.dir/CodeCraft-2021.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.h
@@ -14,6 +15,9 @@ CMakeFiles/CodeCraft-2021.dir/input_reader.cpp.o: /Users/xiaoming/Desktop/huawei
 
 CMakeFiles/CodeCraft-2021.dir/input_reader_test.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.h
 CMakeFiles/CodeCraft-2021.dir/input_reader_test.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader_test.cpp
+
+CMakeFiles/CodeCraft-2021.dir/output_writer.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/output_writer.cpp
+CMakeFiles/CodeCraft-2021.dir/output_writer.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/output_writer.h
 
 CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.h
 CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/request_data_manager.cpp
@@ -31,8 +35,11 @@ CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/hua
 CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.h
 CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.cpp
 CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.h
+CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/utils.h
 CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.h
 CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_manager.h
+
+CMakeFiles/CodeCraft-2021.dir/utils.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/utils.cpp
 
 CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/index_comparator.h
 CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o: /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/input_reader.h
