@@ -173,10 +173,10 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
             return std::pair<uint16_t, ServerInfo>(index_server_lambda_[mid], server_info_list_[index_server_lambda_[mid]]);
         }
     }
+    curr_lambda = server_info_list_[index_server_lambda_[prev]].server_lambda;
     std::cout << "curr_lambda is " << curr_lambda << std::endl;
     std::cout << "lambda is " << lambda << std::endl;
     std::cout << "Binary search 3\n";
-    curr_lambda = server_info_list_[index_server_lambda_[prev]].server_lambda;
     if (prev == 0) {
         std::cout << "next_lambda is " << server_info_list_[index_server_lambda_[prev + 1]].server_lambda << std::endl;
         if (prev + 1 < num_servers_ && std::abs(curr_lambda - lambda) > std::abs(server_info_list_[index_server_lambda_[prev + 1]].server_lambda - lambda)) {
