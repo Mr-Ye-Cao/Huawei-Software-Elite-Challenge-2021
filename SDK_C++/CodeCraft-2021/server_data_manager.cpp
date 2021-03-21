@@ -133,3 +133,61 @@ ServerInfo& ServerDataManager::GetServerNthCpu(uint16_t n) {
 ServerInfo& ServerDataManager::GetServerNthMemory(uint16_t n) {
     return server_info_list_[index_memory_[n]];
 }
+
+std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float lambda, bool fresh_start) {
+    uint16_t prev = prev_lambda_match_;
+    if (fresh_start) {
+        prev = 0;
+    }
+    uint16_t last = prev_lambda_match_;
+    float curr_lambda = 0;
+    while (last < num_servers_) {
+        curr_lambda = server_info_list_[index_server_lambda_[last]].server_lambda;
+        if (lambda <= curr_lambda) {
+            break;
+        }
+        last += last - prev;
+    }
+    if (lambda == curr_lambda) return std::pair<uint16_t, ServerInfo>(index_server_lambda_[last], server_info_list_[index_server_lambda_[last]]);
+    if (last >= num_servers_) last = num_servers_ - 1;
+    while (prev != last) {
+        uint16_t half = (prev + last) / 2;
+        uint16_t mid = prev + half;
+        curr_lambda = server_info_list_[index_server_lambda_[mid]].server_lambda;
+        if (curr_lambda > lambda) {
+            last = mid;
+        } else if (curr_lambda < lambda) {
+            prev = mid;
+        } else {
+            return std::pair<uint16_t, ServerInfo>(index_server_lambda_[mid], server_info_list_[index_server_lambda_[mid]]);
+        }
+    }
+    curr_lambda = server_info_list_[index_server_lambda_[prev]].server_lambda;
+    if (prev == 0) {
+        if (prev + 1 < num_servers_ && std::abs(curr_lambda - lambda) > std::abs(server_info_list_[index_server_lambda_[prev + 1]].server_lambda - lambda)) {
+            return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev + 1], server_info_list_[index_server_lambda_[prev + 1]]);
+        } else {
+            return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev], server_info_list_[index_server_lambda_[prev]]);
+        }
+    }
+
+    // curr_lambda = server_info_list_[index_server_lambda_[last]].server_lambda;
+    if (prev == num_servers_ - 1) {
+        if (prev - 1 >= 0 && std::abs(curr_lambda - lambda) > std::abs(server_info_list_[index_server_lambda_[prev - 1]].server_lambda - lambda)) {
+            return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev - 1], server_info_list_[index_server_lambda_[prev - 1]]);
+        } else {
+            return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev], server_info_list_[index_server_lambda_[prev]]);
+        }
+    }
+
+    float curr_lambda_diff = std::abs(server_info_list_[index_server_lambda_[prev]].server_lambda - curr_lambda);
+    float prev_lambda_diff = std::abs(server_info_list_[index_server_lambda_[prev - 1]].server_lambda - lambda);
+    float next_lambda_diff = std::abs(server_info_list_[index_server_lambda_[prev + 1]].server_lambda - lambda);
+    if (next_lambda_diff >= curr_lambda_diff && next_lambda_diff >= prev_lambda_diff) {
+        return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev + 1], server_info_list_[index_server_lambda_[prev + 1]]);
+    } else if (curr_lambda_diff >= prev_lambda_diff && curr_lambda_diff >= next_lambda_diff) {
+        return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev], server_info_list_[index_server_lambda_[prev]]);
+    } else {
+        return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev - 1], server_info_list_[index_server_lambda_[prev - 1]]);
+    }
+}

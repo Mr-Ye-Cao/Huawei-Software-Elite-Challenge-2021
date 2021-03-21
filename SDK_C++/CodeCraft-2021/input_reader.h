@@ -28,6 +28,7 @@ struct ServerInfo {
 struct VmInfo {
     int16_t vm_cpu; // range [1, 1024] positive number
     int16_t vm_memory; // range [1, 1024] positive number
+    float vm_lambda; // lambda is CPU / Memory
     bool is_single; // single node or double node
     std::string vm_name; // string length is at most 20 characters (number&alphabet&.)
 };
