@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unordered_set>
 
+#include "index_comparator.h"
 #include "vm_manager.h"
 
 VmManager::VmManager() :
@@ -10,7 +11,9 @@ VmManager::VmManager() :
   request_data_manager_(RequestDataManager::GetInstance()),
   days_(request_data_manager_.GetDays()),
   num_vm_(vm_data_manager_.GetNumVm()),
-  request_info_list_(request_data_manager_.GetRequestInfoList()) {
+  request_info_list_(request_data_manager_.GetRequestInfoList()),
+  server_data_manager_(ServerDataManager::GetInstance()),
+  prev_lambda_match_(server_data_manager_.GetNumServers() / 2) {
     vm_schedules_.reserve(num_vm_);
     std::cout << "initializing vm manager" << std::endl;
     for (const auto& request : request_info_list_) {

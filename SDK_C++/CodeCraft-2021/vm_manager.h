@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "request_data_manager.h"
+#include "server_data_manager.h"
 #include "vm_data_manager.h"
 
 // The VM's schedule
@@ -43,6 +44,7 @@ class VmManager {
     VmManager& operator=(const VmManager&) = delete;
 
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& GetWorstCaseVmList();
+    std::pair<uint16_t, ServerInfo&> GetServerLambdaMatch(float lambda, bool fresh_start = false);
 
   private:
     VmManager();
@@ -50,6 +52,7 @@ class VmManager {
 
     VmDataManager& vm_data_manager_;
     RequestDataManager& request_data_manager_;
+    ServerDataManager& server_data_manager_;
     uint16_t days_; // Number of days (T)
     uint16_t num_vm_;
     std::unordered_map<int32_t, RequestInfo>& request_info_list_;
@@ -63,4 +66,6 @@ class VmManager {
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo> vm_schedules_worst_case_;
     int64_t worst_case_core_;
     int64_t worst_case_memory_;
+    std::vector<uint16_t> index_server_lambda_;
+    int16_t prev_lambda_match_;
 };

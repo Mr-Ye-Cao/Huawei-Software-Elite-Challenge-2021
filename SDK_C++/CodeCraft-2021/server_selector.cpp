@@ -51,13 +51,13 @@ int ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& wor
 
     double lambda =(double)cpu_nu / mem_nu;
 
-    ServerInfo& servin = server_data_manager_.GetServerLambdaMatch(lambda);
+    std::pair<uint16_t, ServerInfo> servin = server_data_manager_.GetServerLambdaMatch(lambda);
 
-    int16_t scpu_nu = servin.server_cpu;
-    int16_t smem_nu = servin.server_memory;
-    int s_id = servin.server_id; // TODO(yuxin): add way to get server ID
+    int16_t scpu_nu = servin.second.server_cpu;
+    int16_t smem_nu = servin.second.server_memory;
+    uint16_t s_id = servin.first; // TODO(yuxin): add way to get server ID
 
-    server_data_manager_.vm_to_server_[id] = s_id;
+    // server_data_manager_.vm_to_server_[id] = s_id;
 
     int16_t num_server_buy;
     if(is_single){

@@ -19,6 +19,7 @@ class ServerDataManager {
     ServerInfo& GetServerNthPurchaseCostCpu(uint16_t n); // Find nth best by the ratio of purchase cost : price
     ServerInfo& GetServerNthCpu(uint16_t n); // Gets the server with the nth smallest cpu
     ServerInfo& GetServerNthMemory(uint16_t n); // Gets the server with the nth smallest memory
+    std::pair<uint16_t, ServerInfo> GetServerLambdaMatch(float lambda, bool fresh_start = false);
     inline uint16_t GetNumServers() {
         return num_servers_;
     }
@@ -34,6 +35,7 @@ class ServerDataManager {
     std::vector<uint16_t> index_memory_;
     std::vector<uint16_t> index_server_lambda_;
     uint16_t num_servers_;
+    uint16_t prev_lambda_match_;
     
     // le is less than or equal to, used as comparator
     void BuildIndexPurchaseCost(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/);
