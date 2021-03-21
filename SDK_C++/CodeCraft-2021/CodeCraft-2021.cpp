@@ -3,13 +3,12 @@
 #include <iostream>
 #include <string>
 
+#include "output_writer.h"
 #include "request_data_manager.h"
 #include "server_data_manager.h"
+#include "server_selector.h"
 #include "vm_data_manager.h"
 #include "vm_manager.h"
-#include "server_selector.h"
-
-
 
 int main() {
 	// TODO:read standard input
