@@ -146,6 +146,7 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
     }
     uint16_t last = prev_lambda_match_ + 1;
     float curr_lambda = 0;
+    
     std::cout << "Binary search 1\n";
     while (last < num_servers_) {
         curr_lambda = server_info_list_[index_server_lambda_[last]].server_lambda;
@@ -153,13 +154,14 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
             break;
         }
         last += last - prev;
+        std::cout << "last is " << last << std::endl;
     }
+
     std::cout << "Binary search 2\n";
     if (lambda == curr_lambda) return std::pair<uint16_t, ServerInfo>(index_server_lambda_[last], server_info_list_[index_server_lambda_[last]]);
     if (last >= num_servers_) last = num_servers_ - 1;
-    while (prev - last > 1) {
-        uint16_t half = (prev + last) / 2;
-        uint16_t mid = prev + half;
+    while (last - prev > 1) {
+        uint16_t mid = (prev + last) / 2;
         curr_lambda = server_info_list_[index_server_lambda_[mid]].server_lambda;
         std::cout << "curr_lambda is " << curr_lambda << std::endl;
         std::cout << "lambda is " << lambda << std::endl;
@@ -173,10 +175,11 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
             return std::pair<uint16_t, ServerInfo>(index_server_lambda_[mid], server_info_list_[index_server_lambda_[mid]]);
         }
     }
+
+    curr_lambda = server_info_list_[index_server_lambda_[prev]].server_lambda;
     std::cout << "curr_lambda is " << curr_lambda << std::endl;
     std::cout << "lambda is " << lambda << std::endl;
     std::cout << "Binary search 3\n";
-    curr_lambda = server_info_list_[index_server_lambda_[prev]].server_lambda;
     if (prev == 0) {
         std::cout << "next_lambda is " << server_info_list_[index_server_lambda_[prev + 1]].server_lambda << std::endl;
         if (prev + 1 < num_servers_ && std::abs(curr_lambda - lambda) > std::abs(server_info_list_[index_server_lambda_[prev + 1]].server_lambda - lambda)) {

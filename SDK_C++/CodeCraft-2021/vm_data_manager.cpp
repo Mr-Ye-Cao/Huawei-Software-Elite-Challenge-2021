@@ -9,20 +9,16 @@
 // TODO(Yu Xin): to be implemented.
 VmDataManager::VmDataManager() :
   input_reader_(InputReader::GetInstance()),
-  num_vm_(input_reader_.GetN()),
+  num_vm_(input_reader_.GetM()),
   vm_info_list_(input_reader_.GetVmInfoList()) {
     index_vm_name_.reserve(vm_info_list_.size());
-    index_vm_lambda_.resize((vm_info_list_.size()));
+    index_vm_lambda_.resize(vm_info_list_.size());
     for (uint16_t i = 0; i < vm_info_list_.size(); ++i) {
         index_vm_name_[vm_info_list_[i].vm_name] = i;
         index_vm_lambda_[i] = i;
     }
     BuildIndexVmLambda();
     BuildIndexVmSinDou();
-}
-
-uint16_t VmDataManager::GetNumVm() {
- return num_vm_;
 }
 
 VmInfo& VmDataManager::GetVm(const uint16_t& id) {

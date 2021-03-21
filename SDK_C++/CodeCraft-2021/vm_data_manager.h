@@ -14,7 +14,10 @@ class VmDataManager {
     VmDataManager(const VmDataManager&) = delete;
     VmDataManager& operator=(const VmDataManager&) = delete;
 
-    uint16_t GetNumVm();
+    inline uint16_t GetNumVm() {
+        return num_vm_;
+    }
+
     VmInfo& GetVm(const uint16_t& id);
     VmInfo& GetVm(const std::string& vm_name);
     int GetVmId(const std::string& vm_name);

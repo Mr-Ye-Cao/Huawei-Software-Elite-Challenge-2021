@@ -16,7 +16,7 @@ class ServerSelector {
     ServerSelector(const ServerSelector&) = delete;
     ServerSelector& operator=(const ServerSelector&) = delete;
     void MakeServerSelection();
-    std::pair<int16_t,int16_t> WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num);
+    std::unordered_map<std::uint16_t, std::uint16_t>& GetServerPurchaseChart();
 
   private:
     ServerSelector();
@@ -25,5 +25,7 @@ class ServerSelector {
     VmDataManager& vm_data_manager_;
     VmManager& vm_manager_;
     std::vector<ServerInfo> selected_servers_;
+	std::unordered_map<std::uint16_t, std::uint16_t> server_purchase_chart_;
+    std::pair<int16_t,int16_t> WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num);
     void MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list);
 };
