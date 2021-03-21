@@ -2,6 +2,8 @@
 
 #include "vm_data_manager.h"
 
+#include <iostream>
+
 #include "index_comparator.h"
 
 // TODO(Yu Xin): to be implemented.
@@ -10,6 +12,7 @@ VmDataManager::VmDataManager() :
   num_vm_(input_reader_.GetN()),
   vm_info_list_(input_reader_.GetVmInfoList()) {
     index_vm_name_.reserve(vm_info_list_.size());
+    index_vm_lambda_.resize((vm_info_list_.size()));
     for (uint16_t i = 0; i < vm_info_list_.size(); ++i) {
         index_vm_name_[vm_info_list_[i].vm_name] = i;
         index_vm_lambda_[i] = i;
@@ -68,9 +71,12 @@ void VmDataManager::BuildIndexVmLambda() {
             vm_info_list_.begin(),
             vm_info_list_.end(),
             [] (const VmInfo& a, const VmInfo& b) -> bool {
-                return (float)a.vm_cpu / a.vm_memory < (float)b.vm_cpu / b.vm_memory;
+                return a.vm_lambda < (float)b.vm_lambda;
         })
     );
+    for (int i = 0; i < index_vm_lambda_.size(); ++i) {
+        std::cout << "No. " << i << " vm lambda is " << vm_info_list_[index_vm_lambda_[i]].vm_lambda << std::endl;
+    }
 }
 
 void VmDataManager::BuildIndexVmSinDou() {
