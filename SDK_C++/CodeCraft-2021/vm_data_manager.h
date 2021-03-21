@@ -24,6 +24,7 @@ class VmDataManager {
     VmInfo& GetNthSingleVm(const uint16_t n);
     VmInfo& GetNthDoubleVm(const uint16_t n);
 
+
   private:
     VmDataManager();
     ~VmDataManager() = default;
@@ -36,6 +37,8 @@ class VmDataManager {
     std::vector<uint16_t> index_vm_lambda_;
     std::vector<uint16_t> index_single_vm_;
     std::vector<uint16_t> index_double_vm_;
+    
+
 
     void BuildIndexVmLambda();
     void BuildIndexVmSinDou();

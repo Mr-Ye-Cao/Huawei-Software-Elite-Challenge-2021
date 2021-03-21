@@ -1,6 +1,8 @@
 // @Author: Yu Xin
 
 #include "server_selector.h"
+#include "vm_data_manager.h"
+#include "input_reader.h"
 
 #include "vm_data_manager.h"
 #include "input_reader.h"
@@ -10,6 +12,11 @@ ServerSelector::ServerSelector() :
   vm_data_manager_(VmDataManager::GetInstance()),
   vm_manager_(VmManager::GetInstance()) {
 
+}
+
+ServerSelector& ServerSelector::GetInstance() {
+    static ServerSelector server_selector;
+    return server_selector;
 }
 
 // 1. Sort the servers according to some criteria
@@ -23,7 +30,7 @@ void ServerSelector::MakeServerSelection() {
     
 }
 
-int ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num) {
+std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num) {
     // Input:
     //      VMId(single or double):
     //      WorstCaseNum:
@@ -57,7 +64,7 @@ int ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& wor
     int16_t smem_nu = servin.second.server_memory;
     uint16_t s_id = servin.first; // TODO(yuxin): add way to get server ID
 
-    // server_data_manager_.vm_to_server_[id] = s_id;
+    vm_manager_.vm_to_server_[id] = s_id;
 
     int16_t num_server_buy;
     if(is_single){
@@ -71,7 +78,7 @@ int ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& wor
         num_server_buy = std::max(std::ceil(scpu_nu / cpu_nu), std::ceil(smem_nu / mem_nu));
     }
 
-    return num_server_buy;
+    return std::make_pair(s_id, num_server_buy);
 }
 
 void ServerSelector::MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list) {

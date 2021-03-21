@@ -71,9 +71,12 @@ void VmDataManager::BuildIndexVmLambda() {
             vm_info_list_.begin(),
             vm_info_list_.end(),
             [] (const VmInfo& a, const VmInfo& b) -> bool {
-                return (float)a.vm_cpu / a.vm_memory < (float)b.vm_cpu / b.vm_memory;
+                return a.vm_lambda < (float)b.vm_lambda;
         })
     );
+    for (int i = 0; i < index_vm_lambda_.size(); ++i) {
+        std::cout << "No. " << i << " vm lambda is " << vm_info_list_[index_vm_lambda_[i]].vm_lambda << std::endl;
+    }
 }
 
 void VmDataManager::BuildIndexVmSinDou() {
