@@ -64,11 +64,7 @@ std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& 
     int16_t smem_nu = servin.second.server_memory;
     uint16_t s_id = servin.first; // TODO(yuxin): add way to get server ID
 
-<<<<<<< HEAD
     vm_manager_.vm_to_server_[id] = s_id;
-=======
-    // server_data_manager_.vm_to_server_[id] = s_id;
->>>>>>> f868de48ff4839d27030868913edef80208cade3
 
     int16_t num_server_buy;
     if(is_single){

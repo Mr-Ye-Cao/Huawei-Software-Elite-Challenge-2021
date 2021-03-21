@@ -20,7 +20,7 @@ class ServerSelector {
 
   private:
     ServerSelector();
-    ~ServerSelector();
+    ~ServerSelector() = default;
     ServerDataManager& server_data_manager_;
     VmDataManager& vm_data_manager_;
     VmManager& vm_manager_;

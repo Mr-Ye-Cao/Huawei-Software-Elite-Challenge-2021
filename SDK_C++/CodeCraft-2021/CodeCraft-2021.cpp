@@ -21,15 +21,21 @@ int main() {
 	RequestDataManager& request_data_manager_(RequestDataManager::GetInstance());
 	VmManager& vm_manager_(VmManager::GetInstance());
 	// TODO: process
+	std::cout<<"Debug1"<<std::endl;
 	ServerSelector& sv_select_ = ServerSelector::GetInstance();
+	std::cout<<"Debug2"<<std::endl;
 
 	std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& worst_vm_list = vm_manager_.GetWorstCaseVmList();
-	
+		std::cout<<"Debug3"<<std::endl;
+
 	std::unordered_map<std::uint16_t, std::uint16_t> server_purchase_chart;
+	std::cout<<"Debug4"<<std::endl;
 
 	uint16_t total_server_num = 0;
  	for(uint16_t index=0;index<vm_data_manager_.GetNumVm();index++){
-		VmStatusWorstCaseInfo specifc_vm_worst = worst_vm_list[index];
+		 	std::cout<<"Debug5"<<std::endl;
+
+		VmStatusWorstCaseInfo& specifc_vm_worst = worst_vm_list[index];
 		// the number of specialized server to buy to contain this type ith vm
 		std::pair<uint16_t,uint16_t> spi = sv_select_.WorseCaseSelectionVm(index, specifc_vm_worst.vm_schedule_list.size());
 		uint16_t server_id = spi.first;
