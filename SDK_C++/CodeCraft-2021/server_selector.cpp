@@ -6,6 +6,7 @@
 
 #include "vm_data_manager.h"
 #include "input_reader.h"
+#include "utils.h"
 
 ServerSelector::ServerSelector() :
   server_data_manager_(ServerDataManager::GetInstance()),
@@ -32,7 +33,7 @@ void ServerSelector::MakeServerSelection() {
     std::vector<uint16_t> server_list;
 	uint16_t total_server_num = 0;
  	for(uint16_t index = 0; index < vm_data_manager_.GetNumVm(); index++){
-        std::cout<<"Debug5"<<std::endl;
+        // std::cout<<"Debug5"<<std::endl;
 
 		VmStatusWorstCaseInfo& specifc_vm_worst = vm_manager_.GetWorstCaseVmList()[index];
 		// the number of specialized server to buy to contain this type ith vm
@@ -62,38 +63,35 @@ std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& 
      **/
 
     // get the vm id
-    VmInfo& vinfo = vm_data_manager_.GetVmNthLambda(id);
+    VmInfo& vm_info = vm_data_manager_.GetVmNthLambda(id);
+    bool is_single = vm_info.is_single;
+    int16_t vm_cpu = vm_info.vm_cpu; 
+    int16_t vm_memory = vm_info.vm_memory;
+    float lambda = vm_info.vm_lambda;
 
-    bool is_single = vinfo.is_single;
-    int16_t cpu_nu = vinfo.vm_cpu; 
-    int16_t mem_nu = vinfo.vm_memory;
-
-    cpu_nu *= worst_num;
-    mem_nu *= worst_num;
-
-    float lambda = (float)cpu_nu / mem_nu;
-
-    std::pair<uint16_t, ServerInfo> servin = server_data_manager_.GetServerLambdaMatch(lambda);
-
-    const uint16_t& s_id = servin.first;
-    const uint16_t& scpu_nu = servin.second.server_cpu;
-    const uint16_t& smem_nu = servin.second.server_memory;
-
-    vm_manager_.vm_to_server_[id] = s_id;
-
-    uint16_t num_server_buy;
+    std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaMatch(lambda);
+    const uint16_t& server_id = server_info.first;
+    int16_t num_server_buy;
+    // std::cout << "VM node cpu " << vm_cpu << std::endl;
+    // std::cout << "VM node memory " << vm_memory << std::endl;
     if (is_single) {
         // greedily put vm into the server poin
-        int spcpu_nu = scpu_nu / 2;
-        int spmem_nu = smem_nu / 2;
-
-        num_server_buy = std::ceil(std::max(std::ceil((float)spcpu_nu / cpu_nu), std::ceil((float)spmem_nu / mem_nu)) / 2);
+        int16_t server_node_cpu = server_info.second.server_cpu / 2;
+        int16_t server_node_memory = server_info.second.server_memory / 2;
+        int16_t vm_cpu_per_node = utils::DivideCeil(server_node_cpu, vm_cpu);
+        int16_t vm_memory_per_node = utils::DivideCeil(server_node_memory, vm_memory);
+        // std::cout << "Server node remaining cpu load " << server_node_cpu % vm_cpu << std::endl;
+        // std::cout << "Server node remaining memory load " << server_node_memory % vm_memory << std::endl;
+        num_server_buy = utils::DivideCeil(utils::DivideCeil((int)worst_num, (int)std::min(vm_cpu_per_node, vm_memory_per_node)), 2);
     } else {
-        //
-        num_server_buy = std::ceil(std::max(std::ceil((float)scpu_nu / cpu_nu), std::ceil((float)smem_nu / mem_nu)));
+        int16_t vm_cpu_per_server = utils::DivideCeil(server_info.second.server_cpu, vm_cpu);
+        int16_t vm_memory_per_server = utils::DivideCeil(server_info.second.server_memory, vm_memory);
+        // std::cout << "Server remaining cpu load " << vm_cpu_per_server % vm_cpu << std::endl;
+        // std::cout << "Server remaining memory load " << vm_memory_per_server % vm_memory << std::endl;
+        num_server_buy = utils::DivideCeil((int)worst_num, (int)std::min(vm_cpu_per_server, vm_memory_per_server));
     }
 
-    return std::make_pair(s_id, num_server_buy);
+    return std::make_pair(server_id, num_server_buy);
 }
 
 void ServerSelector::MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list) {

@@ -47,6 +47,16 @@ int main() {
 	// std::cout<<"(purchase, "<<total_server_num<<")"<<std::endl;
 	// std::unordered_map<uint16_t,uint16_t>::iterator it = server_purchase_chart.begin();
 	// Iterate over the map using iterator
+
+    uint16_t total_server_purchased = 0;
+
+    for (const auto& server : server_selector_.GetServerPurchaseChart()) {
+        total_server_purchased += server.second;
+	}
+
+    std::cout<<"(purchase, " <<total_server_purchased<< ")" <<std::endl;
+
+
 	for (const auto& server : server_selector_.GetServerPurchaseChart()) {
 		std::cout<<"(" << server_data_manager_.GetServerInfo(server.first).server_name << ", " << server.second << ")" <<std::endl;
 	}

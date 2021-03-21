@@ -139,7 +139,6 @@ ServerInfo& ServerDataManager::GetServerNthMemory(uint16_t n) {
 }
 
 std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float lambda, bool fresh_start) {
-    std::cout << "Binary search entered\n";
     uint16_t prev = prev_lambda_match_;
     if (fresh_start) {
         prev = 0;
@@ -147,26 +146,26 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
     uint16_t last = prev_lambda_match_ + 1;
     float curr_lambda = 0;
     
-    std::cout << "Binary search 1\n";
+    // std::cout << "Binary search 1\n";
     while (last < num_servers_) {
         curr_lambda = server_info_list_[index_server_lambda_[last]].server_lambda;
         if (lambda <= curr_lambda) {
             break;
         }
         last += last - prev;
-        std::cout << "last is " << last << std::endl;
+        // std::cout << "last is " << last << std::endl;
     }
 
-    std::cout << "Binary search 2\n";
+    // std::cout << "Binary search 2\n";
     if (lambda == curr_lambda) return std::pair<uint16_t, ServerInfo>(index_server_lambda_[last], server_info_list_[index_server_lambda_[last]]);
     if (last >= num_servers_) last = num_servers_ - 1;
     while (last - prev > 1) {
         uint16_t mid = (prev + last) / 2;
         curr_lambda = server_info_list_[index_server_lambda_[mid]].server_lambda;
-        std::cout << "curr_lambda is " << curr_lambda << std::endl;
-        std::cout << "lambda is " << lambda << std::endl;
-        std::cout << "last is " << last << std::endl;
-        std::cout << "prev is " << prev << std::endl;
+        // std::cout << "curr_lambda is " << curr_lambda << std::endl;
+        // std::cout << "lambda is " << lambda << std::endl;
+        // std::cout << "last is " << last << std::endl;
+        // std::cout << "prev is " << prev << std::endl;
         if (curr_lambda > lambda) {
             last = mid;
         } else if (curr_lambda < lambda) {
@@ -177,11 +176,11 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
     }
 
     curr_lambda = server_info_list_[index_server_lambda_[prev]].server_lambda;
-    std::cout << "curr_lambda is " << curr_lambda << std::endl;
-    std::cout << "lambda is " << lambda << std::endl;
-    std::cout << "Binary search 3\n";
+    // std::cout << "curr_lambda is " << curr_lambda << std::endl;
+    // std::cout << "lambda is " << lambda << std::endl;
+    // std::cout << "Binary search 3\n";
     if (prev == 0) {
-        std::cout << "next_lambda is " << server_info_list_[index_server_lambda_[prev + 1]].server_lambda << std::endl;
+        // std::cout << "next_lambda is " << server_info_list_[index_server_lambda_[prev + 1]].server_lambda << std::endl;
         if (prev + 1 < num_servers_ && std::abs(curr_lambda - lambda) > std::abs(server_info_list_[index_server_lambda_[prev + 1]].server_lambda - lambda)) {
             return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev + 1], server_info_list_[index_server_lambda_[prev + 1]]);
         } else {
@@ -191,7 +190,7 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
 
     // curr_lambda = server_info_list_[index_server_lambda_[last]].server_lambda;
     if (prev == num_servers_ - 1) {
-        std::cout << "prev_lambda is " << server_info_list_[index_server_lambda_[prev - 1]].server_lambda << std::endl;
+        // std::cout << "prev_lambda is " << server_info_list_[index_server_lambda_[prev - 1]].server_lambda << std::endl;
         if (prev - 1 >= 0 && std::abs(curr_lambda - lambda) > std::abs(server_info_list_[index_server_lambda_[prev - 1]].server_lambda - lambda)) {
             return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev - 1], server_info_list_[index_server_lambda_[prev - 1]]);
         } else {
@@ -202,8 +201,8 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
     float curr_lambda_diff = std::abs(server_info_list_[index_server_lambda_[prev]].server_lambda - curr_lambda);
     float prev_lambda_diff = std::abs(server_info_list_[index_server_lambda_[prev - 1]].server_lambda - lambda);
     float next_lambda_diff = std::abs(server_info_list_[index_server_lambda_[prev + 1]].server_lambda - lambda);
-    std::cout << "next_lambda is " << server_info_list_[index_server_lambda_[prev + 1]].server_lambda << std::endl;
-    std::cout << "prev_lambda is " << server_info_list_[index_server_lambda_[prev - 1]].server_lambda << std::endl;
+    // std::cout << "next_lambda is " << server_info_list_[index_server_lambda_[prev + 1]].server_lambda << std::endl;
+    // std::cout << "prev_lambda is " << server_info_list_[index_server_lambda_[prev - 1]].server_lambda << std::endl;
     if (next_lambda_diff >= curr_lambda_diff && next_lambda_diff >= prev_lambda_diff) {
         return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev + 1], server_info_list_[index_server_lambda_[prev + 1]]);
     } else if (curr_lambda_diff >= prev_lambda_diff && curr_lambda_diff >= next_lambda_diff) {
