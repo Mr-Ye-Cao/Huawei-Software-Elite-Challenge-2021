@@ -47,7 +47,7 @@ void ServerSelector::MakeServerSelection() {
 
 std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num) {
     // Input:
-    //      VMId(single or double):
+    //      VMId:
     //      WorstCaseNum:
 
     /**
@@ -75,22 +75,22 @@ std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& 
 
     std::pair<uint16_t, ServerInfo> servin = server_data_manager_.GetServerLambdaMatch(lambda);
 
-    int16_t scpu_nu = servin.second.server_cpu;
-    int16_t smem_nu = servin.second.server_memory;
-    uint16_t s_id = servin.first; // TODO(yuxin): add way to get server ID
+    const uint16_t& s_id = servin.first;
+    const uint16_t& scpu_nu = servin.second.server_cpu;
+    const uint16_t& smem_nu = servin.second.server_memory;
 
     vm_manager_.vm_to_server_[id] = s_id;
 
-    int16_t num_server_buy;
+    uint16_t num_server_buy;
     if (is_single) {
         // greedily put vm into the server poin
         int spcpu_nu = scpu_nu / 2;
         int spmem_nu = smem_nu / 2;
 
-        num_server_buy = std::ceil(std::max(std::ceil(spcpu_nu / cpu_nu), std::ceil(spmem_nu / mem_nu)) / 2);
+        num_server_buy = std::ceil(std::max(std::ceil((float)spcpu_nu / cpu_nu), std::ceil((float)spmem_nu / mem_nu)) / 2);
     } else {
         //
-        num_server_buy = std::max(std::ceil(scpu_nu / cpu_nu), std::ceil(smem_nu / mem_nu));
+        num_server_buy = std::ceil(std::max(std::ceil((float)scpu_nu / cpu_nu), std::ceil((float)smem_nu / mem_nu)));
     }
 
     return std::make_pair(s_id, num_server_buy);

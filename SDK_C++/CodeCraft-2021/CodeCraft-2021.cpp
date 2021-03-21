@@ -49,7 +49,7 @@ int main() {
 	// std::unordered_map<uint16_t,uint16_t>::iterator it = server_purchase_chart.begin();
 	// Iterate over the map using iterator
 	for (const auto& server : server_selector_.GetServerPurchaseChart()) {
-		std::cout<<"("<<server.first << ", " << server.second << ")" <<std::endl;
+		std::cout<<"(" << server_data_manager_.GetServerInfo(server.first).server_name << ", " << server.second << ")" <<std::endl;
 	}
 
 	// TODO:write standard output
