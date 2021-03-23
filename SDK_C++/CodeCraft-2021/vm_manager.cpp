@@ -16,11 +16,14 @@ VmManager::VmManager() :
   server_data_manager_(ServerDataManager::GetInstance()),
   prev_lambda_match_(server_data_manager_.GetNumServers() / 2) {
     vm_schedules_.reserve(num_vm_);
+    // num_newly_added_tasks_.resize(days_);
     std::cout << "initializing vm manager" << std::endl;
-    for (const auto& request : request_info_list_) {
+    for (auto& request : request_info_list_) {
         const int32_t request_id = request.first;
-        const RequestInfo& request_info = request.second;
-        int vm_id = vm_data_manager_.GetVmId(request_info.requested_vm_name);
+        RequestInfo& request_info = request.second;
+        // ++num_newly_added_tasks_[request_info.start_day];
+        uint16_t vm_id = vm_data_manager_.GetVmId(request_info.requested_vm_name);
+        request_info.vm_id = vm_id;
 
         // std::cout << "Request " << request_id << " needs vm " << vm_id << " from day " << request_info.start_day << " to day " << request_info.end_day << std::endl;
 
@@ -29,8 +32,8 @@ VmManager::VmManager() :
         curr_vm_status.num_running.resize(days_);
 
         // For finding the lowest ranked vm that can run this request
-        std::set<int> possible_vms;
-        for (int i = 0; i < curr_vm_status_worst_case.vm_schedule_list.size(); ++i) {
+        std::set<int32_t> possible_vms;
+        for (int32_t i = 0; i < curr_vm_status_worst_case.vm_schedule_list.size(); ++i) {
             possible_vms.insert(i);
         }
         for (int16_t day = request_info.start_day; day <= request_info.end_day && !possible_vms.empty(); ++day) {
@@ -42,13 +45,16 @@ VmManager::VmManager() :
                 }
             }
         }
-        int vm_scheduled_for_worst_case;
+        int32_t vm_scheduled_for_worst_case;
         if (possible_vms.empty()) {
             curr_vm_status_worst_case.vm_schedule_list.push_back(std::vector<bool>(days_, false));
+            curr_vm_status_worst_case.vm_unique_id_map[curr_unused_vm_id_] = curr_vm_status_worst_case.vm_schedule_list.size() - 1;
+            ++curr_unused_vm_id_;
             vm_scheduled_for_worst_case = curr_vm_status_worst_case.vm_schedule_list.size() - 1;
         } else {
             vm_scheduled_for_worst_case = *(possible_vms.begin());
         }
+        request_info.vm_num = vm_scheduled_for_worst_case;
         // std::cout << "vm_scheduled_for_worst_case is " << vm_scheduled_for_worst_case << std::endl;
 
         for (int16_t day = request_info.start_day; day <= request_info.end_day; ++day) {
@@ -84,8 +90,7 @@ std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& VmManager::GetWorstCaseVmLi
 }
 
 void VmManager::OutputTodayDeployment(const uint16_t& day) {
-    int32_t num_requests = 0;
-    if (day == 0) {
-
+    for (const int32_t& idx : request_data_manager_.GetRequestOfDay(day)) {
+        output_writer_.OutputSingleVmDeployment(request_info_list_[idx].vm_num);
     }
 }

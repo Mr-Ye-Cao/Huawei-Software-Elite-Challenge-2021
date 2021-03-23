@@ -38,13 +38,14 @@ void ServerSelector::MakeServerSelection() {
 
 		VmStatusWorstCaseInfo& specifc_vm_worst = vm_manager_.GetWorstCaseVmList()[index];
 		// the number of specialized server to buy to contain this type ith vm
-		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(index, specifc_vm_worst.vm_schedule_list.size());
+        uint16_t num_vm = specifc_vm_worst.vm_schedule_list.size();
+		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(index, num_vm);
 		uint16_t server_id = spi.first;
 		uint16_t server_number = spi.second;
 		total_server_num_ += server_number;
 		server_purchase_chart_[server_id] += server_number;
         PurchaseServers(server_id, server_number);
-
+        AddVmsToServers(server_id, index, num_vm);
 	}
 }
 

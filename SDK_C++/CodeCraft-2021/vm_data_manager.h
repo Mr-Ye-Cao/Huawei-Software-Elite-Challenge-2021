@@ -20,7 +20,7 @@ class VmDataManager {
 
     VmInfo& GetVm(const uint16_t& id);
     VmInfo& GetVm(const std::string& vm_name);
-    int GetVmId(const std::string& vm_name);
+    uint16_t GetVmId(const std::string& vm_name);
     VmInfo& GetVmNthLambda(const uint16_t n); // Lambda is CPU / Memory
     uint16_t GetNumSingleVm(const uint16_t n);
     uint16_t GetNumDoubleVm(const uint16_t n);
