@@ -1,7 +1,7 @@
 // @Author: Yu Xin
 
 #include <iostream>
-#include <unordered_set>
+#include <set>
 
 #include "index_comparator.h"
 #include "vm_manager.h"
@@ -9,6 +9,7 @@
 VmManager::VmManager() :
   vm_data_manager_(VmDataManager::GetInstance()),
   request_data_manager_(RequestDataManager::GetInstance()),
+  output_writer_(OutputWriter::GetInstance()),
   days_(request_data_manager_.GetDays()),
   num_vm_(vm_data_manager_.GetNumVm()),
   request_info_list_(request_data_manager_.GetRequestInfoList()),
@@ -28,7 +29,7 @@ VmManager::VmManager() :
         curr_vm_status.num_running.resize(days_);
 
         // For finding the lowest ranked vm that can run this request
-        std::unordered_set<int> possible_vms;
+        std::set<int> possible_vms;
         for (int i = 0; i < curr_vm_status_worst_case.vm_schedule_list.size(); ++i) {
             possible_vms.insert(i);
         }
@@ -80,4 +81,11 @@ VmManager& VmManager::GetInstance() {
 
 std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& VmManager::GetWorstCaseVmList() {
     return vm_schedules_worst_case_;
+}
+
+void VmManager::OutputTodayDeployment(const uint16_t& day) {
+    int32_t num_requests = 0;
+    if (day == 0) {
+
+    }
 }

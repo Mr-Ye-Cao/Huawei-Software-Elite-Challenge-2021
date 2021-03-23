@@ -19,7 +19,7 @@ class ServerSelector {
     ServerSelector& operator=(const ServerSelector&) = delete;
     void MakeServerSelection();
     std::unordered_map<std::uint16_t, std::uint16_t>& GetServerPurchaseChart();
-    void PrintAllServerPurchases();
+    void OutputAllServerPurchases();
 
   private:
     ServerSelector();

@@ -4,6 +4,7 @@
 
 #include <vector>
 
+#include "output_writer.h"
 #include "request_data_manager.h"
 #include "server_data_manager.h"
 #include "vm_data_manager.h"
@@ -29,7 +30,7 @@ struct VmStatusInfo {
 // Status of this type of vm for calc worst case, including how many of this type of vm is running on each day
 // and the schedules of these vm's
 struct VmStatusWorstCaseInfo {
-    // std::vector<uint32_t> num_running;
+    std::vector<uint32_t> num_newly_added_tasks;
     std::vector<std::vector<bool> > vm_schedule_list; // schedule of each vm; the size of this list is the number of worst case vm.
 
     // Day, list of server id; currently unused, but might need it later when mapping VM's to servers
@@ -47,6 +48,7 @@ class VmManager {
 
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& GetWorstCaseVmList();
     std::pair<uint16_t, ServerInfo&> GetServerLambdaMatch(float lambda, bool fresh_start = false);
+    void OutputTodayDeployment(const uint16_t& day);
 
   private:
     VmManager();
@@ -55,6 +57,7 @@ class VmManager {
     VmDataManager& vm_data_manager_;
     RequestDataManager& request_data_manager_;
     ServerDataManager& server_data_manager_;
+    OutputWriter& output_writer_;
     uint16_t days_; // Number of days (T)
     uint16_t num_vm_;
     std::unordered_map<int32_t, RequestInfo>& request_info_list_;

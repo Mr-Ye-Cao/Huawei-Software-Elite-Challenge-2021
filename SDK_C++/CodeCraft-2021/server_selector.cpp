@@ -128,7 +128,7 @@ void ServerSelector::MakeServerSelectionHelper(uint16_t curr_server_id, std::vec
     // 5. Repeat 2-4 until all server combo have been tried
 }
 
-void ServerSelector::PrintAllServerPurchases() {
+void ServerSelector::OutputAllServerPurchases() {
     output_writer_.OutputServerPurchaseHeader(total_server_num_);
     for (const auto& server : server_purchase_chart_) {
         output_writer_.OutputSingleServerPurchase(server_data_manager_.GetServerInfo(server.first).server_name, server.second);
