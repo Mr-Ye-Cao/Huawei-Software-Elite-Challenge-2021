@@ -43,8 +43,15 @@ void ServerSelector::MakeServerSelection() {
 		uint16_t server_number = spi.second;
 		total_server_num += server_number;
 		server_purchase_chart_[server_id] += server_number;
+        PurchaseServers(server_id, server_number);
 	}
-    
+}
+
+void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
+    for (uint16_t i = 0; i < num; ++i) {
+        server_manager_.PurchaseServer(server_id, server_dynamic_id_);
+        ++server_dynamic_id_;
+    }
 }
 
 std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num) {

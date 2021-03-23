@@ -24,11 +24,11 @@ void ServerManager::PurchaseServer(const uint16_t server_static_id, const uint16
     server_cluster_[server_static_id].push_back(server);
 }
 
-int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id) {
+int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_num) {
     if (server_cluster_[server_static_id].size() == 0) return -1;
     uint16_t best_fit = 0; // currently use cpu to find best fit
     bool best_fit_node_A; // currently use cpu to find best fit
-    VmInfo& vm_info = vm_data_manager_.GetVm(vm_id);
+    VmInfo& vm_info = vm_data_manager_.GetVm(vm_static_id);
     int32_t min_curr_cpu_left = std::numeric_limits<int32_t>::max();
     int32_t min_curr_memory_left = std::numeric_limits<int32_t>::max();
     int32_t curr_cpu_left;
@@ -37,7 +37,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
     if (vm_info.is_single) {
         for (uint16_t i = 0; i < server_cluster_[server_static_id].size(); ++i) {
             for (bool node_A = true; node_A; node_A = !node_A) {
-                if (Fits(server_static_id, i, vm_id, curr_cpu_left, curr_memory_left, node_A)) {
+                if (Fits(server_static_id, i, vm_static_id, curr_cpu_left, curr_memory_left, node_A)) {
                     has_a_fit = true;
                     if (curr_cpu_left < min_curr_cpu_left) {
                         min_curr_cpu_left = curr_cpu_left;
@@ -52,17 +52,23 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
         }
         if (has_a_fit) {
             PurchasedServer& best_fit_server = server_cluster_[server_static_id][best_fit];
+            VmRequest vm_request;
+            vm_request.vm_id = vm_id;
+            vm_request.vm_num = vm_num;
             if (best_fit_node_A) {
                 best_fit_server.server_cpu_A -= vm_info.vm_cpu;
                 best_fit_server.server_mem_A -= vm_info.vm_memory;
+                best_fit_server.vm_node_A.push_back(vm_request);
             } else {
                 best_fit_server.server_cpu_B -= vm_info.vm_cpu;
                 best_fit_server.server_mem_B -= vm_info.vm_memory;
+                best_fit_server.vm_node_B.push_back(vm_request);
             }
+            return 0;
         }
     } else {
         for (uint16_t i = 0; i < server_cluster_[server_static_id].size(); ++i) {
-            if (Fits(server_static_id, i, vm_id, curr_cpu_left, curr_memory_left)) {
+            if (Fits(server_static_id, i, vm_static_id, curr_cpu_left, curr_memory_left)) {
                 has_a_fit = true;
                 if (curr_cpu_left < min_curr_cpu_left) {
                     min_curr_cpu_left = curr_cpu_left;
@@ -79,8 +85,15 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
             best_fit_server.server_mem_A -= vm_info.vm_memory / 2;
             best_fit_server.server_cpu_B -= vm_info.vm_cpu / 2;
             best_fit_server.server_mem_B -= vm_info.vm_memory / 2;
+            VmRequest vm_request;
+            vm_request.vm_id = vm_id;
+            vm_request.vm_num = vm_num;
+            best_fit_server.vm_node_A.push_back(vm_request);
+            best_fit_server.vm_node_B.push_back(vm_request);
+            return 0;
         }
     }
+    return -1;
 }
 
 bool ServerManager::Fits(const uint16_t& server_static_id, const uint16_t& server_dynamic_id,

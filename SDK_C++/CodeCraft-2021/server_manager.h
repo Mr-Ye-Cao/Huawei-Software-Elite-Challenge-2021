@@ -33,7 +33,7 @@ class ServerManager {
     ServerManager& operator=(const ServerManager&) = delete;
 
     void PurchaseServer(const uint16_t server_static_id, const uint16_t server_dynamic_id);
-    int AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id); // Adds to the most fit server of this type
+    int AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_num); // Adds to the most fit server of this type
 
   private:
     ServerManager();
