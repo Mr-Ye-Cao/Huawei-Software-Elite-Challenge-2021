@@ -11,7 +11,8 @@
 ServerSelector::ServerSelector() :
   server_data_manager_(ServerDataManager::GetInstance()),
   vm_data_manager_(VmDataManager::GetInstance()),
-  vm_manager_(VmManager::GetInstance()) {
+  vm_manager_(VmManager::GetInstance()),
+  server_manager_(ServerManager::GetInstance()) {
 
 }
 
@@ -42,8 +43,27 @@ void ServerSelector::MakeServerSelection() {
 		uint16_t server_number = spi.second;
 		total_server_num += server_number;
 		server_purchase_chart_[server_id] += server_number;
+        PurchaseServers(server_id, server_number);
+
 	}
-    
+}
+
+void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
+    for (uint16_t i = 0; i < num; ++i) {
+        server_manager_.PurchaseServer(server_id, server_dynamic_id_);
+        ++server_dynamic_id_;
+    }
+}
+
+void ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, uint16_t num) {
+    for (uint16_t i = 0; i < num; ++i) {
+        if (server_manager_.AddVmToServerBestFit(server_id, vm_id, i) != 0) {
+            server_manager_.PurchaseServer(server_id, server_dynamic_id_);
+            std::cout << "Forced to buy a server" << std::endl;
+            ++server_dynamic_id_;
+            server_manager_.AddVmToServerBestFit(server_id, vm_id, i);
+        }
+    }
 }
 
 std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num) {
