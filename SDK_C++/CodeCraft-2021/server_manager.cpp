@@ -24,7 +24,7 @@ void ServerManager::PurchaseServer(const uint16_t server_static_id, const uint16
     server_cluster_[server_static_id].push_back(server);
 }
 
-int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_num) {
+int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_unique_id) {
     if (server_cluster_[server_static_id].size() == 0) return -1;
     uint16_t best_fit = 0; // currently use cpu to find best fit
     bool best_fit_node_A; // currently use cpu to find best fit
@@ -54,7 +54,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
             PurchasedServer& best_fit_server = server_cluster_[server_static_id][best_fit];
             VmRequest vm_request;
             vm_request.vm_id = vm_id;
-            vm_request.vm_num = vm_num;
+            vm_request.vm_unique_id = vm_unique_id;
             if (best_fit_node_A) {
                 best_fit_server.server_cpu_A -= vm_info.vm_cpu;
                 best_fit_server.server_mem_A -= vm_info.vm_memory;
@@ -87,7 +87,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
             best_fit_server.server_mem_B -= vm_info.vm_memory / 2;
             VmRequest vm_request;
             vm_request.vm_id = vm_id;
-            vm_request.vm_num = vm_num;
+            vm_request.vm_unique_id = vm_unique_id;
             best_fit_server.vm_node_A.push_back(vm_request);
             best_fit_server.vm_node_B.push_back(vm_request);
             return 0;
