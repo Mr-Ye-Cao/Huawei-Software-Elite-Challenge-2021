@@ -11,7 +11,8 @@
 ServerSelector::ServerSelector() :
   server_data_manager_(ServerDataManager::GetInstance()),
   vm_data_manager_(VmDataManager::GetInstance()),
-  vm_manager_(VmManager::GetInstance()) {
+  vm_manager_(VmManager::GetInstance()),
+  server_manager_(ServerManager::GetInstance()) {
 
 }
 
