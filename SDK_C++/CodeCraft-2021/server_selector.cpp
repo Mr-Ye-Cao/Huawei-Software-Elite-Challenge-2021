@@ -44,6 +44,7 @@ void ServerSelector::MakeServerSelection() {
 		total_server_num += server_number;
 		server_purchase_chart_[server_id] += server_number;
         PurchaseServers(server_id, server_number);
+
 	}
 }
 
@@ -51,6 +52,17 @@ void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
     for (uint16_t i = 0; i < num; ++i) {
         server_manager_.PurchaseServer(server_id, server_dynamic_id_);
         ++server_dynamic_id_;
+    }
+}
+
+void ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, uint16_t num) {
+    for (uint16_t i = 0; i < num; ++i) {
+        if (server_manager_.AddVmToServerBestFit(server_id, vm_id, i) != 0) {
+            server_manager_.PurchaseServer(server_id, server_dynamic_id_);
+            std::cout << "Forced to buy a server" << std::endl;
+            ++server_dynamic_id_;
+            server_manager_.AddVmToServerBestFit(server_id, vm_id, i);
+        }
     }
 }
 

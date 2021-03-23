@@ -28,7 +28,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
     if (server_cluster_[server_static_id].size() == 0) return -1;
     uint16_t best_fit = 0; // currently use cpu to find best fit
     bool best_fit_node_A; // currently use cpu to find best fit
-    VmInfo& vm_info = vm_data_manager_.GetVm(vm_static_id);
+    VmInfo& vm_info = vm_data_manager_.GetVm(vm_id);
     int32_t min_curr_cpu_left = std::numeric_limits<int32_t>::max();
     int32_t min_curr_memory_left = std::numeric_limits<int32_t>::max();
     int32_t curr_cpu_left;
@@ -37,7 +37,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
     if (vm_info.is_single) {
         for (uint16_t i = 0; i < server_cluster_[server_static_id].size(); ++i) {
             for (bool node_A = true; node_A; node_A = !node_A) {
-                if (Fits(server_static_id, i, vm_static_id, curr_cpu_left, curr_memory_left, node_A)) {
+                if (Fits(server_static_id, i, vm_id, curr_cpu_left, curr_memory_left, node_A)) {
                     has_a_fit = true;
                     if (curr_cpu_left < min_curr_cpu_left) {
                         min_curr_cpu_left = curr_cpu_left;
@@ -68,7 +68,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
         }
     } else {
         for (uint16_t i = 0; i < server_cluster_[server_static_id].size(); ++i) {
-            if (Fits(server_static_id, i, vm_static_id, curr_cpu_left, curr_memory_left)) {
+            if (Fits(server_static_id, i, vm_id, curr_cpu_left, curr_memory_left)) {
                 has_a_fit = true;
                 if (curr_cpu_left < min_curr_cpu_left) {
                     min_curr_cpu_left = curr_cpu_left;
