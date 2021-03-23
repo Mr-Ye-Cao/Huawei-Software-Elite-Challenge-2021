@@ -60,6 +60,7 @@ int main() {
 	for (const auto& server : server_selector_.GetServerPurchaseChart()) {
 		std::cout<<"(" << server_data_manager_.GetServerInfo(server.first).server_name << ", " << server.second << ")" <<std::endl;
 	}
+    server_selector_.PrintAllServerPurchases();
 
 	// TODO:write standard output
 	// TODO:fflush(stdout);
