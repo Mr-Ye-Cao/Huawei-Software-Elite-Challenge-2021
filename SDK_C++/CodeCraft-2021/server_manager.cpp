@@ -13,6 +13,10 @@ ServerManager& ServerManager::GetInstance() {
     return server_manager;
 }
 
+VmDeploymentInfo& ServerManager::GetVmDeploymentInfo(int32_t vm_unique_key) {
+    return vm_unique_key_to_deployment_info_[vm_unique_key];
+}
+
 void ServerManager::PurchaseServer(const uint16_t server_static_id, const uint16_t server_dynamic_id) {
     PurchasedServer server;
     ServerInfo& server_info = server_data_manager_.GetServerInfo(server_static_id);
@@ -27,7 +31,7 @@ void ServerManager::PurchaseServer(const uint16_t server_static_id, const uint16
 int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_unique_id) {
     if (server_cluster_[server_static_id].size() == 0) return -1;
     uint16_t best_fit = 0; // currently use cpu to find best fit
-    bool best_fit_node_A; // currently use cpu to find best fit
+    bool best_fit_node_A;
     VmInfo& vm_info = vm_data_manager_.GetVm(vm_id);
     int32_t min_curr_cpu_left = std::numeric_limits<int32_t>::max();
     int32_t min_curr_memory_left = std::numeric_limits<int32_t>::max();
@@ -53,16 +57,20 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
         if (has_a_fit) {
             PurchasedServer& best_fit_server = server_cluster_[server_static_id][best_fit];
             VmRequest vm_request;
+            VmDeploymentInfo& vm_deployment_info = vm_unique_key_to_deployment_info_[vm_unique_id];
             vm_request.vm_id = vm_id;
             vm_request.vm_unique_id = vm_unique_id;
+            vm_deployment_info.server_dynamic_id = best_fit_server.server_dynamic_id;
             if (best_fit_node_A) {
                 best_fit_server.server_cpu_A -= vm_info.vm_cpu;
                 best_fit_server.server_mem_A -= vm_info.vm_memory;
                 best_fit_server.vm_node_A.push_back(vm_request);
+                vm_deployment_info.is_A = true;
             } else {
                 best_fit_server.server_cpu_B -= vm_info.vm_cpu;
                 best_fit_server.server_mem_B -= vm_info.vm_memory;
                 best_fit_server.vm_node_B.push_back(vm_request);
+                vm_deployment_info.is_A = false;
             }
             return 0;
         }
@@ -90,6 +98,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
             vm_request.vm_unique_id = vm_unique_id;
             best_fit_server.vm_node_A.push_back(vm_request);
             best_fit_server.vm_node_B.push_back(vm_request);
+            vm_unique_key_to_deployment_info_[vm_unique_id].server_dynamic_id = best_fit_server.server_dynamic_id;
             return 0;
         }
     }

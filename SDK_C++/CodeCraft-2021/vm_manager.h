@@ -7,6 +7,7 @@
 #include "output_writer.h"
 #include "request_data_manager.h"
 #include "server_data_manager.h"
+#include "server_manager.h"
 #include "vm_data_manager.h"
 
 // The VM's schedule
@@ -56,6 +57,7 @@ class VmManager {
     VmDataManager& vm_data_manager_;
     RequestDataManager& request_data_manager_;
     ServerDataManager& server_data_manager_;
+    ServerManager& server_manager_;
     OutputWriter& output_writer_;
     uint16_t days_; // Number of days (T)
     uint16_t num_vm_;

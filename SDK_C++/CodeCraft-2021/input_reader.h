@@ -44,7 +44,7 @@ struct RequestInfo {
     int16_t end_day; // non inclusive
     uint16_t vm_id; // vm id that the task is assigned to
     int32_t vm_num; // the num of vm of vm_id type that this task is assigned to
-    // int32_t unique_vm_id; // the num of vm of vm_id type that this task is assigned to
+    int32_t unique_vm_id; // the num of vm of vm_id type that this task is assigned to
     // int32_t request_id; // request_id is 32bit integer BUT NOT NECESSARILY POSITIVE
     std::string requested_vm_name; // string length is at most 20 characters (number&alphabet&.)
 };

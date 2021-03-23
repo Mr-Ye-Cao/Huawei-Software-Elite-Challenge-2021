@@ -9,6 +9,7 @@
 VmManager::VmManager() :
   vm_data_manager_(VmDataManager::GetInstance()),
   request_data_manager_(RequestDataManager::GetInstance()),
+  server_manager_(ServerManager::GetInstance()),
   output_writer_(OutputWriter::GetInstance()),
   days_(request_data_manager_.GetDays()),
   num_vm_(vm_data_manager_.GetNumVm()),
@@ -55,6 +56,10 @@ VmManager::VmManager() :
             vm_scheduled_for_worst_case = *(possible_vms.begin());
         }
         request_info.vm_num = vm_scheduled_for_worst_case;
+        auto it = std::find_if(curr_vm_status_worst_case.vm_unique_id_map.begin(), curr_vm_status_worst_case.vm_unique_id_map.end(),
+                           [&vm_scheduled_for_worst_case] (const std::unordered_map<int32_t, int32_t>::value_type& p) { return p.second == vm_scheduled_for_worst_case; });
+
+        request_info.unique_vm_id = it->first;
         // std::cout << "vm_scheduled_for_worst_case is " << vm_scheduled_for_worst_case << std::endl;
 
         for (int16_t day = request_info.start_day; day <= request_info.end_day; ++day) {
@@ -91,6 +96,11 @@ std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& VmManager::GetWorstCaseVmLi
 
 void VmManager::OutputTodayDeployment(const uint16_t& day) {
     for (const int32_t& idx : request_data_manager_.GetRequestOfDay(day)) {
-        output_writer_.OutputSingleVmDeployment(request_info_list_[idx].vm_num);
+        if (vm_data_manager_.GetVm(request_info_list_[idx].vm_id).is_single) {
+            const std::string node = server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).is_A ? "A" : "B";
+            output_writer_.OutputSingleVmDeployment(server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id, node);
+        } else {
+            output_writer_.OutputSingleVmDeployment(server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id);
+        }
     }
 }

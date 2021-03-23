@@ -61,6 +61,7 @@ int main() {
 		std::cout<<"(" << server_data_manager_.GetServerInfo(server.first).server_name << ", " << server.second << ")" <<std::endl;
 	}
     server_selector_.OutputAllServerPurchases();
+    vm_manager_.OutputTodayDeployment(0);
 
 	// TODO:write standard output
 	// TODO:fflush(stdout);

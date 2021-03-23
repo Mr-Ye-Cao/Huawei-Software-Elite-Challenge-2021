@@ -22,9 +22,17 @@ void OutputWriter::OutputSingleServerPurchase(const std::string& server_name, co
 }
 
 void OutputWriter::OutputSingleMigration(const uint16_t& request_id, const uint16_t& dest_server_id, const std::string& node) {
-    std::cout << "(" << request_id << ", " << dest_server_id << ", " << node << ")" << std::endl;
+    if (node == "") {
+        std::cout << "(" << request_id << ", " << dest_server_id << ")" << std::endl;
+    } else {
+        std::cout << "(" << request_id << ", " << dest_server_id << ", " << node << ")" << std::endl;
+    }
 }
 
 void OutputWriter::OutputSingleVmDeployment(const uint16_t& server_id, const std::string& node) {
-    std::cout << "(" << server_id << ", " << node << ")" << std::endl;
+    if (node == "") {
+        std::cout << "(" << server_id << ")" << std::endl;
+    } else {
+        std::cout << "(" << server_id << ", " << node << ")" << std::endl;
+    }
 }
