@@ -37,6 +37,10 @@ VmInfo& VmDataManager::GetVmNthLambda(const uint16_t n) {
     return vm_info_list_[index_vm_lambda_[n]];
 }
 
+uint16_t& VmDataManager::GetVmIndexNthLambda(const uint16_t n) {
+    return index_vm_lambda_[n];
+}
+
 VmInfo& VmDataManager::GetNthSingleVm(const uint16_t n) {
     // Assumes correct input
     return vm_info_list_[index_single_vm_[n]];
