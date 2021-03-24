@@ -31,7 +31,7 @@ void InputReader::ReadInputFile(){
         
         ServerInfo& curr = server_info_list_[i];
         curr.server_name = line.substr(0, (server_start = line.find(kSpace)) - 1);
-        std::cout << "Server Name: " << curr.server_name << std::endl;
+        // std::cout << "Server Name: " << curr.server_name << std::endl;
         curr.server_cpu = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         curr.server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         curr.purchase_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
@@ -54,7 +54,7 @@ void InputReader::ReadInputFile(){
 
         VmInfo& curr = vm_info_list_[i];
         curr.vm_name = line.substr(0, (vm_start = line.find(kSpace))-1);
-        std::cout << "VM Name: " << curr.vm_name << std::endl;
+        // std::cout << "VM Name: " << curr.vm_name << std::endl;
         curr.vm_cpu = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
         curr.vm_memory = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
         curr.is_single = line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)) == kZero ? true : false;

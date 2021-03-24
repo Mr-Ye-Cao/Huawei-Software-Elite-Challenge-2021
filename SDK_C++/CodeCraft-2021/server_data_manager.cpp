@@ -14,7 +14,7 @@ ServerDataManager& ServerDataManager::GetInstance() {
 ServerDataManager::ServerDataManager() :
   input_reader_(InputReader::GetInstance()),
   server_info_list_(input_reader_.GetServerInfoList()) {
-    std::cout << "Server manager constructed\n";
+    // std::cout << "Server data manager constructed\n";
     
     purchase_list_.resize(server_info_list_.size());
 

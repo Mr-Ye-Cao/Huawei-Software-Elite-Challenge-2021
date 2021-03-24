@@ -18,7 +18,7 @@ VmManager::VmManager() :
   prev_lambda_match_(server_data_manager_.GetNumServers() / 2) {
     vm_schedules_.reserve(num_vm_);
     // num_newly_added_tasks_.resize(days_);
-    std::cout << "initializing vm manager" << std::endl;
+    // std::cout << "initializing vm manager" << std::endl;
     for (auto& request : request_info_list_) {
         const int32_t request_id = request.first;
         RequestInfo& request_info = request.second;
@@ -81,8 +81,8 @@ VmManager::VmManager() :
         worst_case_core_ += curr_vm.vm_cpu * num_requested;
         worst_case_memory_ += curr_vm.vm_memory * num_requested;
     }
-    std::cout << "worst_case_core_ is " << worst_case_core_ << std::endl;
-    std::cout << "worst_case_memory_ is " << worst_case_memory_ << std::endl;
+    // std::cout << "worst_case_core_ is " << worst_case_core_ << std::endl;
+    // std::cout << "worst_case_memory_ is " << worst_case_memory_ << std::endl;
 }
 
 VmManager& VmManager::GetInstance() {
