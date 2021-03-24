@@ -48,10 +48,11 @@ void ServerSelector::MakeServerSelection() {
 		total_server_num_ += server_number;
         PurchaseServers(server_id, server_number);
         // int i = 0;
+        uint16_t server_number_old = server_number;
         for (const auto& unique_key : specifc_vm_worst.vm_schedule_list) {
-            // std::cout << i++ << std::endl;
             server_number += AddVmsToServers(server_id, vm_id, unique_key.first);
         }
+        // std::cout << "Extras bought: " << server_number - server_number_old << std::endl;
 		server_purchase_chart_[server_id] += server_number;
 	}
     num_new_purchases_ = total_server_num_ - old_total_server_num;
