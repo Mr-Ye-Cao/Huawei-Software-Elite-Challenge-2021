@@ -15,7 +15,7 @@ class OutputWriter {
     void OutputMigrationHeader(const uint32_t& num);
     void OutputSingleServerPurchase(const std::string& server_name, const uint16_t& num);
     void OutputSingleMigration(const uint16_t& request_id, const uint16_t& dest_server_id, const std::string& node = "");
-    void OutputSingleVmDeployment(const uint16_t& server_id, const std::string& node = "");
+    void OutputSingleVmDeployment(const int32_t& request_id, const uint16_t& server_id, const std::string& node = "");
     
   private:
     OutputWriter() = default;

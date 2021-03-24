@@ -98,9 +98,9 @@ void VmManager::OutputTodayDeployment(const uint16_t& day) {
     for (const int32_t& idx : request_data_manager_.GetRequestOfDay(day)) {
         if (vm_data_manager_.GetVm(request_info_list_[idx].vm_id).is_single) {
             const std::string node = server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).is_A ? "A" : "B";
-            output_writer_.OutputSingleVmDeployment(server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id, node);
+            output_writer_.OutputSingleVmDeployment(idx, server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id, node);
         } else {
-            output_writer_.OutputSingleVmDeployment(server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id);
+            output_writer_.OutputSingleVmDeployment(idx, server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id);
         }
     }
 }

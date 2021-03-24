@@ -29,10 +29,10 @@ void OutputWriter::OutputSingleMigration(const uint16_t& request_id, const uint1
     }
 }
 
-void OutputWriter::OutputSingleVmDeployment(const uint16_t& server_id, const std::string& node) {
+void OutputWriter::OutputSingleVmDeployment(const int32_t& request_id, const uint16_t& server_id, const std::string& node) {
     if (node == "") {
-        std::cout << "(" << server_id << ")" << std::endl;
+        std::cout << "(" << request_id << ", " << server_id << ")" << std::endl;
     } else {
-        std::cout << "(" << server_id << ", " << node << ")" << std::endl;
+        std::cout << "("  << request_id << ", " << server_id << ", " << node << ")" << std::endl;
     }
 }
