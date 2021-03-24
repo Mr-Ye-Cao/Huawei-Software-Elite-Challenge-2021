@@ -45,8 +45,8 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
     bool has_a_fit = false;
     if (vm_info.is_single) {
         for (uint16_t i = 0; i < server_cluster_[server_static_id].size(); ++i) {
-            // bool node_A = true;
-            for (bool node_A = true; node_A; node_A = !node_A) {//int i = 0; i < 2; ++i) {
+            bool node_A = true;
+            for (int i = 0; i < 2; ++i) {
                 if (Fits(server_static_id, i, vm_id, curr_cpu_left, curr_memory_left, node_A)) {
                     has_a_fit = true;
                     if (curr_cpu_left < min_curr_cpu_left) {
@@ -58,7 +58,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
                         min_curr_memory_left = curr_memory_left;
                     }
                 }
-                // node_A = false;
+                node_A = false;
             }
         }
         if (has_a_fit) {
@@ -124,6 +124,7 @@ bool ServerManager::Fits(const uint16_t& server_static_id, const uint16_t& serve
                          const uint16_t& vm_id, int32_t& cpu_left, int32_t& memory_left, const bool node_A) {
     VmInfo& vm_info = vm_data_manager_.GetVm(vm_id);
     PurchasedServer& curr_server = server_cluster_[server_static_id][server_dynamic_id];
+    if (node_A) return false;
     if (vm_info.is_single) {
         if (node_A) {
             if (curr_server.server_cpu_A >= vm_info.vm_cpu && curr_server.server_mem_A >= vm_info.vm_memory) {
