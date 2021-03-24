@@ -34,8 +34,8 @@ VmManager::VmManager() :
 
         // For finding the lowest ranked vm that can run this request
         std::set<int32_t> possible_vms;
-        for (int32_t i = 0; i < curr_vm_status_worst_case.vm_schedule_list.size(); ++i) {
-            possible_vms.insert(i);
+        for (const auto& vm : curr_vm_status_worst_case.vm_schedule_list) {
+            possible_vms.insert(vm.first);
         }
         for (int16_t day = request_info.start_day; day <= request_info.end_day && !possible_vms.empty(); ++day) {
             for (auto it = possible_vms.begin(); it != possible_vms.end(); ) {
@@ -48,18 +48,18 @@ VmManager::VmManager() :
         }
         int32_t vm_scheduled_for_worst_case;
         if (possible_vms.empty()) {
-            curr_vm_status_worst_case.vm_schedule_list.push_back(std::vector<bool>(days_, false));
+            curr_vm_status_worst_case.vm_schedule_list[curr_unused_vm_id_] = std::vector<bool>(days_, false);
             curr_vm_status_worst_case.vm_unique_id_map[curr_unused_vm_id_] = curr_vm_status_worst_case.vm_schedule_list.size() - 1;
+            vm_scheduled_for_worst_case = curr_unused_vm_id_;
             ++curr_unused_vm_id_;
-            vm_scheduled_for_worst_case = curr_vm_status_worst_case.vm_schedule_list.size() - 1;
         } else {
             vm_scheduled_for_worst_case = *(possible_vms.begin());
         }
-        request_info.vm_num = vm_scheduled_for_worst_case;
-        auto it = std::find_if(curr_vm_status_worst_case.vm_unique_id_map.begin(), curr_vm_status_worst_case.vm_unique_id_map.end(),
-                           [&vm_scheduled_for_worst_case] (const std::unordered_map<int32_t, int32_t>::value_type& p) { return p.second == vm_scheduled_for_worst_case; });
+        request_info.unique_vm_id = vm_scheduled_for_worst_case;
+        // auto it = std::find_if(curr_vm_status_worst_case.vm_unique_id_map.begin(), curr_vm_status_worst_case.vm_unique_id_map.end(),
+        //                    [&vm_scheduled_for_worst_case] (const std::unordered_map<int32_t, int32_t>::value_type& p) { return p.second == vm_scheduled_for_worst_case; });
 
-        request_info.unique_vm_id = it->first;
+        // request_info.unique_vm_id = it->first;
         // std::cout << "vm_scheduled_for_worst_case is " << vm_scheduled_for_worst_case << std::endl;
 
         for (int16_t day = request_info.start_day; day <= request_info.end_day; ++day) {

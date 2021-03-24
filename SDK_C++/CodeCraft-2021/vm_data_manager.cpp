@@ -70,9 +70,9 @@ void VmDataManager::BuildIndexVmLambda() {
                 return a.vm_lambda < (float)b.vm_lambda;
         })
     );
-    for (int i = 0; i < index_vm_lambda_.size(); ++i) {
-        std::cout << "No. " << i << " vm lambda is " << vm_info_list_[index_vm_lambda_[i]].vm_lambda << std::endl;
-    }
+    // for (int i = 0; i < index_vm_lambda_.size(); ++i) {
+    //     std::cout << "No. " << i << " vm lambda is " << vm_info_list_[index_vm_lambda_[i]].vm_lambda << std::endl;
+    // }
 }
 
 void VmDataManager::BuildIndexVmSinDou() {

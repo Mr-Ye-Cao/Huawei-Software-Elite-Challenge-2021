@@ -113,9 +113,9 @@ void ServerDataManager::BuildIndexServerLambda() {
                 return a.server_lambda < b.server_lambda;
         })
     );
-    for (int i = 0; i < index_server_lambda_.size(); ++i) {
-        std::cout << "No. " << i << " server lambda is " << server_info_list_[index_server_lambda_[i]].server_lambda << std::endl;
-    }
+    // for (int i = 0; i < index_server_lambda_.size(); ++i) {
+    //     std::cout << "No. " << i << " server lambda is " << server_info_list_[index_server_lambda_[i]].server_lambda << std::endl;
+    // }
 }
 
 ServerInfo& ServerDataManager::GetServerInfo(uint16_t n) {

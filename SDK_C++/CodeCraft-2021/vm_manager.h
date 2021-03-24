@@ -31,7 +31,7 @@ struct VmStatusInfo {
 // Status of this type of vm for calc worst case, including how many of this type of vm is running on each day
 // and the schedules of these vm's
 struct VmStatusWorstCaseInfo {
-    std::vector<std::vector<bool> > vm_schedule_list; // schedule of each vm; the size of this list is the number of worst case vm.
+    std::unordered_map<int32_t, std::vector<bool> > vm_schedule_list; // unique id to schedule of each vm; the size of this map is the number of worst case vm.
     std::unordered_map<int32_t, int32_t> vm_unique_id_map; // Unique id to index in vm_schedule_list
     // Day, list of server id; currently unused, but might need it later when mapping VM's to servers
     std::vector<uint16_t > server_id_list;
