@@ -2,9 +2,14 @@
 
 #include "server_manager.h"
 
+#include <iostream>
+
 ServerManager::ServerManager() : 
+  request_data_manager_(RequestDataManager::GetInstance()),
   server_data_manager_(ServerDataManager::GetInstance()),
-  vm_data_manager_(VmDataManager::GetInstance()) {
+  vm_data_manager_(VmDataManager::GetInstance()),
+  vm_manager_(VmManager::GetInstance()),
+  output_writer_(OutputWriter::GetInstance()) {
     server_cluster_.resize(server_data_manager_.GetNumServers());
 }
 
@@ -60,17 +65,24 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
             VmDeploymentInfo& vm_deployment_info = vm_unique_key_to_deployment_info_[vm_unique_id];
             vm_request.vm_id = vm_id;
             vm_request.vm_unique_id = vm_unique_id;
+            vm_deployment_info.vm_id = vm_id;
             vm_deployment_info.server_dynamic_id = best_fit_server.server_dynamic_id;
+            best_fit_server.vm_list.push_back(std::make_pair(vm_id, vm_unique_id));
+            // vm_deployment_info.request_id = vm_manager_.GetRequestOnVm(vm_id, vm_unique_id, )
             if (best_fit_node_A) {
                 best_fit_server.server_cpu_A -= vm_info.vm_cpu;
                 best_fit_server.server_mem_A -= vm_info.vm_memory;
                 best_fit_server.vm_node_A.push_back(vm_request);
                 vm_deployment_info.is_A = true;
+                // std::cout << "single node request " << vm_manager_.GetRequestOnVm(vm_id, vm_unique_id) 
+                //     << " on server " << best_fit_server.server_dynamic_id << " node A of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
             } else {
                 best_fit_server.server_cpu_B -= vm_info.vm_cpu;
                 best_fit_server.server_mem_B -= vm_info.vm_memory;
                 best_fit_server.vm_node_B.push_back(vm_request);
                 vm_deployment_info.is_A = false;
+                // std::cout << "single node request " << vm_manager_.GetRequestOnVm(vm_id, vm_unique_id)
+                //     << " on server " << best_fit_server.server_dynamic_id << " node B of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
             }
             return 0;
         }
@@ -99,6 +111,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
             best_fit_server.vm_node_A.push_back(vm_request);
             best_fit_server.vm_node_B.push_back(vm_request);
             vm_unique_key_to_deployment_info_[vm_unique_id].server_dynamic_id = best_fit_server.server_dynamic_id;
+            // std::cout << "double node request " << vm_manager_.GetRequestOnVm(vm_id, vm_unique_id) << " on server " << best_fit_server.server_dynamic_id << " of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
             return 0;
         }
     }
@@ -140,4 +153,17 @@ bool ServerManager::Fits(const uint16_t& server_static_id, const uint16_t& serve
         }
     }
     return false;
+}
+
+void ServerManager::OutputTodayDeployment(const uint16_t& day) {
+    for (const int32_t& idx : request_data_manager_.GetRequestOfDay(day)) {
+        const uint16_t curr_vm_id = request_data_manager_.GetVmId(idx);
+        VmDeploymentInfo& curr_info = GetVmDeploymentInfo(request_data_manager_.GetUniqueVmId(idx));
+        if (vm_data_manager_.GetVm(curr_vm_id).is_single) {
+            const std::string node = curr_info.is_A ? "A" : "B";
+            output_writer_.OutputSingleVmDeployment(idx, curr_info.server_dynamic_id, node);
+        } else {
+            output_writer_.OutputSingleVmDeployment(idx, curr_info.server_dynamic_id);
+        }
+    }
 }

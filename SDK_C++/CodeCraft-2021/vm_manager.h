@@ -7,7 +7,7 @@
 #include "output_writer.h"
 #include "request_data_manager.h"
 #include "server_data_manager.h"
-#include "server_manager.h"
+// #include "server_manager.h"
 #include "vm_data_manager.h"
 
 // The VM's schedule
@@ -28,13 +28,20 @@ struct VmStatusInfo {
     std::unordered_map<int32_t, std::vector<int32_t> > server_id_list;
 };
 
+struct VmToday {
+    bool is_running;
+    int32_t request_id;
+};
+
+
 // Status of this type of vm for calc worst case, including how many of this type of vm is running on each day
 // and the schedules of these vm's
 struct VmStatusWorstCaseInfo {
-    std::unordered_map<int32_t, std::vector<bool> > vm_schedule_list; // unique id to schedule of each vm; the size of this map is the number of worst case vm.
-    std::unordered_map<int32_t, int32_t> vm_unique_id_map; // Unique id to index in vm_schedule_list
+    std::unordered_map<int32_t, std::vector<VmToday> > vm_schedule_list; // unique id to schedule of each vm; the size of this map is the number of worst case vm.
+    // std::unordered_map<int32_t, std::vector<int32_t> > request_id_list; // Day, list of server id
+    // std::unordered_map<int32_t, int32_t> vm_unique_id_map; // Unique id to index in vm_schedule_list
     // Day, list of server id; currently unused, but might need it later when mapping VM's to servers
-    std::vector<uint16_t > server_id_list;
+    // std::vector<uint16_t > server_id_list;
 };
 
 class VmManager {
@@ -48,7 +55,7 @@ class VmManager {
 
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& GetWorstCaseVmList();
     std::pair<uint16_t, ServerInfo&> GetServerLambdaMatch(float lambda, bool fresh_start = false);
-    void OutputTodayDeployment(const uint16_t& day);
+    int32_t GetRequestOnVm(uint16_t vm_id, int32_t vm_unique_id, uint16_t day); // Gets the request on this vm at the day
 
   private:
     VmManager();
@@ -57,7 +64,7 @@ class VmManager {
     VmDataManager& vm_data_manager_;
     RequestDataManager& request_data_manager_;
     ServerDataManager& server_data_manager_;
-    ServerManager& server_manager_;
+    // ServerManager& server_manager_;
     OutputWriter& output_writer_;
     uint16_t days_; // Number of days (T)
     uint16_t num_vm_;

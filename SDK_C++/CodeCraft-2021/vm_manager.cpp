@@ -9,7 +9,7 @@
 VmManager::VmManager() :
   vm_data_manager_(VmDataManager::GetInstance()),
   request_data_manager_(RequestDataManager::GetInstance()),
-  server_manager_(ServerManager::GetInstance()),
+//   server_manager_(ServerManager::GetInstance()),
   output_writer_(OutputWriter::GetInstance()),
   days_(request_data_manager_.GetDays()),
   num_vm_(vm_data_manager_.GetNumVm()),
@@ -39,7 +39,7 @@ VmManager::VmManager() :
         }
         for (int16_t day = request_info.start_day; day <= request_info.end_day && !possible_vms.empty(); ++day) {
             for (auto it = possible_vms.begin(); it != possible_vms.end(); ) {
-                if (curr_vm_status_worst_case.vm_schedule_list[*it][day]) {
+                if (curr_vm_status_worst_case.vm_schedule_list[*it][day].is_running) {
                     it = possible_vms.erase(it);
                 } else {
                     ++it;
@@ -48,8 +48,8 @@ VmManager::VmManager() :
         }
         int32_t vm_scheduled_for_worst_case;
         if (possible_vms.empty()) {
-            curr_vm_status_worst_case.vm_schedule_list[curr_unused_vm_id_] = std::vector<bool>(days_, false);
-            curr_vm_status_worst_case.vm_unique_id_map[curr_unused_vm_id_] = curr_vm_status_worst_case.vm_schedule_list.size() - 1;
+            curr_vm_status_worst_case.vm_schedule_list[curr_unused_vm_id_] = std::vector<VmToday>(days_);
+            // curr_vm_status_worst_case.vm_unique_id_map[curr_unused_vm_id_] = curr_vm_status_worst_case.vm_schedule_list.size() - 1;
             vm_scheduled_for_worst_case = curr_unused_vm_id_;
             ++curr_unused_vm_id_;
         } else {
@@ -65,7 +65,8 @@ VmManager::VmManager() :
         for (int16_t day = request_info.start_day; day <= request_info.end_day; ++day) {
             ++curr_vm_status.num_running[day];
             curr_vm_status.request_id_list[day].push_back(request_id);
-            curr_vm_status_worst_case.vm_schedule_list[vm_scheduled_for_worst_case][day] = true;
+            curr_vm_status_worst_case.vm_schedule_list[vm_scheduled_for_worst_case][day].is_running = true;
+            curr_vm_status_worst_case.vm_schedule_list[vm_scheduled_for_worst_case][day].request_id = request_id;
             // std::cout << "Request " << curr_vm_status.request_id_list[day].back()
             //     << " added, we have " << curr_vm_status.num_running[day] << " "
             //     << request_info.requested_vm_name << " running on day " << day << std::endl;
@@ -94,13 +95,6 @@ std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& VmManager::GetWorstCaseVmLi
     return vm_schedules_worst_case_;
 }
 
-void VmManager::OutputTodayDeployment(const uint16_t& day) {
-    for (const int32_t& idx : request_data_manager_.GetRequestOfDay(day)) {
-        if (vm_data_manager_.GetVm(request_info_list_[idx].vm_id).is_single) {
-            const std::string node = server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).is_A ? "A" : "B";
-            output_writer_.OutputSingleVmDeployment(idx, server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id, node);
-        } else {
-            output_writer_.OutputSingleVmDeployment(idx, server_manager_.GetVmDeploymentInfo(request_info_list_[idx].unique_vm_id).server_dynamic_id);
-        }
-    }
+int32_t VmManager::GetRequestOnVm(uint16_t vm_id, int32_t vm_unique_id, uint16_t day) {
+    return vm_schedules_worst_case_[vm_id].vm_schedule_list[vm_unique_id][day].request_id;
 }

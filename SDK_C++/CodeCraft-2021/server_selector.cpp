@@ -46,7 +46,7 @@ void ServerSelector::MakeServerSelection() {
 		total_server_num_ += server_number;
 		server_purchase_chart_[server_id] += server_number;
         PurchaseServers(server_id, server_number);
-        for (const auto& unique_key : specifc_vm_worst.vm_unique_id_map) {
+        for (const auto& unique_key : specifc_vm_worst.vm_schedule_list) {
             AddVmsToServers(server_id, index, unique_key.first);
         }
 	}
@@ -139,4 +139,8 @@ void ServerSelector::OutputAllServerPurchases() {
 
 uint16_t ServerSelector::GetNumNewPurchases() {
     return num_new_purchases_;
+}
+
+void ServerSelector::ResetNumNewPurchases() {
+    num_new_purchases_ = 0;
 }

@@ -20,6 +20,7 @@ class ServerSelector {
     void MakeServerSelection();
     std::unordered_map<std::uint16_t, std::uint16_t>& GetServerPurchaseChart();
     uint16_t GetNumNewPurchases();
+    void ResetNumNewPurchases();
     void OutputAllServerPurchases();
 
   private:
