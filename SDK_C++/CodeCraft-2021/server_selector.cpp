@@ -4,15 +4,16 @@
 
 #include <iostream>
 
-#include "vm_data_manager.h"
 #include "input_reader.h"
 #include "utils.h"
+#include "vm_data_manager.h"
 
 ServerSelector::ServerSelector() :
   server_data_manager_(ServerDataManager::GetInstance()),
   vm_data_manager_(VmDataManager::GetInstance()),
   vm_manager_(VmManager::GetInstance()),
-  server_manager_(ServerManager::GetInstance()) {
+  server_manager_(ServerManager::GetInstance()),
+  output_writer_(OutputWriter::GetInstance()) {
 
 }
 
@@ -32,19 +33,21 @@ std::unordered_map<std::uint16_t, std::uint16_t>& ServerSelector::GetServerPurch
 // 5. Repeat 2-4 until all server combo have been tried
 void ServerSelector::MakeServerSelection() {
     std::vector<uint16_t> server_list;
-	uint16_t total_server_num = 0;
  	for(uint16_t index = 0; index < vm_data_manager_.GetNumVm(); index++){
         // std::cout<<"Debug5"<<std::endl;
 
 		VmStatusWorstCaseInfo& specifc_vm_worst = vm_manager_.GetWorstCaseVmList()[index];
 		// the number of specialized server to buy to contain this type ith vm
-		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(index, specifc_vm_worst.vm_schedule_list.size());
+        uint16_t num_vm = specifc_vm_worst.vm_schedule_list.size();
+		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(index, num_vm);
 		uint16_t server_id = spi.first;
 		uint16_t server_number = spi.second;
-		total_server_num += server_number;
+		total_server_num_ += server_number;
 		server_purchase_chart_[server_id] += server_number;
         PurchaseServers(server_id, server_number);
-
+        for (const auto& unique_key : specifc_vm_worst.vm_unique_id_map) {
+            AddVmsToServers(server_id, index, unique_key.first);
+        }
 	}
 }
 
@@ -55,14 +58,12 @@ void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
     }
 }
 
-void ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, uint16_t num) {
-    for (uint16_t i = 0; i < num; ++i) {
-        if (server_manager_.AddVmToServerBestFit(server_id, vm_id, i) != 0) {
-            server_manager_.PurchaseServer(server_id, server_dynamic_id_);
-            std::cout << "Forced to buy a server" << std::endl;
-            ++server_dynamic_id_;
-            server_manager_.AddVmToServerBestFit(server_id, vm_id, i);
-        }
+void ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key) {
+    if (server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key) != 0) {
+        server_manager_.PurchaseServer(server_id, server_dynamic_id_);
+        std::cout << "Forced to buy a server" << std::endl;
+        ++server_dynamic_id_;
+        server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key);
     }
 }
 
@@ -126,4 +127,11 @@ void ServerSelector::MakeServerSelectionHelper(uint16_t curr_server_id, std::vec
     }
     // 4. Repeat 2-3 with the next to the top server, by adding the next to the top server to the back of the list.
     // 5. Repeat 2-4 until all server combo have been tried
+}
+
+void ServerSelector::OutputAllServerPurchases() {
+    output_writer_.OutputServerPurchaseHeader(total_server_num_);
+    for (const auto& server : server_purchase_chart_) {
+        output_writer_.OutputSingleServerPurchase(server_data_manager_.GetServerInfo(server.first).server_name, server.second);
+    }
 }

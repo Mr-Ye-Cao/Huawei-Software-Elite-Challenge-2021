@@ -11,7 +11,12 @@
 
 struct VmRequest {
     uint16_t vm_id; // static id, represents the type of vm
-    uint16_t vm_num; // Represents which of the vm's of the type is this
+    uint16_t vm_unique_id; // Represents which of the vm's of the type is this
+};
+
+struct VmDeploymentInfo {
+    uint16_t server_dynamic_id;
+    bool is_A;
 };
 
 
@@ -33,7 +38,8 @@ class ServerManager {
     ServerManager& operator=(const ServerManager&) = delete;
 
     void PurchaseServer(const uint16_t server_static_id, const uint16_t server_dynamic_id);
-    int AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_num); // Adds to the most fit server of this type
+    int AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_unique_id); // Adds to the most fit server of this type
+    VmDeploymentInfo& GetVmDeploymentInfo(int32_t vm_unique_key);
 
   private:
     ServerManager();
@@ -43,4 +49,5 @@ class ServerManager {
     ServerDataManager& server_data_manager_;
     VmDataManager& vm_data_manager_;
     std::vector<std::vector<PurchasedServer> > server_cluster_; // server_id (static) to its status
+    std::unordered_map<int32_t, VmDeploymentInfo> vm_unique_key_to_deployment_info_;
 };
