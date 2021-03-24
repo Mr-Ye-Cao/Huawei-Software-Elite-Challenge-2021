@@ -277,6 +277,33 @@ request_data_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/request_data_manager.cpp.s
 .PHONY : request_data_manager.cpp.s
 
+scheduler.o: scheduler.cpp.o
+
+.PHONY : scheduler.o
+
+# target to build an object file
+scheduler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/scheduler.cpp.o
+.PHONY : scheduler.cpp.o
+
+scheduler.i: scheduler.cpp.i
+
+.PHONY : scheduler.i
+
+# target to preprocess a source file
+scheduler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/scheduler.cpp.i
+.PHONY : scheduler.cpp.i
+
+scheduler.s: scheduler.cpp.s
+
+.PHONY : scheduler.s
+
+# target to generate assembly for a file
+scheduler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/scheduler.cpp.s
+.PHONY : scheduler.cpp.s
+
 server_data_manager.o: server_data_manager.cpp.o
 
 .PHONY : server_data_manager.o
@@ -490,6 +517,9 @@ help:
 	@echo "... request_data_manager.o"
 	@echo "... request_data_manager.i"
 	@echo "... request_data_manager.s"
+	@echo "... scheduler.o"
+	@echo "... scheduler.i"
+	@echo "... scheduler.s"
 	@echo "... server_data_manager.o"
 	@echo "... server_data_manager.i"
 	@echo "... server_data_manager.s"

@@ -19,6 +19,7 @@ class ServerSelector {
     ServerSelector& operator=(const ServerSelector&) = delete;
     void MakeServerSelection();
     std::unordered_map<std::uint16_t, std::uint16_t>& GetServerPurchaseChart();
+    uint16_t GetNumNewPurchases();
     void OutputAllServerPurchases();
 
   private:
@@ -33,6 +34,7 @@ class ServerSelector {
 	std::unordered_map<std::uint16_t, std::uint16_t> server_purchase_chart_; // static server id to number to buy
     uint16_t server_dynamic_id_ = 0;
 	uint16_t total_server_num_ = 0;
+	uint16_t num_new_purchases_ = 0;
 
     std::pair<int16_t,int16_t> WorseCaseSelectionVm(const uint16_t& id, const uint16_t& worst_num);
     void MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list);

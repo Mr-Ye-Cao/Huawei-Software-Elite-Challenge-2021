@@ -33,6 +33,7 @@ std::unordered_map<std::uint16_t, std::uint16_t>& ServerSelector::GetServerPurch
 // 5. Repeat 2-4 until all server combo have been tried
 void ServerSelector::MakeServerSelection() {
     std::vector<uint16_t> server_list;
+    uint16_t old_total_server_num = total_server_num_;
  	for(uint16_t index = 0; index < vm_data_manager_.GetNumVm(); index++){
         // std::cout<<"Debug5"<<std::endl;
 
@@ -49,6 +50,7 @@ void ServerSelector::MakeServerSelection() {
             AddVmsToServers(server_id, index, unique_key.first);
         }
 	}
+    num_new_purchases_ = total_server_num_ - old_total_server_num;
 }
 
 void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
@@ -130,8 +132,11 @@ void ServerSelector::MakeServerSelectionHelper(uint16_t curr_server_id, std::vec
 }
 
 void ServerSelector::OutputAllServerPurchases() {
-    output_writer_.OutputServerPurchaseHeader(total_server_num_);
     for (const auto& server : server_purchase_chart_) {
         output_writer_.OutputSingleServerPurchase(server_data_manager_.GetServerInfo(server.first).server_name, server.second);
     }
+}
+
+uint16_t ServerSelector::GetNumNewPurchases() {
+    return num_new_purchases_;
 }
