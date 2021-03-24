@@ -44,14 +44,15 @@ void ServerSelector::MakeServerSelection() {
 		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(nth_smallest_lambda, num_vm);
 		uint16_t server_id = spi.first;
 		uint16_t server_number = spi.second;
+        // std::cout << "Initially bought " << server_number << " servers" << std::endl;
 		total_server_num_ += server_number;
-		server_purchase_chart_[server_id] += server_number;
         PurchaseServers(server_id, server_number);
-        int i = 0;
+        // int i = 0;
         for (const auto& unique_key : specifc_vm_worst.vm_schedule_list) {
-            std::cout << i++ << std::endl;
-            AddVmsToServers(server_id, vm_id, unique_key.first);
+            // std::cout << i++ << std::endl;
+            server_number += AddVmsToServers(server_id, vm_id, unique_key.first);
         }
+		server_purchase_chart_[server_id] += server_number;
 	}
     num_new_purchases_ = total_server_num_ - old_total_server_num;
 }
@@ -63,14 +64,17 @@ void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
     }
 }
 
-void ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key) {
+uint16_t ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key) {
     if (server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key) != 0) {
         server_manager_.PurchaseServer(server_id, server_dynamic_id_);
-        std::cout << "Forced to buy a server " << server_data_manager_.GetServerInfo(server_id).server_cpu << ", " << server_data_manager_.GetServerInfo(server_id).server_memory << std::endl;
-        std::cout << "vm has " << vm_data_manager_.GetVm(vm_id).vm_cpu << ", " << vm_data_manager_.GetVm(vm_id).vm_memory << ", " << vm_data_manager_.GetVm(vm_id).is_single << std::endl;
+        // std::cout << "Forced to buy a server " << server_data_manager_.GetServerInfo(server_id).server_cpu << ", " << server_data_manager_.GetServerInfo(server_id).server_memory << std::endl;
+        // std::cout << "vm has " << vm_data_manager_.GetVm(vm_id).vm_cpu << ", " << vm_data_manager_.GetVm(vm_id).vm_memory << ", " << vm_data_manager_.GetVm(vm_id).is_single << std::endl;
         ++server_dynamic_id_;
-        std::cout << server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key) << std::endl;
+        ++total_server_num_;
+        server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key);
+        return 1;
     }
+    return 0;
 }
 
 std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& nth_smallest_lambda, const uint16_t& worst_num) {
@@ -97,9 +101,9 @@ std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& 
     float lambda = vm_info.vm_lambda;
 
     std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaMatch(lambda);
-    std::cout << "vm lambda: " << lambda << ", server lambda: " << server_info.second.server_lambda << std::endl;
-    std::cout << "vm cpu: " << vm_cpu << ", server cpu: " << server_info.second.server_cpu << std::endl;
-    std::cout << "vm memory: " << vm_memory << ", server memory: " << server_info.second.server_memory << std::endl;
+    // std::cout << "vm lambda: " << lambda << ", server lambda: " << server_info.second.server_lambda << std::endl;
+    // std::cout << "vm cpu: " << vm_cpu << ", server cpu: " << server_info.second.server_cpu << std::endl;
+    // std::cout << "vm memory: " << vm_memory << ", server memory: " << server_info.second.server_memory << std::endl;
     const uint16_t& server_id = server_info.first;
     int16_t num_server_buy;
     // std::cout << "VM node cpu " << vm_cpu << std::endl;

@@ -40,5 +40,5 @@ class ServerSelector {
     std::pair<int16_t,int16_t> WorseCaseSelectionVm(const uint16_t& nth_smallest_lambda, const uint16_t& worst_num);
     void MakeServerSelectionHelper(uint16_t curr_server_id, std::vector<uint16_t> server_list);
     void PurchaseServers(uint16_t server_id, uint16_t num);
-    void AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key);
+    uint16_t AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key);
 };
