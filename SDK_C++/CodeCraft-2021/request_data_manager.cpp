@@ -22,6 +22,14 @@ uint16_t RequestDataManager::GetDays() {
     return days_;
 }
 
+uint16_t RequestDataManager::GetVmId(int32_t request_id) {
+    return request_info_list_[request_id].vm_id;
+}
+
+int32_t RequestDataManager::GetUniqueVmId(int32_t request_id) {
+    return request_info_list_[request_id].unique_vm_id;
+}
+
 std::vector<int32_t>& RequestDataManager::GetRequestOfDay(uint16_t day) {
     return requests_by_start_day_[day];
 }

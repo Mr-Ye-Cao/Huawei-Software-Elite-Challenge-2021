@@ -14,6 +14,8 @@ class RequestDataManager {
     RequestDataManager& operator=(const RequestDataManager&) = delete;
 
     uint16_t GetDays();
+    uint16_t GetVmId(int32_t request_id);
+    int32_t GetUniqueVmId(int32_t request_id);
     std::vector<int32_t>& GetRequestOfDay(uint16_t day);
     std::unordered_map<int32_t, RequestInfo>& GetRequestInfoList();
 
