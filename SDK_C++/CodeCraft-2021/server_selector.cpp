@@ -52,7 +52,7 @@ void ServerSelector::MakeServerSelection() {
         for (const auto& unique_key : specifc_vm_worst.vm_schedule_list) {
             server_number += AddVmsToServers(server_id, vm_id, unique_key.first);
         }
-        std::cout << "Extras bought: " << server_number - server_number_old << std::endl;
+        // std::cout << "Extras bought: " << server_number - server_number_old << std::endl;
 		server_purchase_chart_[server_id] += server_number;
 	}
     num_new_purchases_ = total_server_num_ - old_total_server_num;
@@ -68,12 +68,12 @@ void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
 uint16_t ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key) {
     if (server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key) != 0) {
         server_manager_.PurchaseServer(server_id, server_dynamic_id_);
-        std::cout << "Forced to buy a server " << server_data_manager_.GetServerInfo(server_id).server_cpu << ", " << server_data_manager_.GetServerInfo(server_id).server_memory << std::endl;
-        std::cout << "vm has " << vm_data_manager_.GetVm(vm_id).vm_cpu << ", " << vm_data_manager_.GetVm(vm_id).vm_memory << ", " << vm_data_manager_.GetVm(vm_id).is_single << std::endl;
+        // std::cout << "Forced to buy a server " << server_data_manager_.GetServerInfo(server_id).server_cpu << ", " << server_data_manager_.GetServerInfo(server_id).server_memory << std::endl;
+        // std::cout << "vm has " << vm_data_manager_.GetVm(vm_id).vm_cpu << ", " << vm_data_manager_.GetVm(vm_id).vm_memory << ", " << vm_data_manager_.GetVm(vm_id).is_single << std::endl;
         ++server_dynamic_id_;
         ++total_server_num_;
         int i = server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key);
-        std::cout << i << std::endl;
+        // std::cout << i << std::endl;
         return 1;
     }
     return 0;

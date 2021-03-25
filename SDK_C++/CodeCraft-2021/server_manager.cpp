@@ -77,15 +77,15 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
                 best_fit_server.server_mem_A -= vm_info.vm_memory;
                 best_fit_server.vm_node_A.push_back(vm_request);
                 vm_deployment_info.is_A = true;
-                std::cout << "single node VM " << vm_data_manager_.GetVm(vm_id).vm_name
-                    << " on server " << best_fit_server.server_dynamic_id << " node A of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
+                // std::cout << "single node VM " << vm_data_manager_.GetVm(vm_id).vm_name
+                //     << " on server " << best_fit_server.server_dynamic_id << " node A of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
             } else {
                 best_fit_server.server_cpu_B -= vm_info.vm_cpu;
                 best_fit_server.server_mem_B -= vm_info.vm_memory;
                 best_fit_server.vm_node_B.push_back(vm_request);
                 vm_deployment_info.is_A = false;
-                std::cout << "single node request " << vm_data_manager_.GetVm(vm_id).vm_name
-                    << " on server " << best_fit_server.server_dynamic_id << " node B of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
+                // std::cout << "single node request " << vm_data_manager_.GetVm(vm_id).vm_name
+                //     << " on server " << best_fit_server.server_dynamic_id << " node B of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
             }
             return 0;
         }
@@ -114,7 +114,7 @@ int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const u
             best_fit_server.vm_node_A.push_back(vm_request);
             best_fit_server.vm_node_B.push_back(vm_request);
             vm_unique_key_to_deployment_info_[vm_unique_id].server_dynamic_id = best_fit_server.server_dynamic_id;
-            std::cout << "double node request " << vm_data_manager_.GetVm(vm_id).vm_name << " on server " << best_fit_server.server_dynamic_id << " of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
+            // std::cout << "double node request " << vm_data_manager_.GetVm(vm_id).vm_name << " on server " << best_fit_server.server_dynamic_id << " of type " << server_data_manager_.GetServerInfo(server_static_id).server_name << std::endl;
             return 0;
         }
     }
@@ -128,10 +128,10 @@ bool ServerManager::Fits(const uint16_t& server_static_id, const uint16_t& serve
     // if (node_A) return false;
     if (vm_info.is_single) {
         if (node_A) {
-            std::cout << "curr_server.server_cpu_A: " << curr_server.server_cpu_A << std::endl;
-            std::cout << "vm_info.vm_cpu: " << vm_info.vm_cpu << std::endl;
-            std::cout << "curr_server.server_mem_A: " << curr_server.server_mem_A << std::endl;
-            std::cout << "vm_info.vm_memory: " << vm_info.vm_memory << std::endl;
+            // std::cout << "curr_server.server_cpu_A: " << curr_server.server_cpu_A << std::endl;
+            // std::cout << "vm_info.vm_cpu: " << vm_info.vm_cpu << std::endl;
+            // std::cout << "curr_server.server_mem_A: " << curr_server.server_mem_A << std::endl;
+            // std::cout << "vm_info.vm_memory: " << vm_info.vm_memory << std::endl;
             if (curr_server.server_cpu_A >= vm_info.vm_cpu && curr_server.server_mem_A >= vm_info.vm_memory) {
                 cpu_left = curr_server.server_cpu_A;
                 memory_left = curr_server.server_mem_A;
@@ -140,10 +140,10 @@ bool ServerManager::Fits(const uint16_t& server_static_id, const uint16_t& serve
                 return false;
             }
         } else {
-            std::cout << "curr_server.server_cpu_B: " << curr_server.server_cpu_B << std::endl;
-            std::cout << "vm_info.vm_cpu: " << vm_info.vm_cpu << std::endl;
-            std::cout << "curr_server.server_mem_B: " << curr_server.server_mem_B << std::endl;
-            std::cout << "vm_info.vm_memory: " << vm_info.vm_memory << std::endl;
+            // std::cout << "curr_server.server_cpu_B: " << curr_server.server_cpu_B << std::endl;
+            // std::cout << "vm_info.vm_cpu: " << vm_info.vm_cpu << std::endl;
+            // std::cout << "curr_server.server_mem_B: " << curr_server.server_mem_B << std::endl;
+            // std::cout << "vm_info.vm_memory: " << vm_info.vm_memory << std::endl;
             if (curr_server.server_cpu_B >= vm_info.vm_cpu && curr_server.server_mem_B >= vm_info.vm_memory) {
                 cpu_left = curr_server.server_cpu_B;
                 memory_left = curr_server.server_mem_B;
@@ -155,12 +155,12 @@ bool ServerManager::Fits(const uint16_t& server_static_id, const uint16_t& serve
     } else {
         int16_t vm_cpu_per_node = vm_info.vm_cpu / 2;
         int16_t vm_memory_per_node = vm_info.vm_memory / 2;
-        std::cout << "curr_server.server_cpu_A: " << curr_server.server_cpu_A << std::endl;
-        std::cout << "curr_server.server_cpu_B: " << curr_server.server_cpu_B << std::endl;
-        std::cout << "vm_cpu_per_node: " << vm_cpu_per_node << std::endl;
-        std::cout << "curr_server.server_mem_A: " << curr_server.server_mem_A << std::endl;
-        std::cout << "curr_server.server_mem_B: " << curr_server.server_mem_B << std::endl;
-        std::cout << "vm_memory_per_node: " << vm_memory_per_node << std::endl;
+        // std::cout << "curr_server.server_cpu_A: " << curr_server.server_cpu_A << std::endl;
+        // std::cout << "curr_server.server_cpu_B: " << curr_server.server_cpu_B << std::endl;
+        // std::cout << "vm_cpu_per_node: " << vm_cpu_per_node << std::endl;
+        // std::cout << "curr_server.server_mem_A: " << curr_server.server_mem_A << std::endl;
+        // std::cout << "curr_server.server_mem_B: " << curr_server.server_mem_B << std::endl;
+        // std::cout << "vm_memory_per_node: " << vm_memory_per_node << std::endl;
         if (curr_server.server_cpu_A >= vm_cpu_per_node && curr_server.server_mem_A >= vm_memory_per_node && 
             curr_server.server_cpu_B >= vm_cpu_per_node && curr_server.server_mem_B >= vm_memory_per_node) {
             cpu_left = curr_server.server_cpu_A + curr_server.server_cpu_B;

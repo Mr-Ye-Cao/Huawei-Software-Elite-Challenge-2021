@@ -98,3 +98,29 @@ std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& VmManager::GetWorstCaseVmLi
 int32_t VmManager::GetRequestOnVm(uint16_t vm_id, int32_t vm_unique_id, uint16_t day) {
     return vm_schedules_worst_case_[vm_id].vm_schedule_list[vm_unique_id][day].request_id;
 }
+
+std::vector<std::pair<uint16_t, int32_t> > VmManager::GetNewVmOfToday(uint16_t day) {
+    std::vector<std::pair<uint16_t, int32_t> > new_vm_of_today;
+    if (day == 0) {
+        for (const auto& vm_type_ite : vm_schedules_worst_case_) {
+            const uint16_t vm_id = vm_type_ite.first;
+            for (const auto& vm_ite : vm_type_ite.second.vm_schedule_list) {
+                const int32_t vm_unique_id = vm_ite.first;
+                if (vm_ite.second[day].is_running) {
+                    new_vm_of_today.push_back(std::make_pair(vm_id, vm_unique_id));
+                }
+            }
+        }
+    } else {
+        for (const auto& vm_type_ite : vm_schedules_worst_case_) {
+            const uint16_t vm_id = vm_type_ite.first;
+            for (const auto& vm_ite : vm_type_ite.second.vm_schedule_list) {
+                const int32_t vm_unique_id = vm_ite.first;
+                if (vm_ite.second[day].is_running && !vm_ite.second[day - 1].is_running) {
+                    new_vm_of_today.push_back(std::make_pair(vm_id, vm_unique_id));
+                }
+            }
+        }
+    }
+    return new_vm_of_today;
+}
