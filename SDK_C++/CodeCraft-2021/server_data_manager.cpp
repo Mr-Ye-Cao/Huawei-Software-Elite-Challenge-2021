@@ -19,35 +19,35 @@ ServerDataManager::ServerDataManager() :
     
     purchase_list_.resize(server_info_list_.size());
 
-    index_purchase_cost_.resize(server_info_list_.size());
-    index_purchase_cost_cpu_.resize(server_info_list_.size());
+    index_brute_force_.resize(server_info_list_.size());
+    // index_purchase_cost_cpu_.resize(server_info_list_.size());
     index_cpu_.resize(server_info_list_.size());
     index_memory_.resize(server_info_list_.size());
     num_servers_ = server_info_list_.size();
     index_server_lambda_.resize(server_info_list_.size());
     for (uint16_t i = 0; i < num_servers_; ++i) {
-        index_purchase_cost_[i] = i;
-        index_purchase_cost_cpu_[i] = i;
+        index_brute_force_[i] = i;
+        // index_purchase_cost_cpu_[i] = i;
         index_cpu_[i] = i;
         index_memory_[i] = i;
         index_server_lambda_[i] = i;
     }
-    BuildIndexPurchaseCost();
-    BuildIndexPurchaseCostCpu();
+    BuildIndexBruteForce();
+    // BuildIndexPurchaseCostCpu();
     BuildIndexCpu();
     BuildIndexMemory();
     BuildIndexServerLambda();
 }
 
-void ServerDataManager::BuildIndexPurchaseCost(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/) {
+void ServerDataManager::BuildIndexBruteForce(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/) {
     std::sort(
-        index_purchase_cost_.begin(),
-        index_purchase_cost_.end(),
+        index_brute_force_.begin(),
+        index_brute_force_.end(),
         IndexComparator<std::vector<ServerInfo>::const_iterator, ServerInfo>(
             server_info_list_.begin(),
             server_info_list_.end(),
             [] (const ServerInfo& a, const ServerInfo& b) -> bool {
-                return a.purchase_cost < b.purchase_cost;
+                return a.purchase_cost < b.purchase_cost; // TODO: change this to your sorting criteria
         })
     );
     // for (int i = 0; i < index_purchase_cost_.size(); ++i) {
@@ -55,21 +55,21 @@ void ServerDataManager::BuildIndexPurchaseCost(/*bool (*le)(const ServerInfo&, c
     // }
 }
 
-void ServerDataManager::BuildIndexPurchaseCostCpu() {
-    std::sort(
-        index_purchase_cost_cpu_.begin(),
-        index_purchase_cost_cpu_.end(),
-        IndexComparator<std::vector<ServerInfo>::const_iterator, ServerInfo>(
-            server_info_list_.begin(),
-            server_info_list_.end(),
-            [] (const ServerInfo& a, const ServerInfo& b) -> bool {
-                return (float)a.purchase_cost / a.server_memory < (float)b.purchase_cost / b.server_memory;
-        })
-    );
-    // for (int i = 0; i < index_purchase_cost_cpu_.size(); ++i) {
-    //     std::cout << "No. " << i << " costs " << server_info_list_[index_purchase_cost_cpu_[i]].purchase_cost << std::endl;
-    // }
-}
+// void ServerDataManager::BuildIndexPurchaseCostCpu() {
+//     std::sort(
+//         index_purchase_cost_cpu_.begin(),
+//         index_purchase_cost_cpu_.end(),
+//         IndexComparator<std::vector<ServerInfo>::const_iterator, ServerInfo>(
+//             server_info_list_.begin(),
+//             server_info_list_.end(),
+//             [] (const ServerInfo& a, const ServerInfo& b) -> bool {
+//                 return (float)a.purchase_cost / a.server_memory < (float)b.purchase_cost / b.server_memory;
+//         })
+//     );
+//     // for (int i = 0; i < index_purchase_cost_cpu_.size(); ++i) {
+//     //     std::cout << "No. " << i << " costs " << server_info_list_[index_purchase_cost_cpu_[i]].purchase_cost << std::endl;
+//     // }
+// }
 
 void ServerDataManager::BuildIndexCpu() {
     std::sort(
@@ -123,13 +123,13 @@ ServerInfo& ServerDataManager::GetServerInfo(uint16_t n) {
     return server_info_list_[n];
 }
 
-ServerInfo& ServerDataManager::GetServerNthPurchaseCost(uint16_t n) {
-    return server_info_list_[index_purchase_cost_[n]];
+ServerInfo& ServerDataManager::GetServerNthBruteForce(uint16_t n) {
+    return server_info_list_[index_brute_force_[n]];
 }
 
-ServerInfo& ServerDataManager::GetServerNthPurchaseCostCpu(uint16_t n) {
-    return server_info_list_[index_purchase_cost_cpu_[n]];
-}
+// ServerInfo& ServerDataManager::GetServerNthPurchaseCostCpu(uint16_t n) {
+//     return server_info_list_[index_purchase_cost_cpu_[n]];
+// }
 
 ServerInfo& ServerDataManager::GetServerNthCpu(uint16_t n) {
     return server_info_list_[index_cpu_[n]];
