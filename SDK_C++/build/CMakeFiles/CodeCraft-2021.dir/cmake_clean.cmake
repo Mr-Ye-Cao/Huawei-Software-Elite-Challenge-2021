@@ -9,7 +9,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/CodeCraft-2021.dir/scheduler.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/server_data_manager.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/server_manager.cpp.o"
-  "CMakeFiles/CodeCraft-2021.dir/server_mananger.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/server_selector.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/utils.cpp.o"
   "CMakeFiles/CodeCraft-2021.dir/vm_data_manager.cpp.o"

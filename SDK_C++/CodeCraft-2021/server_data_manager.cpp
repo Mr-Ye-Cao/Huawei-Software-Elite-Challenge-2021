@@ -2,6 +2,7 @@
 
 #include "server_data_manager.h"
 
+#include <algorithm>
 #include <iostream>
 
 #include "index_comparator.h"
