@@ -7,8 +7,8 @@
 #include <fstream>
 
 InputReader::InputReader() {
-    ReadInputFile();
-    // ReadInputCin();
+    // ReadInputFile();
+    ReadInputCin();
 }
 
 void InputReader::ReadInputFile(){
@@ -34,9 +34,12 @@ void InputReader::ReadInputFile(){
         curr.server_name = line.substr(0, (server_start = line.find(kSpace)) - 1);
         // std::cout << "Server Name: " << curr.server_name << std::endl;
         curr.server_cpu = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        // std::cout << "cpu Start is " << server_start << std::endl;
         curr.server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        // std::cout << "memory Start is " << server_start << std::endl;
         curr.purchase_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
-        curr.running_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        // std::cout << "cost Start is " << server_start << std::endl;
+        curr.running_cost = std::stoi(line.substr(server_start + 1, line.size() - server_start - 1));
         curr.server_lambda = (float)curr.server_cpu / curr.server_memory;
     }
 
@@ -45,6 +48,7 @@ void InputReader::ReadInputFile(){
     uint16_t vm_cpu, vm_memory; // range [1, 1024] positive number (can be contained in at least one server)
     bool is_single;
     uint16_t vm_start = 0;
+    uint16_t next_start = 0;
     std::getline(file, line);
     M = std::stoi(line);
     vm_info_list_.resize(M);
@@ -56,10 +60,17 @@ void InputReader::ReadInputFile(){
         VmInfo& curr = vm_info_list_[i];
         curr.vm_name = line.substr(0, (vm_start = line.find(kSpace))-1);
         // std::cout << "VM Name: " << curr.vm_name << std::endl;
-        curr.vm_cpu = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
-        curr.vm_memory = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
-        curr.is_single = line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)) == kZero ? true : false;
+        next_start = line.find(kSpace, vm_start + 1);
+        curr.vm_cpu = std::stoi(line.substr(vm_start + 1, next_start - vm_start));
+        vm_start = next_start;
+        next_start = line.find(kSpace, vm_start + 1);
+        curr.vm_memory = std::stoi(line.substr(vm_start + 1, next_start - vm_start));
+        curr.is_single = line.substr(vm_start + 1, 1) == kZero ? true : false;
         curr.vm_lambda = (float)curr.vm_cpu / curr.vm_memory;
+        // std::cout << "Vm name is " << curr.vm_name << std::endl;
+        // std::cout << "Vm cpu is " << curr.vm_cpu << std::endl;
+        // std::cout << "Vm memory is " << curr.vm_memory << std::endl;
+        // std::cout << "Vm is single is " << curr.is_single << std::endl;
     }
 
     // Adds requests
@@ -97,6 +108,7 @@ void InputReader::ReadInputFile(){
             }
         }
     }
+    // std::cout << "Finished reading requests" << std::endl;
 }
 
 void InputReader::ReadInputCin(){
@@ -126,15 +138,18 @@ void InputReader::ReadInputCin(){
         getline(std::cin, line);
 
         line = line.substr(1, line.length() - 2);
-        std::cout << "curr line is " << line << std::endl;
+        // std::cout << "curr line is " << line << std::endl;
         server_start = 0;
         
         ServerInfo& curr = server_info_list_[i];
         curr.server_name = line.substr(0, (server_start = line.find(kSpace)) - 1);
         // std::cout << "Server Name: " << curr.server_name << std::endl;
         curr.server_cpu = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        // std::cout << "cpu Start is " << server_start << std::endl;
         curr.server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        // std::cout << "memory Start is " << server_start << std::endl;
         curr.purchase_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        // std::cout << "cost Start is " << server_start << std::endl;
         curr.running_cost = std::stoi(line.substr(server_start + 1, line.size() - server_start - 1));
         curr.server_lambda = (float)curr.server_cpu / curr.server_memory;
     }
@@ -144,6 +159,7 @@ void InputReader::ReadInputCin(){
     uint16_t vm_cpu, vm_memory; // range [1, 1024] positive number (can be contained in at least one server)
     bool is_single;
     uint16_t vm_start = 0;
+    uint16_t next_start = 0;
 
     // std::getline(file, line);
     getline(std::cin, line);
@@ -163,15 +179,23 @@ void InputReader::ReadInputCin(){
         VmInfo& curr = vm_info_list_[i];
         curr.vm_name = line.substr(0, (vm_start = line.find(kSpace))-1);
         // std::cout << "VM Name: " << curr.vm_name << std::endl;
-        curr.vm_cpu = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
-        curr.vm_memory = std::stoi(line.substr(vm_start + 1, vm_start = line.find(kSpace, vm_start + 1)));
+        next_start = line.find(kSpace, vm_start + 1);
+        curr.vm_cpu = std::stoi(line.substr(vm_start + 1, next_start - vm_start));
+        vm_start = next_start;
+        next_start = line.find(kSpace, vm_start + 1);
+        curr.vm_memory = std::stoi(line.substr(vm_start + 1, next_start - vm_start));
         curr.is_single = line.substr(vm_start + 1, 1) == kZero ? true : false;
         curr.vm_lambda = (float)curr.vm_cpu / curr.vm_memory;
+        // std::cout << "Vm name is " << curr.vm_name << std::endl;
+        // std::cout << "Vm cpu is " << curr.vm_cpu << std::endl;
+        // std::cout << "Vm memory is " << curr.vm_memory << std::endl;
+        // std::cout << "Vm is single is " << curr.is_single << std::endl;
     }
 
     // Adds requests
     // std::getline(file,line);
     getline(std::cin, line);
+
 
     T = std::stoi(line);
     // daily_request_info_list_.resize(T);
@@ -189,6 +213,7 @@ void InputReader::ReadInputCin(){
         for(int j = 0; j < R; ++j) {
             // std::getline(file,line);
             getline(std::cin, line);
+
 
             line = line.substr(1, line.length() - 2);
 
