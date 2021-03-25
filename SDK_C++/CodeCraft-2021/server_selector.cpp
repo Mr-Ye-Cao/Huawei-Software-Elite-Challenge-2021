@@ -102,7 +102,10 @@ std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& 
     int16_t vm_memory = vm_info.vm_memory;
     float lambda = vm_info.vm_lambda;
 
-    std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaMatch(lambda);
+    // For brute force approach
+    std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerNthBruteForce(nth_smallest_lambda);
+    // For lambda approach
+    // std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaMatch(lambda);
     // std::cout << "vm lambda: " << lambda << ", server lambda: " << server_info.second.server_lambda << std::endl;
     // std::cout << "vm cpu: " << vm_cpu << ", server cpu: " << server_info.second.server_cpu << std::endl;
     // std::cout << "vm memory: " << vm_memory << ", server memory: " << server_info.second.server_memory << std::endl;

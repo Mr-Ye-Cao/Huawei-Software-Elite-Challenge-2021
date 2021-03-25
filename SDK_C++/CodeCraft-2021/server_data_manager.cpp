@@ -123,8 +123,8 @@ ServerInfo& ServerDataManager::GetServerInfo(uint16_t n) {
     return server_info_list_[n];
 }
 
-ServerInfo& ServerDataManager::GetServerNthBruteForce(uint16_t n) {
-    return server_info_list_[index_brute_force_[n]];
+std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerNthBruteForce(uint16_t n) {
+    return std::make_pair(index_brute_force_[n], server_info_list_[index_brute_force_[n]]);
 }
 
 // ServerInfo& ServerDataManager::GetServerNthPurchaseCostCpu(uint16_t n) {

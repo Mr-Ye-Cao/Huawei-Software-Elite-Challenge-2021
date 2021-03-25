@@ -19,7 +19,7 @@ class ServerDataManager {
     
     // ALL ranking are done from smallest to largest
     ServerInfo& GetServerInfo(uint16_t n);
-    ServerInfo& GetServerNthBruteForce(uint16_t n);
+    std::pair<uint16_t, ServerInfo> GetServerNthBruteForce(uint16_t n);
     // ServerInfo& GetServerNthPurchaseCostCpu(uint16_t n); // Find nth best by the ratio of purchase cost : price
     ServerInfo& GetServerNthCpu(uint16_t n); // Gets the server with the nth smallest cpu
     ServerInfo& GetServerNthMemory(uint16_t n); // Gets the server with the nth smallest memory
