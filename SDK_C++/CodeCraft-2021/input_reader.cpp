@@ -30,6 +30,7 @@ void InputReader::ReadInputFile(){
         server_start = 0;
         
         ServerInfo& curr = server_info_list_[i];
+        // TODO(yuxin): section where things start to go wrong (substr start out of range error)
         curr.server_name = line.substr(0, (server_start = line.find(kSpace)) - 1);
         // std::cout << "Server Name: " << curr.server_name << std::endl;
         curr.server_cpu = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
