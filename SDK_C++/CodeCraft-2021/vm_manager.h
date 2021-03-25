@@ -56,6 +56,7 @@ class VmManager {
     std::unordered_map<uint16_t, VmStatusWorstCaseInfo>& GetWorstCaseVmList();
     std::pair<uint16_t, ServerInfo&> GetServerLambdaMatch(float lambda, bool fresh_start = false);
     int32_t GetRequestOnVm(uint16_t vm_id, int32_t vm_unique_id, uint16_t day); // Gets the request on this vm at the day
+    std::vector<std::pair<uint16_t, int32_t> > GetNewVmOfToday(uint16_t day); // Gets the newly added vm's of the day (vm_id, vm_unique_id)
 
   private:
     VmManager();
