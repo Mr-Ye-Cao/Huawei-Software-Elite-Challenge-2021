@@ -7,8 +7,8 @@
 #include <fstream>
 
 InputReader::InputReader() {
-    // ReadInputFile();
-    ReadInputCin();
+    ReadInputFile();
+    // ReadInputCin();
 }
 
 void InputReader::ReadInputFile(){
