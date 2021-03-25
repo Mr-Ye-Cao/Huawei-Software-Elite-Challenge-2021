@@ -358,33 +358,6 @@ server_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_manager.cpp.s
 .PHONY : server_manager.cpp.s
 
-server_mananger.o: server_mananger.cpp.o
-
-.PHONY : server_mananger.o
-
-# target to build an object file
-server_mananger.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_mananger.cpp.o
-.PHONY : server_mananger.cpp.o
-
-server_mananger.i: server_mananger.cpp.i
-
-.PHONY : server_mananger.i
-
-# target to preprocess a source file
-server_mananger.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_mananger.cpp.i
-.PHONY : server_mananger.cpp.i
-
-server_mananger.s: server_mananger.cpp.s
-
-.PHONY : server_mananger.s
-
-# target to generate assembly for a file
-server_mananger.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CodeCraft-2021.dir/build.make CMakeFiles/CodeCraft-2021.dir/server_mananger.cpp.s
-.PHONY : server_mananger.cpp.s
-
 server_selector.o: server_selector.cpp.o
 
 .PHONY : server_selector.o
@@ -526,9 +499,6 @@ help:
 	@echo "... server_manager.o"
 	@echo "... server_manager.i"
 	@echo "... server_manager.s"
-	@echo "... server_mananger.o"
-	@echo "... server_mananger.i"
-	@echo "... server_mananger.s"
 	@echo "... server_selector.o"
 	@echo "... server_selector.i"
 	@echo "... server_selector.s"

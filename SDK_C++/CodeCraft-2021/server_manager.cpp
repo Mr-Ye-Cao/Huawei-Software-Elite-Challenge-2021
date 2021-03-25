@@ -2,6 +2,7 @@
 
 #include "server_manager.h"
 
+#include <limits>
 #include <iostream>
 
 ServerManager::ServerManager() : 
