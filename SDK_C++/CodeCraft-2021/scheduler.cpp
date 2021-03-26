@@ -73,5 +73,6 @@ void Scheduler::OneIterationInternal() {
         }
     }
     server_selector_.OutputTodayServerPurchases();
+    output_writer_.OutputMigrationHeader(today_);
     server_manager_.OutputTodayDeployment(today_);
 }
