@@ -23,6 +23,7 @@ class Scheduler {
     Scheduler();
     ~Scheduler() = default;
     void OneIterationInternal();
+    void OutputEverythingToday();
 
     RequestDataManager& request_data_manager_;
     ServerManager& server_manager_;

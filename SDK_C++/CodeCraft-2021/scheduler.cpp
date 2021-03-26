@@ -72,6 +72,10 @@ void Scheduler::OneIterationInternal() {
             // std::cout<<"Debug3"<<std::endl;
         }
     }
+    OutputEverythingToday();
+}
+
+void Scheduler::OutputEverythingToday() {
     server_selector_.OutputTodayServerPurchases();
     output_writer_.OutputMigrationHeader(today_);
     server_manager_.OutputTodayDeployment(today_);
