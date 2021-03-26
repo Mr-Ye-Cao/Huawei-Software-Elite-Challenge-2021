@@ -44,10 +44,10 @@ void ServerSelector::MakeServerSelection() {
 		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(nth_smallest_lambda, num_vm);
 		uint16_t server_id = spi.first;
 		uint16_t server_number = 0; //spi.second;
-        // std::cout << "Initially bought " << server_number << " servers" << std::endl;
-		// total_server_num_ += server_number;
-        // PurchaseServers(server_id, server_number);
-        // int i = 0;
+        std::cout << "Initially bought " << server_number << " servers" << std::endl;
+		total_server_num_ += server_number;
+        PurchaseServers(server_id, server_number);
+        int i = 0;
         uint16_t server_number_old = server_number;
         for (const auto& unique_key : specifc_vm_worst.vm_schedule_list) {
             server_number += AddVmsToServers(server_id, vm_id, unique_key.first);
@@ -55,6 +55,7 @@ void ServerSelector::MakeServerSelection() {
         // std::cout << "Extras bought: " << server_number - server_number_old << std::endl;
 		server_purchase_chart_[server_id] += server_number;
 	}
+    std::cout << "Exit loop" << std::endl;
     num_new_purchases_ = total_server_num_ - old_total_server_num;
 }
 
@@ -103,9 +104,9 @@ std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& 
     float lambda = vm_info.vm_lambda;
 
     // For brute force approach
-    std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerNthBruteForce(nth_smallest_lambda);
+    // std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerNthBruteForce(nth_smallest_lambda);
     // For lambda approach
-    // std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaMatch(lambda);
+    std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaMatch(lambda);
     // std::cout << "vm lambda: " << lambda << ", server lambda: " << server_info.second.server_lambda << std::endl;
     // std::cout << "vm cpu: " << vm_cpu << ", server cpu: " << server_info.second.server_cpu << std::endl;
     // std::cout << "vm memory: " << vm_memory << ", server memory: " << server_info.second.server_memory << std::endl;

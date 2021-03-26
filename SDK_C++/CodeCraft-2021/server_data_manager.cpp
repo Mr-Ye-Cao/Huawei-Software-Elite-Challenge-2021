@@ -50,8 +50,8 @@ void ServerDataManager::BuildIndexBruteForce(/*bool (*le)(const ServerInfo&, con
                 return a.purchase_cost < b.purchase_cost; // TODO: change this to your sorting criteria
         })
     );
-    // for (int i = 0; i < index_purchase_cost_.size(); ++i) {
-    //     std::cout << "No. " << i << " is " << server_info_list_[index_purchase_cost_[i]].purchase_cost << std::endl;
+    // for (int i = 0; i < index_brute_force_.size(); ++i) {
+    //     std::cout << "No. " << i << " is " << server_info_list_[index_brute_force_[i]].purchase_cost << std::endl;
     // }
 }
 
