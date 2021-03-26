@@ -81,10 +81,14 @@ output_writer.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/output_writer.h
 request_data_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/request_data_manager.h
+server_data_manager.h
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_data_manager.h
 server_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_manager.h
 server_selector.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/server_selector.h
+vm_data_manager.h
+/Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_data_manager.h
 vm_manager.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/vm_manager.h
 
@@ -94,6 +98,8 @@ server_data_manager.h
 algorithm
 -
 iostream
+-
+unordered_set
 -
 index_comparator.h
 /Users/xiaoming/Desktop/huawei/solution/Huawei-Software-Elite-Challenge-2021/SDK_C++/CodeCraft-2021/index_comparator.h

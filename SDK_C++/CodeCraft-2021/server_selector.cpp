@@ -31,33 +31,69 @@ std::unordered_map<std::uint16_t, std::uint16_t>& ServerSelector::GetServerPurch
 // 3. Remove one server from the back of the list
 // 4. Repeat 2-3 with the next to the top server, by adding the next to the top server to the back of the list.
 // 5. Repeat 2-4 until all server combo have been tried
-void ServerSelector::MakeServerSelection() {
-    std::vector<uint16_t> server_list;
-    uint16_t old_total_server_num = total_server_num_;
- 	for(uint16_t nth_smallest_lambda = 0; nth_smallest_lambda < vm_data_manager_.GetNumVm(); nth_smallest_lambda++){
-        // std::cout<<"Debug5"<<std::endl;
+// void ServerSelector::MakeServerSelection() {
+//     std::vector<uint16_t> server_list;
+//     uint16_t old_total_server_num = total_server_num_;
+//  	for(uint16_t nth_smallest_lambda = 0; nth_smallest_lambda < vm_data_manager_.GetNumVm(); nth_smallest_lambda++){
+//         // std::cout<<"Debug5"<<std::endl;
 
-        uint16_t vm_id = vm_data_manager_.GetVmIndexNthLambda(nth_smallest_lambda);
-		VmStatusWorstCaseInfo& specifc_vm_worst = vm_manager_.GetWorstCaseVmList()[vm_id];
-		// the number of specialized server to buy to contain this type ith vm
-        uint16_t num_vm = specifc_vm_worst.vm_schedule_list.size();
-		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(nth_smallest_lambda, num_vm);
-		uint16_t server_id = spi.first;
-		uint16_t server_number = 0; //spi.second;
-        // std::cout << "Initially bought " << server_number << " servers" << std::endl;
-		total_server_num_ += server_number;
-        PurchaseServers(server_id, server_number);
-        int i = 0;
-        uint16_t server_number_old = server_number;
-        for (const auto& unique_key : specifc_vm_worst.vm_schedule_list) {
-            server_number += AddVmsToServers(server_id, vm_id, unique_key.first);
-        }
-        // std::cout << "Extras bought: " << server_number - server_number_old << std::endl;
-        server_purchase_chart_today_[server_id] = server_number;
-		// server_purchase_chart_[server_id] += server_number;
-	}
-    // std::cout << "Exit loop" << std::endl;
-    num_new_purchases_ = total_server_num_ - old_total_server_num;
+//         uint16_t vm_id = vm_data_manager_.GetVmIndexNthLambda(nth_smallest_lambda);
+// 		VmStatusWorstCaseInfo& specifc_vm_worst = vm_manager_.GetWorstCaseVmList()[vm_id];
+// 		// the number of specialized server to buy to contain this type ith vm
+//         uint16_t num_vm = specifc_vm_worst.vm_schedule_list.size();
+// 		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(nth_smallest_lambda, num_vm);
+// 		uint16_t server_id = spi.first;
+// 		uint16_t server_number = 0; //spi.second;
+//         // std::cout << "Initially bought " << server_number << " servers" << std::endl;
+// 		total_server_num_ += server_number;
+//         PurchaseServers(server_id, server_number);
+//         int i = 0;
+//         uint16_t server_number_old = server_number;
+//         for (const auto& unique_key : specifc_vm_worst.vm_schedule_list) {
+//             server_number += AddVmsToServers(server_id, vm_id, unique_key.first);
+//         }
+//         // std::cout << "Extras bought: " << server_number - server_number_old << std::endl;
+//         server_purchase_chart_today_[server_id] = server_number;
+// 		// server_purchase_chart_[server_id] += server_number;
+// 	}
+//     // std::cout << "Exit loop" << std::endl;
+//     num_new_purchases_ = total_server_num_ - old_total_server_num;
+// }
+
+void ServerSelector::MakeServerSelectionSimple(uint16_t today) {
+  // choose a server type in this case we only buy the first server
+  uint16_t sta_server_id = 0;
+  // get the task requests of vms for today
+  std::vector<std::pair<uint16_t, int32_t> > today_tasks =  vm_manager_.GetNewVmOfToday(today);
+  // keep track of the dynamic server id
+  uint16_t dyn_server_id = 0;
+//   std::cout<<"Debug1"<<std::endl;
+  // for each task put the vm into the server
+    for (int i = 0; i < today_tasks.size(); ++i){
+        AddVmsToServers(sta_server_id, today_tasks[i].first , today_tasks[i].second);
+        // if (server_manager_.AddVmToServerBestFit(sta_server_id, today_tasks[i].first , today_tasks[i].second) == -1) {
+        //     // std::cout<<"Debug2"<<std::endl;
+
+        //     // we need to purchase a new server for the vm
+        //     VmInfo& curr_vm_info = vm_data_manager_.GetVm(today_tasks[i].first);
+        //     uint16_t temp_server_static_id = server_data_manager_.GetBestServerThatFits(curr_vm_info.vm_cpu, curr_vm_info.vm_memory, curr_vm_info.is_single);
+        //     PurchaseServers(temp_server_static_id, 1);
+
+        //     // update the dynamic server id
+        //     ++dyn_server_id;
+            
+        //     if (server_manager_.AddVmToServerBestFit(temp_server_static_id, today_tasks[i].first , today_tasks[i].second) == -1){
+        //         std::cout<< "This server type is unable to finish the tasks.\n";
+        //         break;
+        //     } else {
+        //         // the vm is successfully put into server
+        //         // do nothing in this case
+        //     }
+
+        //     // reset the purchase
+        //     // server_selector_.ResetNumNewPurchases();
+        // }
+    }
 }
 
 void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
@@ -69,14 +105,22 @@ void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
 
 uint16_t ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key) {
     if (server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key) != 0) {
-        server_manager_.PurchaseServer(server_id, server_dynamic_id_);
+        VmInfo& curr_vm_info = vm_data_manager_.GetVm(vm_id);
+        uint16_t temp_server_static_id = server_data_manager_.GetBestServerThatFits(curr_vm_info.vm_cpu, curr_vm_info.vm_memory, curr_vm_info.is_single);
+        server_manager_.PurchaseServer(temp_server_static_id, server_dynamic_id_);
         // std::cout << "Forced to buy a server " << server_data_manager_.GetServerInfo(server_id).server_cpu << ", " << server_data_manager_.GetServerInfo(server_id).server_memory << std::endl;
         // std::cout << "vm has " << vm_data_manager_.GetVm(vm_id).vm_cpu << ", " << vm_data_manager_.GetVm(vm_id).vm_memory << ", " << vm_data_manager_.GetVm(vm_id).is_single << std::endl;
         ++server_dynamic_id_;
         ++total_server_num_;
-        int i = server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key);
+        int i = server_manager_.AddVmToServerBestFit(temp_server_static_id, vm_id, vm_unique_key);
+        if (i == -1){
+            std::cout<< "This server type is unable to finish the tasks.\n";
+            return -1;
+        }
         // std::cout << i << std::endl;
-        return 1;
+        server_purchase_chart_today_[temp_server_static_id] += 1;
+        ++num_new_purchases_;
+        return 0;
     }
     return 0;
 }
@@ -171,6 +215,6 @@ void ServerSelector::ApplyTodayPurchase() {
         const uint16_t& server_id = server_ite.first;
         uint16_t& num_to_buy = server_ite.second;
         server_purchase_chart_[server_id] += num_to_buy;
-        num_to_buy = 0;
+        server_purchase_chart_today_.erase(server_ite.first);
     }
 }
