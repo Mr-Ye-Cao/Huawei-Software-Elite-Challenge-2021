@@ -26,7 +26,7 @@ Scheduler& Scheduler::GetInstance() {
 
 void Scheduler::Run() {
     for (uint16_t day = 0; day < request_data_manager_.GetDays(); ++day) {
-        std::cout<<"Debug0"<<std::endl;
+        // std::cout<<"Debug0"<<std::endl;
 
         OneIterationInternal();
         ++today_;
@@ -72,6 +72,6 @@ void Scheduler::OneIterationInternal() {
             // std::cout<<"Debug3"<<std::endl;
         }
     }
-    server_manager_.OutputTodayDeployment(today_);
     server_selector_.OutputTodayServerPurchases();
+    server_manager_.OutputTodayDeployment(today_);
 }
