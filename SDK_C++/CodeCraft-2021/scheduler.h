@@ -7,8 +7,10 @@
 #include "input_reader.h"
 #include "output_writer.h"
 #include "request_data_manager.h"
+#include "server_data_manager.h"
 #include "server_manager.h"
 #include "server_selector.h"
+#include "vm_data_manager.h"
 #include "vm_manager.h"
 
 class Scheduler {
@@ -26,8 +28,10 @@ class Scheduler {
     void OutputEverythingToday();
 
     RequestDataManager& request_data_manager_;
+    ServerDataManager& server_data_manager_;
     ServerManager& server_manager_;
     ServerSelector& server_selector_;
+    VmDataManager& vm_data_manager_;
     VmManager& vm_manager_;
     OutputWriter& output_writer_;
 

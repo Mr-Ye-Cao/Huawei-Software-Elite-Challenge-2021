@@ -17,7 +17,8 @@ class ServerSelector {
     static ServerSelector& GetInstance();
     ServerSelector(const ServerSelector&) = delete;
     ServerSelector& operator=(const ServerSelector&) = delete;
-    void MakeServerSelection();
+    // void MakeServerSelection();
+    void MakeServerSelectionSimple(uint16_t today);
     std::unordered_map<std::uint16_t, std::uint16_t>& GetServerPurchaseChart();
     uint16_t GetNumNewPurchases();
     void ResetTodayPurchases();

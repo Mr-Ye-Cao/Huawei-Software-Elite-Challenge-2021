@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <unordered_set>
 
 #include "index_comparator.h"
 
@@ -19,41 +20,41 @@ ServerDataManager::ServerDataManager() :
     
     purchase_list_.resize(server_info_list_.size());
 
-    index_brute_force_.resize(server_info_list_.size());
+    // index_brute_force_.resize(server_info_list_.size());
     // index_purchase_cost_cpu_.resize(server_info_list_.size());
     index_cpu_.resize(server_info_list_.size());
     index_memory_.resize(server_info_list_.size());
     num_servers_ = server_info_list_.size();
     index_server_lambda_.resize(server_info_list_.size());
     for (uint16_t i = 0; i < num_servers_; ++i) {
-        index_brute_force_[i] = i;
+        // index_brute_force_[i] = i;
         // index_purchase_cost_cpu_[i] = i;
         index_cpu_[i] = i;
         index_memory_[i] = i;
         index_server_lambda_[i] = i;
     }
-    BuildIndexBruteForce();
+    // BuildIndexBruteForce();
     // BuildIndexPurchaseCostCpu();
     BuildIndexCpu();
     BuildIndexMemory();
     BuildIndexServerLambda();
 }
 
-void ServerDataManager::BuildIndexBruteForce(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/) {
-    std::sort(
-        index_brute_force_.begin(),
-        index_brute_force_.end(),
-        IndexComparator<std::vector<ServerInfo>::const_iterator, ServerInfo>(
-            server_info_list_.begin(),
-            server_info_list_.end(),
-            [] (const ServerInfo& a, const ServerInfo& b) -> bool {
-                return a.purchase_cost < b.purchase_cost; // TODO: change this to your sorting criteria
-        })
-    );
-    // for (int i = 0; i < index_brute_force_.size(); ++i) {
-    //     std::cout << "No. " << i << " is " << server_info_list_[index_brute_force_[i]].purchase_cost << std::endl;
-    // }
-}
+// void ServerDataManager::BuildIndexBruteForce(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/) {
+//     std::sort(
+//         index_brute_force_.begin(),
+//         index_brute_force_.end(),
+//         IndexComparator<std::vector<ServerInfo>::const_iterator, ServerInfo>(
+//             server_info_list_.begin(),
+//             server_info_list_.end(),
+//             [] (const ServerInfo& a, const ServerInfo& b) -> bool {
+//                 return a.purchase_cost < b.purchase_cost; // TODO: change this to your sorting criteria
+//         })
+//     );
+//     // for (int i = 0; i < index_brute_force_.size(); ++i) {
+//     //     std::cout << "No. " << i << " is " << server_info_list_[index_brute_force_[i]].purchase_cost << std::endl;
+//     // }
+// }
 
 // void ServerDataManager::BuildIndexPurchaseCostCpu() {
 //     std::sort(
@@ -123,9 +124,9 @@ ServerInfo& ServerDataManager::GetServerInfo(uint16_t n) {
     return server_info_list_[n];
 }
 
-std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerNthBruteForce(uint16_t n) {
-    return std::make_pair(index_brute_force_[n], server_info_list_[index_brute_force_[n]]);
-}
+// std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerNthBruteForce(uint16_t n) {
+//     return std::make_pair(index_brute_force_[n], server_info_list_[index_brute_force_[n]]);
+// }
 
 // ServerInfo& ServerDataManager::GetServerNthPurchaseCostCpu(uint16_t n) {
 //     return server_info_list_[index_purchase_cost_cpu_[n]];
@@ -211,4 +212,50 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
     } else {
         return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev - 1], server_info_list_[index_server_lambda_[prev - 1]]);
     }
+}
+
+uint16_t ServerDataManager::GetBestServerThatFits(int16_t vm_cpu, int16_t vm_memory, bool is_single) {
+    if (!is_single) {
+        vm_cpu /= 2;
+        vm_memory /= 2;
+    }
+    // std::cout << "vm_cpu is " << vm_cpu << std::endl;
+    // std::cout << "vm_memory is " << vm_memory << std::endl;
+    std::vector<uint16_t>::iterator it_cpu = std::lower_bound(
+        index_cpu_.begin(),
+        index_cpu_.end(),
+        vm_cpu,
+        [this] (const uint16_t& a, const uint16_t& b) -> bool {
+            return this->server_info_list_[a].server_cpu < b;
+        }
+    );
+    std::vector<uint16_t>::iterator it_memory = std::lower_bound(
+        index_memory_.begin(),
+        index_memory_.end(),
+        vm_memory,
+        [this] (const uint16_t& a, const uint16_t& b) -> bool {
+            return this->server_info_list_[a].server_memory < b;
+        }
+    );
+    std::vector<uint16_t> server_list;
+    std::unordered_set<uint16_t> cpu_index_set(it_cpu, index_cpu_.end());
+    std::unordered_set<uint16_t> servers_that_fits_both;
+    // for (auto& it = it_cpu; it != index_cpu_.end(); ++it) {
+    //     // std::cout << *it << ", ";
+    // }
+    // std::cout << std::endl;
+    for (auto& it = it_memory; it != index_memory_.end(); ++it) {
+        // std::cout << *it << ", ";
+        if (cpu_index_set.find(*it) != cpu_index_set.end()) {
+            servers_that_fits_both.insert(*it);
+        }
+    }
+    // std::cout << std::endl;
+    // std::set_intersection(it_cpu, index_cpu_.end(),
+    //                       it_memory, index_memory_.end(),
+    //                       back_inserter(server_list));
+    // Currently returns anyone in the list of server that can fit, 
+    // but later we can apply some conditions for optimization.
+    // std::cout << "servers_that_fits_both has size " << servers_that_fits_both.size() << std::endl;
+    return *servers_that_fits_both.begin();
 }

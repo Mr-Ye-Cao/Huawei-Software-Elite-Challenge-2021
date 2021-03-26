@@ -51,7 +51,7 @@ class ServerManager {
     ServerManager();
     ~ServerManager() = default;
     inline bool Fits(const uint16_t& server_static_id, const uint16_t& server_dynamic_id, const uint16_t& vm_id, int32_t& cpu_left, int32_t& memory_left, const bool node_A=true);
-    void ApplyTodayPurchase();
+    // void ApplyTodayPurchase();
 
     RequestDataManager& request_data_manager_;
     ServerDataManager& server_data_manager_;
@@ -59,6 +59,6 @@ class ServerManager {
     VmManager& vm_manager_;
     OutputWriter& output_writer_;
     std::vector<std::vector<PurchasedServer> > server_cluster_; // server_id (static) to its status
-    std::vector<std::vector<PurchasedServer> > server_cluster_today_; // server_id (static) to its status
+    // std::vector<std::vector<PurchasedServer> > server_cluster_today_; // server_id (static) to its status
     std::unordered_map<int32_t, VmDeploymentInfo> vm_unique_key_to_deployment_info_;
 };

@@ -19,11 +19,13 @@ class ServerDataManager {
     
     // ALL ranking are done from smallest to largest
     ServerInfo& GetServerInfo(uint16_t n);
-    std::pair<uint16_t, ServerInfo> GetServerNthBruteForce(uint16_t n);
+    // std::pair<uint16_t, ServerInfo> GetServerNthBruteForce(uint16_t n);
     // ServerInfo& GetServerNthPurchaseCostCpu(uint16_t n); // Find nth best by the ratio of purchase cost : price
     ServerInfo& GetServerNthCpu(uint16_t n); // Gets the server with the nth smallest cpu
     ServerInfo& GetServerNthMemory(uint16_t n); // Gets the server with the nth smallest memory
     std::pair<uint16_t, ServerInfo> GetServerLambdaMatch(float lambda, bool fresh_start = false);
+    // Gets the best server that fist this vm
+    uint16_t GetBestServerThatFits(int16_t vm_cpu, int16_t vm_memory, bool is_single);
     inline uint16_t GetNumServers() {
         return num_servers_;
     }
@@ -33,7 +35,7 @@ class ServerDataManager {
     ~ServerDataManager() = default;
     InputReader& input_reader_;
     std::vector<ServerInfo>& server_info_list_;
-    std::vector<uint16_t> index_brute_force_;
+    // std::vector<uint16_t> index_brute_force_;
     // std::vector<uint16_t> index_purchase_cost_cpu_; // By the ratio of purchase cost : price 
     std::vector<uint16_t> index_cpu_;
     std::vector<uint16_t> index_memory_;
@@ -42,7 +44,7 @@ class ServerDataManager {
     uint16_t prev_lambda_match_;
     
     // le is less than or equal to, used as comparator
-    void BuildIndexBruteForce(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/);
+    // void BuildIndexBruteForce(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/);
     // void BuildIndexPurchaseCostCpu(); // Build index by the ratio of purchase cost : price 
     void BuildIndexCpu(); // Build index by the number of cpu's 
     void BuildIndexMemory(); // Build index by the size of memory 
