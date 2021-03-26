@@ -44,7 +44,7 @@ void ServerSelector::MakeServerSelection() {
 		std::pair<uint16_t,uint16_t> spi = WorseCaseSelectionVm(nth_smallest_lambda, num_vm);
 		uint16_t server_id = spi.first;
 		uint16_t server_number = 0; //spi.second;
-        std::cout << "Initially bought " << server_number << " servers" << std::endl;
+        // std::cout << "Initially bought " << server_number << " servers" << std::endl;
 		total_server_num_ += server_number;
         PurchaseServers(server_id, server_number);
         int i = 0;
@@ -53,9 +53,10 @@ void ServerSelector::MakeServerSelection() {
             server_number += AddVmsToServers(server_id, vm_id, unique_key.first);
         }
         // std::cout << "Extras bought: " << server_number - server_number_old << std::endl;
-		server_purchase_chart_[server_id] += server_number;
+        server_purchase_chart_today_[server_id] = server_number;
+		// server_purchase_chart_[server_id] += server_number;
 	}
-    std::cout << "Exit loop" << std::endl;
+    // std::cout << "Exit loop" << std::endl;
     num_new_purchases_ = total_server_num_ - old_total_server_num;
 }
 
@@ -148,16 +149,28 @@ void ServerSelector::MakeServerSelectionHelper(uint16_t curr_server_id, std::vec
     // 5. Repeat 2-4 until all server combo have been tried
 }
 
-void ServerSelector::OutputAllServerPurchases() {
-    for (const auto& server : server_purchase_chart_) {
+void ServerSelector::OutputTodayServerPurchases() {
+    output_writer_.OutputServerPurchaseHeader(num_new_purchases_);
+    for (const auto& server : server_purchase_chart_today_) {
         output_writer_.OutputSingleServerPurchase(server_data_manager_.GetServerInfo(server.first).server_name, server.second);
     }
+    ResetTodayPurchases();
 }
 
 uint16_t ServerSelector::GetNumNewPurchases() {
     return num_new_purchases_;
 }
 
-void ServerSelector::ResetNumNewPurchases() {
+void ServerSelector::ResetTodayPurchases() {
     num_new_purchases_ = 0;
+    ApplyTodayPurchase();
+}
+
+void ServerSelector::ApplyTodayPurchase() {
+    for (auto& server_ite : server_purchase_chart_today_) {
+        const uint16_t& server_id = server_ite.first;
+        uint16_t& num_to_buy = server_ite.second;
+        server_purchase_chart_[server_id] += num_to_buy;
+        num_to_buy = 0;
+    }
 }

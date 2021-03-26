@@ -12,6 +12,7 @@ ServerManager::ServerManager() :
   vm_manager_(VmManager::GetInstance()),
   output_writer_(OutputWriter::GetInstance()) {
     server_cluster_.resize(server_data_manager_.GetNumServers());
+    server_cluster_today_.resize(server_data_manager_.GetNumServers());
 }
 
 ServerManager& ServerManager::GetInstance() {
@@ -31,7 +32,17 @@ void ServerManager::PurchaseServer(const uint16_t server_static_id, const uint16
     server.server_cpu_B = server.server_cpu_A;
     server.server_mem_A = server_info.server_memory / 2;
     server.server_mem_B = server.server_mem_A;
-    server_cluster_[server_static_id].push_back(server);
+    server_cluster_today_[server_static_id].push_back(server);
+}
+
+void ServerManager::ApplyTodayPurchase() {
+    for (int server_id = 0; server_id < server_cluster_today_.size(); ++server_id) {
+        std::vector<PurchasedServer>& server_list = server_cluster_today_[server_id];
+        for (const PurchasedServer& server : server_list) {
+            server_cluster_[server_id].push_back(server);
+        }
+        server_list.clear();
+    }
 }
 
 int ServerManager::AddVmToServerBestFit(const uint16_t server_static_id, const uint16_t vm_id, const uint16_t vm_unique_id) {
