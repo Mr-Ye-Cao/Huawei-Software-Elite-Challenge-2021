@@ -37,9 +37,9 @@ void InputReader::ReadInputFile(){
         // std::cout << "cpu Start is " << server_start << std::endl;
         curr.server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         // std::cout << "memory Start is " << server_start << std::endl;
-        curr.purchase_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        /*curr.purchase_cost = */std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         // std::cout << "cost Start is " << server_start << std::endl;
-        curr.running_cost = std::stoi(line.substr(server_start + 1, line.size() - server_start - 1));
+        /*curr.running_cost = */std::stoi(line.substr(server_start + 1, line.size() - server_start - 1));
         curr.server_lambda = (float)curr.server_cpu / curr.server_memory;
     }
 
@@ -148,9 +148,9 @@ void InputReader::ReadInputCin(){
         // std::cout << "cpu Start is " << server_start << std::endl;
         curr.server_memory = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         // std::cout << "memory Start is " << server_start << std::endl;
-        curr.purchase_cost = std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
+        /*curr.purchase_cost = */std::stoi(line.substr(server_start + 1, server_start = line.find(kSpace, server_start + 1)));
         // std::cout << "cost Start is " << server_start << std::endl;
-        curr.running_cost = std::stoi(line.substr(server_start + 1, line.size() - server_start - 1));
+        /*curr.running_cost = */std::stoi(line.substr(server_start + 1, line.size() - server_start - 1));
         curr.server_lambda = (float)curr.server_cpu / curr.server_memory;
     }
 
