@@ -1,4 +1,4 @@
-// @Author: Yu Xin
+ // @Author: Yu Xin
 
 #include "server_data_manager.h"
 
@@ -38,6 +38,8 @@ ServerDataManager::ServerDataManager() :
     BuildIndexCpu();
     BuildIndexMemory();
     BuildIndexServerLambda();
+    BuildServerLambdaIntervalMatch();
+    // std::cout << "Server data manager constructed" << std::endl;
 }
 
 // void ServerDataManager::BuildIndexBruteForce(/*bool (*le)(const ServerInfo&, const ServerInfo&)*/) {
@@ -212,6 +214,68 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
     } else {
         return std::pair<uint16_t, ServerInfo>(index_server_lambda_[prev - 1], server_info_list_[index_server_lambda_[prev - 1]]);
     }
+}
+
+void ServerDataManager::BuildServerLambdaIntervalMatch() {
+    server_lambda_match_.resize(kNumIntervals);
+    float least_lambda = server_info_list_[*index_server_lambda_.begin()].server_lambda;
+    float most_lambda = server_info_list_[index_server_lambda_[num_servers_ - 1]].server_lambda;
+    float increment_le_1 = (1 - least_lambda) / (kNumIntervals / 2);
+    float increment_gt_1 = (most_lambda - 1) / (kNumIntervals / 2);
+    uint8_t interval_num = 0;
+    uint16_t curr_best_server_id = 0;
+    uint16_t curr_best_server_cpu_memory_sum = 0;
+    float lambda_offset = -1;
+    uint16_t interval_offset = -1;
+    for (uint16_t i = 0; i < num_servers_; ++i) {
+        const ServerInfo& curr_server_info = server_info_list_[index_server_lambda_[i]];
+        uint16_t curr_cpu_memory_sum = curr_server_info.server_cpu + curr_server_info.server_memory;
+        float curr_server_lambda = curr_server_info.server_lambda;
+        if (curr_server_lambda <= 1) {
+            if (curr_server_lambda >= least_lambda + interval_num * increment_le_1 && curr_server_lambda < least_lambda + (interval_num + 1) * increment_le_1) {
+
+            } else {
+                ServerOfLambdaInterval& curr_interval = server_lambda_match_[interval_num];
+                curr_interval.lambda_start = least_lambda + interval_num * increment_le_1;
+                curr_interval.lambda_end = least_lambda + (interval_num + 1) * increment_le_1;
+                curr_interval.server_id = curr_best_server_id;
+                curr_best_server_cpu_memory_sum = 0;
+                ++interval_num;
+            }
+        } else {
+            if (lambda_offset < 0) {
+                lambda_offset = least_lambda + interval_num * increment_le_1;
+                interval_offset = interval_num;
+                interval_num = 0;
+            }
+            if (curr_server_lambda >= lambda_offset + interval_num * increment_gt_1 && curr_server_lambda < interval_num + (interval_num + 1) * increment_gt_1) {
+
+            } else {
+                ServerOfLambdaInterval& curr_interval = server_lambda_match_[interval_offset + interval_num];
+                curr_interval.lambda_start = lambda_offset + interval_num * increment_gt_1;
+                curr_interval.lambda_end = lambda_offset + (interval_num + 1) * increment_gt_1;
+                curr_interval.server_id = curr_best_server_id;
+                curr_best_server_cpu_memory_sum = 0;
+                ++interval_num;
+            }
+        }
+        if (curr_cpu_memory_sum > curr_best_server_cpu_memory_sum) {
+            curr_best_server_id = index_server_lambda_[i];
+            curr_best_server_cpu_memory_sum = curr_cpu_memory_sum;
+        }
+    }
+    // for (const ServerOfLambdaInterval& interval_ite : server_lambda_match_) {
+    //     std::cout << interval_ite.lambda_start << ", " << interval_ite.lambda_end << ", " << server_info_list_[interval_ite.server_id].server_cpu << ", " << server_info_list_[interval_ite.server_id].server_memory << std::endl;
+    // }
+}
+
+std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaIntervalMatch(float lambda) {
+    uint16_t server;
+    for (const ServerOfLambdaInterval& interval_ite : server_lambda_match_) {
+        server = interval_ite.server_id;
+        if (lambda < interval_ite.lambda_end) break;
+    }
+    return std::make_pair(server, server_info_list_[server]);
 }
 
 uint16_t ServerDataManager::GetBestServerThatFits(int16_t vm_cpu, int16_t vm_memory, bool is_single) {
