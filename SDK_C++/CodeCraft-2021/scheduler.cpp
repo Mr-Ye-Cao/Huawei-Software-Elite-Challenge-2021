@@ -32,7 +32,7 @@ void Scheduler::Run() {
 
         OneIterationInternal();
         ++today_;
-        std::cout << today_ << std::endl;
+        // std::cout << today_ << std::endl;
     }
 }
 

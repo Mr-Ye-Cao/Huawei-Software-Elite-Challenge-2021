@@ -22,9 +22,9 @@ ServerSelector& ServerSelector::GetInstance() {
     return server_selector;
 }
 
-std::unordered_map<std::uint16_t, std::uint16_t>& ServerSelector::GetServerPurchaseChart() {
-    return server_purchase_chart_;
-}
+// std::unordered_map<std::uint16_t, std::uint16_t>& ServerSelector::GetServerPurchaseChart() {
+//     return server_purchase_chart_;
+// }
 
 // 1. Sort the servers according to some criteria
 // 2. Calculate the upper bound of the cost when using only the top server (muiti knapsack where value of each vm = size of each vm)
@@ -96,24 +96,24 @@ void ServerSelector::MakeServerSelectionSimple(uint16_t today) {
     }
 }
 
-void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
-    for (uint16_t i = 0; i < num; ++i) {
-        server_manager_.PurchaseServer(server_id, server_dynamic_id_);
-        ++server_dynamic_id_;
-    }
-}
+// void ServerSelector::PurchaseServers(uint16_t server_id, uint16_t num) {
+//     for (uint16_t i = 0; i < num; ++i) {
+//         server_manager_.PurchaseServer(server_id, server_dynamic_id_);
+//         ++server_dynamic_id_;
+//     }
+// }
 
 uint16_t ServerSelector::AddVmsToServers(uint16_t server_id, uint16_t vm_id, int32_t vm_unique_key) {
     if (server_manager_.AddVmToServerBestFit(server_id, vm_id, vm_unique_key) != 0) {
         VmInfo& curr_vm_info = vm_data_manager_.GetVm(vm_id);
-        uint16_t temp_server_static_id = server_data_manager_.GetBestServerThatFits(curr_vm_info.vm_cpu, curr_vm_info.vm_memory, curr_vm_info.is_single);
+        uint16_t temp_server_static_id = server_data_manager_.GetServerLambdaIntervalMatch(curr_vm_info.vm_lambda).first; //GetBestServerThatFits(curr_vm_info.vm_cpu, curr_vm_info.vm_memory, curr_vm_info.is_single);
         server_manager_.PurchaseServer(temp_server_static_id, server_dynamic_id_);
         // std::cout << "Forced to buy a server " << server_data_manager_.GetServerInfo(server_id).server_cpu << ", " << server_data_manager_.GetServerInfo(server_id).server_memory << std::endl;
         // std::cout << "vm has " << vm_data_manager_.GetVm(vm_id).vm_cpu << ", " << vm_data_manager_.GetVm(vm_id).vm_memory << ", " << vm_data_manager_.GetVm(vm_id).is_single << std::endl;
         ++server_dynamic_id_;
         ++total_server_num_;
         int i = server_manager_.AddVmToServerBestFit(temp_server_static_id, vm_id, vm_unique_key);
-        if (i == -1){
+        if (i != 0){
             std::cout<< "This server type is unable to finish the tasks.\n";
             return -1;
         }
@@ -151,7 +151,7 @@ std::pair<int16_t,int16_t> ServerSelector::WorseCaseSelectionVm(const uint16_t& 
     // For brute force approach
     // std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerNthBruteForce(nth_smallest_lambda);
     // For lambda approach
-    std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaMatch(lambda);
+    std::pair<uint16_t, ServerInfo> server_info = server_data_manager_.GetServerLambdaIntervalMatch(lambda);
     // std::cout << "vm lambda: " << lambda << ", server lambda: " << server_info.second.server_lambda << std::endl;
     // std::cout << "vm cpu: " << vm_cpu << ", server cpu: " << server_info.second.server_cpu << std::endl;
     // std::cout << "vm memory: " << vm_memory << ", server memory: " << server_info.second.server_memory << std::endl;

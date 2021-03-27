@@ -7,6 +7,11 @@
 
 #include "input_reader.h"
 
+namespace {
+  const uint8_t kNumIntervals = 10; // has to be even number
+} // namespace
+
+
 struct ServerOfLambdaInterval {
   float lambda_start;
   float lambda_end;
@@ -57,4 +62,5 @@ class ServerDataManager {
     void BuildIndexCpu(); // Build index by the number of cpu's 
     void BuildIndexMemory(); // Build index by the size of memory 
     void BuildIndexServerLambda(); // Lambda is CPU / Memory 
+    void BuildServerLambdaIntervalMatch();
 };
