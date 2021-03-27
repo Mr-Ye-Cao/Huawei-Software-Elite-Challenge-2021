@@ -214,6 +214,10 @@ std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaMatch(float la
     }
 }
 
+std::pair<uint16_t, ServerInfo> ServerDataManager::GetServerLambdaIntervalMatch(float lambda) {
+    
+}
+
 uint16_t ServerDataManager::GetBestServerThatFits(int16_t vm_cpu, int16_t vm_memory, bool is_single) {
     if (!is_single) {
         vm_cpu /= 2;
