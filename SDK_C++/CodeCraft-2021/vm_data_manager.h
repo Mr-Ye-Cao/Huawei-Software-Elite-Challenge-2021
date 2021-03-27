@@ -21,12 +21,12 @@ class VmDataManager {
     VmInfo& GetVm(const uint16_t& id);
     VmInfo& GetVm(const std::string& vm_name);
     uint16_t GetVmId(const std::string& vm_name);
-    VmInfo& GetVmNthLambda(const uint16_t n); // Lambda is CPU / Memory
-    uint16_t& GetVmIndexNthLambda(const uint16_t n);
-    uint16_t GetNumSingleVm(const uint16_t n);
-    uint16_t GetNumDoubleVm(const uint16_t n);
-    VmInfo& GetNthSingleVm(const uint16_t n);
-    VmInfo& GetNthDoubleVm(const uint16_t n);
+    // VmInfo& GetVmNthLambda(const uint16_t n); // Lambda is CPU / Memory
+    // uint16_t& GetVmIndexNthLambda(const uint16_t n);
+    // uint16_t GetNumSingleVm(const uint16_t n);
+    // uint16_t GetNumDoubleVm(const uint16_t n);
+    // VmInfo& GetNthSingleVm(const uint16_t n);
+    // VmInfo& GetNthDoubleVm(const uint16_t n);
 
 
   private:
@@ -38,13 +38,13 @@ class VmDataManager {
     uint16_t num_double_vm_;
     std::vector<VmInfo>& vm_info_list_;
     std::unordered_map<std::string, uint16_t> index_vm_name_;
-    std::vector<uint16_t> index_vm_lambda_;
-    std::vector<uint16_t> index_single_vm_;
-    std::vector<uint16_t> index_double_vm_;
+    // std::vector<uint16_t> index_vm_lambda_;
+    // std::vector<uint16_t> index_single_vm_;
+    // std::vector<uint16_t> index_double_vm_;
     
 
 
-    void BuildIndexVmLambda();
-    void BuildIndexVmSinDou();
+    // void BuildIndexVmLambda();
+    // void BuildIndexVmSinDou();
     
 };
