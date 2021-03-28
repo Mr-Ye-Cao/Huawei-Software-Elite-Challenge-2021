@@ -1,0 +1,35 @@
+2
+(NV603, 92, 324, 53800, 500) 
+(NV604, 128, 512, 87800, 800) 
+2
+(c3.large.4, 2, 8, 0) 
+(c3.8xlarge.2, 32, 64, 1)
+
+3           -------> there are three days' requests in total
+2           -------> there are 2 requests in 1 of 3 days
+(add, c3.large.4, 5) (add, c3.large.4, 0)
+2           -------> there are 2 requests in 2 of 3 days
+(del, 0)
+(add, c3.8xlarge.2, 1)
+3		    -------> there are 3 requests in 3 of 3 days
+(add, c3.large.4, 2)
+(del, 1)
+(del, 2)
+
+# Day One
+(purchase, 2)
+(NV603, 1)
+(NV604, 1)
+(migration, 0)
+(0, A)
+(0, B)
+
+# Day Two
+(purchase, 0)
+(migration, 0)
+(1)
+
+# Day Three
+(purchase, 0)
+(migration, 0)
+(1, B)
